@@ -1,0 +1,2154 @@
+{
+  "paragraphs": [
+    {
+      "text": "%md \n## 统计分析ask-ans匹配后的数据转成行数据，后半部分根据anscls结果过滤数据",
+      "user": "anonymous",
+      "dateUpdated": "May 16, 2018 4:52:55 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "markdown",
+          "editOnDblClick": true
+        },
+        "editorMode": "ace/mode/markdown",
+        "editorHide": true,
+        "tableHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "HTML",
+            "data": "\u003cdiv class\u003d\"markdown-body\"\u003e\n\u003ch2\u003e统计分析ask-ans匹配后的数据转成行数据，后半部分根据anscls结果过滤数据\u003c/h2\u003e\n\u003c/div\u003e"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1524573548698_-158493185",
+      "id": "20180424-203908_693462370",
+      "dateCreated": "Apr 24, 2018 8:39:08 PM",
+      "dateStarted": "May 16, 2018 4:52:55 PM",
+      "dateFinished": "May 16, 2018 4:52:55 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "var Q_all_m3 \u003d sqlContext.read.load(\"/user/webrank/liuqin/viewpoint/query_map_url_list_tpye3_choice_0707_0803_maped_ans.parquet\")",
+      "user": "anonymous",
+      "dateUpdated": "May 16, 2018 6:24:57 PM",
+      "config": {
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "results": {},
+        "enabled": true,
+        "editorSetting": {
+          "language": "scala"
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "ERROR",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "java.lang.IllegalStateException: Cannot call methods on a stopped SparkContext.\nThis stopped SparkContext was created at:\n\norg.apache.spark.sql.SparkSession$Builder.getOrCreate(SparkSession.scala:901)\nsun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)\nsun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)\nsun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)\njava.lang.reflect.Method.invoke(Method.java:498)\norg.apache.zeppelin.spark.Utils.invokeMethod(Utils.java:38)\norg.apache.zeppelin.spark.Utils.invokeMethod(Utils.java:33)\norg.apache.zeppelin.spark.SparkInterpreter.createSparkSession(SparkInterpreter.java:368)\norg.apache.zeppelin.spark.SparkInterpreter.getSparkSession(SparkInterpreter.java:233)\norg.apache.zeppelin.spark.SparkInterpreter.open(SparkInterpreter.java:841)\norg.apache.zeppelin.interpreter.LazyOpenInterpreter.open(LazyOpenInterpreter.java:70)\norg.apache.zeppelin.interpreter.remote.RemoteInterpreterServer$InterpretJob.jobRun(RemoteInterpreterServer.java:491)\norg.apache.zeppelin.scheduler.Job.run(Job.java:175)\norg.apache.zeppelin.scheduler.FIFOScheduler$1.run(FIFOScheduler.java:139)\njava.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511)\njava.util.concurrent.FutureTask.run(FutureTask.java:266)\njava.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.access$201(ScheduledThreadPoolExecutor.java:180)\njava.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:293)\njava.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)\njava.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)\n\nThe currently active SparkContext was created at:\n\n(No active SparkContext.)\n\n  at org.apache.spark.SparkContext.assertNotStopped(SparkContext.scala:100)\n  at org.apache.spark.SparkContext.defaultParallelism(SparkContext.scala:2320)\n  at org.apache.spark.sql.execution.datasources.parquet.ParquetFileFormat$.mergeSchemasInParallel(ParquetFileFormat.scala:546)\n  at org.apache.spark.sql.execution.datasources.parquet.ParquetFileFormat.inferSchema(ParquetFileFormat.scala:241)\n  at org.apache.spark.sql.execution.datasources.DataSource$$anonfun$7.apply(DataSource.scala:177)\n  at org.apache.spark.sql.execution.datasources.DataSource$$anonfun$7.apply(DataSource.scala:177)\n  at scala.Option.orElse(Option.scala:289)\n  at org.apache.spark.sql.execution.datasources.DataSource.getOrInferFileFormatSchema(DataSource.scala:176)\n  at org.apache.spark.sql.execution.datasources.DataSource.resolveRelation(DataSource.scala:366)\n  at org.apache.spark.sql.DataFrameReader.load(DataFrameReader.scala:178)\n  at org.apache.spark.sql.DataFrameReader.load(DataFrameReader.scala:156)\n  ... 46 elided\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1524561295146_-1874659559",
+      "id": "20180326-124149_489368593",
+      "dateCreated": "Apr 24, 2018 5:14:55 PM",
+      "dateStarted": "May 16, 2018 6:24:57 PM",
+      "dateFinished": "May 16, 2018 6:25:00 PM",
+      "status": "ERROR",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "var Q_all_m3 \u003d sqlContext.read.load(\"/user/webrank/liuqin/viewpoint/query_map_url_list_tpye2_choice_0707_0803_maped_ans.parquet\")",
+      "user": "anonymous",
+      "dateUpdated": "May 16, 2018 4:25:01 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "Q_all_m3: org.apache.spark.sql.DataFrame \u003d [query: string, url: string ... 3 more fields]\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1526459090811_1210722579",
+      "id": "20180516-162450_1346239255",
+      "dateCreated": "May 16, 2018 4:24:50 PM",
+      "dateStarted": "May 16, 2018 4:25:01 PM",
+      "dateFinished": "May 16, 2018 4:26:00 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "Q_all_m3.count()",
+      "user": "anonymous",
+      "dateUpdated": "May 3, 2018 7:22:01 PM",
+      "config": {
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "results": {},
+        "enabled": true,
+        "editorSetting": {
+          "language": "scala"
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "res20: Long \u003d 874331\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1524561295146_-1874659559",
+      "id": "20180411-142637_1674197438",
+      "dateCreated": "Apr 24, 2018 5:14:55 PM",
+      "dateStarted": "May 3, 2018 7:22:01 PM",
+      "dateFinished": "May 3, 2018 7:23:42 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "Q_all_m3.count()",
+      "user": "anonymous",
+      "dateUpdated": "May 16, 2018 4:37:57 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "res4: Long \u003d 375888\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1526459108541_159988657",
+      "id": "20180516-162508_1087183009",
+      "dateCreated": "May 16, 2018 4:25:08 PM",
+      "dateStarted": "May 16, 2018 4:37:57 PM",
+      "dateFinished": "May 16, 2018 4:38:09 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "Q_all_m3.count()",
+      "user": "anonymous",
+      "dateUpdated": "May 2, 2018 6:07:49 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "res0: Long \u003d 133972\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1524573297346_-671715925",
+      "id": "20180424-203457_995475904",
+      "dateCreated": "Apr 24, 2018 8:34:57 PM",
+      "dateStarted": "May 2, 2018 6:07:50 PM",
+      "dateFinished": "May 2, 2018 6:10:01 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "Q_all_m3.show(10)",
+      "user": "anonymous",
+      "dateUpdated": "May 16, 2018 4:26:49 PM",
+      "config": {
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "results": {},
+        "enabled": true,
+        "editorSetting": {
+          "language": "scala"
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "+--------------+--------------------+--------------------+--------------------+--------------------+\n|         query|                 url|                 ans|                 URI|                  op|\n+--------------+--------------------+--------------------+--------------------+--------------------+\n| PH值4.0是酸性还是碱性|http://ask.39.net...|你好 属于碱性体质了，正常人的尿液...|http://ask.39.net...|@ACCEPT:true\n@ANS...|\n| 重.庆做试管选择爱德华可靠|http://ask.39.net...|您好，试管婴儿是针对自然怀孕障碍的...|http://ask.39.net...|@ACCEPT:true\n@ANS...|\n| 重.庆做试管选择爱德华可靠|http://ask.39.net...|您好！试管婴儿的成功率只有20%，...|http://ask.39.net...|@ACCEPT:false\n@AN...|\n| 重.庆做试管选择爱德华可靠|http://ask.39.net...|目前国内试管的成功率只有20%-3...|http://ask.39.net...|@ACCEPT:false\n@AN...|\n|桂林看男 科哪好先.选择博仕|http://ask.39.net...|                null|                null|                null|\n|      无锡男科还是男健|http://ask.39.net...|                null|                null|                null|\n|     先吃水果还是先吃饭|http://ask.ci123....|                null|                null|                null|\n|     佑替是药还是保健品|http://ask.family...|                null|                null|                null|\n| 孩子散瞳后快散好还是慢散好|http://ask.family...|10岁小孩看不清远处物体，可能是有...|http://ask.family...|@ACCEPT:false\n@AN...|\n| 孩子散瞳后快散好还是慢散好|http://ask.family...|你好，一般孩子近视的话快速散瞳就可...|http://ask.family...|@ACCEPT:true\n@ANS...|\n+--------------+--------------------+--------------------+--------------------+--------------------+\nonly showing top 10 rows\n\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1524561295147_-1875044308",
+      "id": "20180327-114551_1149172972",
+      "dateCreated": "Apr 24, 2018 5:14:55 PM",
+      "dateStarted": "May 16, 2018 4:26:49 PM",
+      "dateFinished": "May 16, 2018 4:26:50 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "var Q_all_m3_drop \u003d Q_all_m3.dropDuplicates(Seq(\"query\",\"ans\",\"url\"))",
+      "user": "anonymous",
+      "dateUpdated": "May 16, 2018 4:38:01 PM",
+      "config": {
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "results": {},
+        "enabled": true,
+        "editorSetting": {
+          "language": "scala"
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "Q_all_m3_drop: org.apache.spark.sql.Dataset[org.apache.spark.sql.Row] \u003d [query: string, url: string ... 3 more fields]\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1524561295147_-1875044308",
+      "id": "20180327-115822_1460922438",
+      "dateCreated": "Apr 24, 2018 5:14:55 PM",
+      "dateStarted": "May 16, 2018 4:38:01 PM",
+      "dateFinished": "May 16, 2018 4:38:09 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "Q_all_m3_drop.count()",
+      "user": "anonymous",
+      "dateUpdated": "May 16, 2018 4:38:12 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "res5: Long \u003d 361430\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1526459405896_1495494249",
+      "id": "20180516-163005_1412120554",
+      "dateCreated": "May 16, 2018 4:30:05 PM",
+      "dateStarted": "May 16, 2018 4:38:12 PM",
+      "dateFinished": "May 16, 2018 4:38:34 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "Q_all_m3_drop.count()",
+      "user": "anonymous",
+      "dateUpdated": "May 3, 2018 7:51:50 PM",
+      "config": {
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "results": {},
+        "enabled": true,
+        "editorSetting": {
+          "language": "scala"
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "res28: Long \u003d 853885\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1524561295148_-1876968052",
+      "id": "20180327-120014_1656416775",
+      "dateCreated": "Apr 24, 2018 5:14:55 PM",
+      "dateStarted": "May 3, 2018 7:51:50 PM",
+      "dateFinished": "May 3, 2018 7:55:17 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "Q_all_m3_drop.count()",
+      "user": "anonymous",
+      "dateUpdated": "May 2, 2018 6:09:49 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "res1: Long \u003d 102371\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1524573323724_1826904729",
+      "id": "20180424-203523_373591059",
+      "dateCreated": "Apr 24, 2018 8:35:23 PM",
+      "dateStarted": "May 2, 2018 6:10:01 PM",
+      "dateFinished": "May 2, 2018 6:10:13 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "Q_all_m3_drop.select(\"url\").distinct.count()",
+      "user": "anonymous",
+      "dateUpdated": "May 3, 2018 7:54:36 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "res29: Long \u003d 378427\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1525347260519_-1357576139",
+      "id": "20180503-193420_143593487",
+      "dateCreated": "May 3, 2018 7:34:20 PM",
+      "dateStarted": "May 3, 2018 7:54:36 PM",
+      "dateFinished": "May 3, 2018 7:55:28 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "Q_all_m3.select(\"query\",\"url\").distinct.count()",
+      "user": "anonymous",
+      "dateUpdated": "May 3, 2018 7:59:41 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "res32: Long \u003d 427879\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1525348753982_637721266",
+      "id": "20180503-195913_1846288339",
+      "dateCreated": "May 3, 2018 7:59:13 PM",
+      "dateStarted": "May 3, 2018 7:59:41 PM",
+      "dateFinished": "May 3, 2018 8:03:09 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "Q_all_m3.select(\"url\").distinct.count()",
+      "user": "anonymous",
+      "dateUpdated": "May 3, 2018 7:46:47 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "res27: Long \u003d 378427\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1525347991483_1569111342",
+      "id": "20180503-194631_1106525390",
+      "dateCreated": "May 3, 2018 7:46:31 PM",
+      "dateStarted": "May 3, 2018 7:46:47 PM",
+      "dateFinished": "May 3, 2018 7:50:02 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "Q_all_m3_drop.select(\"query\").distinct.count()",
+      "user": "anonymous",
+      "dateUpdated": "May 2, 2018 12:31:49 PM",
+      "config": {
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "results": {},
+        "enabled": true,
+        "editorSetting": {
+          "language": "scala"
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "res9: Long \u003d 148861\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1524561295148_-1876968052",
+      "id": "20180327-120241_1596048923",
+      "dateCreated": "Apr 24, 2018 5:14:55 PM",
+      "dateStarted": "May 2, 2018 12:34:44 PM",
+      "dateFinished": "May 2, 2018 12:35:53 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "Q_all_m3_drop.select(\"query\").distinct.count() ",
+      "user": "anonymous",
+      "dateUpdated": "May 16, 2018 4:36:08 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "res2: Long \u003d 29691\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1525255946361_549070312",
+      "id": "20180502-181226_1129147157",
+      "dateCreated": "May 2, 2018 6:12:26 PM",
+      "dateStarted": "May 2, 2018 6:12:29 PM",
+      "dateFinished": "May 2, 2018 6:15:46 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "Q_all_m3_drop.select(\"query\").distinct.count()",
+      "user": "anonymous",
+      "dateUpdated": "May 16, 2018 4:36:15 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "res3: Long \u003d 59340\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1526459768568_-26265916",
+      "id": "20180516-163608_1123527409",
+      "dateCreated": "May 16, 2018 4:36:08 PM",
+      "dateStarted": "May 16, 2018 4:36:15 PM",
+      "dateFinished": "May 16, 2018 4:37:01 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "Q_all_m3_drop.where(\"ans is Null or ans \u003d\u003d \u0027\u0027\").show(10)",
+      "user": "anonymous",
+      "dateUpdated": "May 2, 2018 6:13:13 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "+------------------+--------------------+----+----+----+\n|             query|                 url| ans| URI|  op|\n+------------------+--------------------+----+----+----+\n|   .广州治疗毛囊炎.系肤 康放心|http://www.120ask...|null|null|null|\n|    .广州治青春痘.系肤 康放心|http://ask.39.net...|null|null|null|\n|    .广州疤痕医院.可肤 康放心|http://ask.39.net...|null|null|null|\n|    .广州皮 肤科.系肤 康放心|http://ask.39.net...|null|null|null|\n|     .广州祛疤痕.位肤 康放心|http://www.haodf....|null|null|null|\n|     .广州青春痘.系肤 康放心|http://ask.39.net...|null|null|null|\n|   .海口治尿路感染.系肤 康放心|http://www.120ask...|null|null|null|\n| .海口治生 殖器感染.至肤 康放心|http://ask.39.net...|null|null|null|\n| .海口治疗前列腺增生.至肤 康放心|http://club.xywy....|null|null|null|\n|.海口治疗急性前列腺炎.系肤 康放心|http://ask.39.net...|null|null|null|\n+------------------+--------------------+----+----+----+\nonly showing top 10 rows\n\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1524628800160_-1565705",
+      "id": "20180425-120000_723680928",
+      "dateCreated": "Apr 25, 2018 12:00:00 PM",
+      "dateStarted": "May 2, 2018 6:13:13 PM",
+      "dateFinished": "May 2, 2018 6:15:57 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "Q_all_m3_drop.where(\"ans is Null or ans \u003d\u003d \u0027\u0027\").select(\"url\").take(10)",
+      "user": "anonymous",
+      "dateUpdated": "May 3, 2018 8:18:01 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "res33: Array[org.apache.spark.sql.Row] \u003d Array([http://tieba.baidu.com/p/5160545975], [http://www.120ask.com/question/29790398.htm], [http://www.zhihu.com/question/21772457], [http://www.zhihu.com/question/31103245], [http://www.zhihu.com/question/37648028], [http://tieba.baidu.com/p/5483841054], [http://wenda.tianya.cn/m/thread.jsp?tid\u003d0a110d2c17042231], [http://wenwen.sogou.com/z/q703238623.htm], [http://wenwen.sogou.com/z/q706789317.htm], [http://www.zhihu.com/question/26506994])\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1525347376378_311449265",
+      "id": "20180503-193616_866570667",
+      "dateCreated": "May 3, 2018 7:36:16 PM",
+      "dateStarted": "May 3, 2018 8:18:01 PM",
+      "dateFinished": "May 3, 2018 8:21:41 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "var sql_result \u003d  Q_all_m3_drop.filter(\"ans is Not Null and ans !\u003d \u0027\u0027\") \nsql_result.count()",
+      "user": "anonymous",
+      "dateUpdated": "May 3, 2018 7:35:30 PM",
+      "config": {
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "results": {},
+        "enabled": true,
+        "editorSetting": {
+          "language": "scala"
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "sql_result: org.apache.spark.sql.Dataset[org.apache.spark.sql.Row] \u003d [query: string, url: string ... 3 more fields]\nres23: Long \u003d 645403\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1524561295151_-1876583303",
+      "id": "20180411-155451_1847504924",
+      "dateCreated": "Apr 24, 2018 5:14:55 PM",
+      "dateStarted": "May 3, 2018 7:35:30 PM",
+      "dateFinished": "May 3, 2018 7:38:50 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "var sql_result \u003d  Q_all_m3_drop.filter(\"ans is Not Null and ans !\u003d \u0027\u0027\") \nsql_result.count()",
+      "user": "anonymous",
+      "dateUpdated": "May 16, 2018 4:38:55 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "sql_result: org.apache.spark.sql.Dataset[org.apache.spark.sql.Row] \u003d [query: string, url: string ... 3 more fields]\nres6: Long \u003d 263881\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1526459924517_668234852",
+      "id": "20180516-163844_778673747",
+      "dateCreated": "May 16, 2018 4:38:44 PM",
+      "dateStarted": "May 16, 2018 4:38:55 PM",
+      "dateFinished": "May 16, 2018 4:39:20 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "var sql_result \u003d  Q_all_m3_drop.filter(\"ans is Not Null and ans !\u003d \u0027\u0027\") \nsql_result.count()",
+      "user": "anonymous",
+      "dateUpdated": "May 2, 2018 6:14:41 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "sql_result: org.apache.spark.sql.Dataset[org.apache.spark.sql.Row] \u003d [query: string, url: string ... 3 more fields]\nres4: Long \u003d 74951\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1524573357847_388575423",
+      "id": "20180424-203557_209951802",
+      "dateCreated": "Apr 24, 2018 8:35:57 PM",
+      "dateStarted": "May 2, 2018 6:15:47 PM",
+      "dateFinished": "May 2, 2018 6:16:03 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "sql_result.show()",
+      "user": "anonymous",
+      "dateUpdated": "Apr 24, 2018 8:01:22 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "+-----------------+---+-------------+-----+--------------------+--------------------+--------------------+\n|            query| pv|       QLEVEL|QTYPE|                 ans|                 URI|                  op|\n+-----------------+---+-------------+-----+--------------------+--------------------+--------------------+\n|        \"\"好不好妈妈\"\"|  4|4.50772996426|    3|\u003cpre\u003e不明白你问的是什么问题，...|http://wenwen.sog...|@ACCEPT:false\n@AN...|\n|        \"\"好不好妈妈\"\"|  4|4.50772996426|    3|\u003cpre\u003e天低下最伟大的就是母爱了...|http://wenwen.sog...|@ACCEPT:false\n@AN...|\n|        \"\"好不好妈妈\"\"|  4|4.50772996426|    3|\u003cpre\u003e好 \u003cbr/\u003e世上只有妈...|http://wenwen.sog...|@ACCEPT:true\n@ANS...|\n|*治.疗白.癜风的费用高吗国丹很好|146|4.62273061552|    3|您好： 本病治疗困难，疗程长，痊愈...|http://www.120ask...|@ACCEPT:false\n@AN...|\n|*治.疗白.癜风的费用高吗国丹很好|146|4.62273061552|    3|指导意见：亲爱的朋友您好，根据您的...|http://club.xywy....|@ACCEPT:false\n@AN...|\n|*治.疗白.癜风的费用高吗国丹很好|146|4.62273061552|    3|指导意见：您好，得了白癜风建议到正...|http://club.xywy....|@ACCEPT:false\n@AN...|\n|*治.疗白.癜风的费用高吗国丹很好|146|4.62273061552|    3|病情分析： 治疗白癜风的费用不是很...|http://www.120ask...|@ACCEPT:false\n@AN...|\n| *白癜 风传染吗研究合 肥华夏*|848|4.39877261359|    3|\u003cp\u003e建议到中白医疗集团看看吧\u003c/...|https://zhidao.ba...|@ACCEPT:false\n@AN...|\n| *白癜 风传染吗研究合 肥华夏*|848|4.39877261359|    3|\u003cpre\u003e \u003cbr/\u003e\u003cp\u003e\u003cst...|http://wenwen.sog...|@ACCEPT:false\n@AN...|\n| *白癜 风传染吗研究合 肥华夏*|848|4.39877261359|    3|\u003cpre\u003e\u003cp\u003e会的 \u003c/p\u003e \u003c...|http://wenwen.sog...|@ACCEPT:false\n@AN...|\n| *白癜 风传染吗研究合 肥华夏*|848|4.39877261359|    3|\u003cpre\u003e\u003cp\u003e您好，很高兴为您解...|http://wenwen.sog...|@ACCEPT:false\n@AN...|\n| *白癜 风传染吗研究合 肥华夏*|848|4.39877261359|    3|\u003cpre\u003e\u003cp\u003e您好：\u003c/p\u003e \u003c...|http://wenwen.sog...|@ACCEPT:false\n@AN...|\n| *白癜 风传染吗研究合 肥华夏*|848|4.39877261359|    3|\u003cpre\u003e\u003cstrong\u003e华海白癜...|http://wenwen.sog...|@ACCEPT:true\n@ANS...|\n| *白癜 风传染吗研究合 肥华夏*|848|4.39877261359|    3|\u003cpre\u003e不会，它只是表皮因病变缺...|http://wenwen.sog...|@ACCEPT:false\n@AN...|\n| *白癜 风传染吗研究合 肥华夏*|848|4.39877261359|    3|\u003cpre\u003e不是传染病，可以治好，不...|http://wenwen.sog...|@ACCEPT:false\n@AN...|\n| *白癜 风传染吗研究合 肥华夏*|848|4.39877261359|    3|\u003cpre\u003e呵呵，要介绍这种病的由来...|http://wenwen.sog...|@ACCEPT:false\n@AN...|\n| *白癜 风传染吗研究合 肥华夏*|848|4.39877261359|    3|\u003cpre\u003e希望大家帮我把这个帖发给...|http://wenwen.sog...|@ACCEPT:false\n@AN...|\n| *白癜 风传染吗研究合 肥华夏*|848|4.39877261359|    3|\u003cpre\u003e并不具备病原体.何为传染...|https://zhidao.ba...|@ACCEPT:true\n@ANS...|\n| *白癜 风传染吗研究合 肥华夏*|848|4.39877261359|    3|\u003cpre\u003e建议：你好，白癜风是不传...|http://wenwen.sog...|@ACCEPT:false\n@AN...|\n| *白癜 风传染吗研究合 肥华夏*|848|4.39877261359|    3|\u003cpre\u003e建议：您好，白癜风是皮肤...|http://wenwen.sog...|@ACCEPT:true\n@ANS...|\n+-----------------+---+-------------+-----+--------------------+--------------------+--------------------+\nonly showing top 20 rows\n\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1524562777972_429804402",
+      "id": "20180424-173937_197340379",
+      "dateCreated": "Apr 24, 2018 5:39:37 PM",
+      "dateStarted": "Apr 24, 2018 8:01:22 PM",
+      "dateFinished": "Apr 24, 2018 8:02:18 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "sql_result.select(\"query\").distinct.count()",
+      "user": "anonymous",
+      "dateUpdated": "May 2, 2018 12:32:52 PM",
+      "config": {
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "results": {},
+        "enabled": true,
+        "editorSetting": {
+          "language": "scala"
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "res11: Long \u003d 118227\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1524561295151_-1876583303",
+      "id": "20180411-155120_651001345",
+      "dateCreated": "Apr 24, 2018 5:14:55 PM",
+      "dateStarted": "May 2, 2018 12:35:53 PM",
+      "dateFinished": "May 2, 2018 12:36:55 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "sql_result.select(\"query\").distinct.count()",
+      "user": "anonymous",
+      "dateUpdated": "May 2, 2018 6:19:03 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "res5: Long \u003d 20276\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1524574113128_-347195814",
+      "id": "20180424-204833_827340997",
+      "dateCreated": "Apr 24, 2018 8:48:33 PM",
+      "dateStarted": "May 2, 2018 6:19:04 PM",
+      "dateFinished": "May 2, 2018 6:22:28 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "sql_result.select(\"query\").distinct.count()",
+      "user": "anonymous",
+      "dateUpdated": "May 16, 2018 4:40:20 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "res7: Long \u003d 46022\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1526460015097_-624582749",
+      "id": "20180516-164015_1139450567",
+      "dateCreated": "May 16, 2018 4:40:15 PM",
+      "dateStarted": "May 16, 2018 4:40:20 PM",
+      "dateFinished": "May 16, 2018 4:40:44 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "sql_result.select(\"url\").distinct.count()",
+      "user": "anonymous",
+      "dateUpdated": "May 3, 2018 7:56:08 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "res31: Long \u003d 194419\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1525347339449_-1518462476",
+      "id": "20180503-193539_1417276859",
+      "dateCreated": "May 3, 2018 7:35:39 PM",
+      "dateStarted": "May 3, 2018 7:56:08 PM",
+      "dateFinished": "May 3, 2018 7:56:16 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "def getHost(line : String) : String \u003d {\r\n    if (line \u003d\u003d null || line.trim().equals(\"\")) {\r\n      return \"\";\r\n    }\r\n    try {\r\n      val caseInsensitivePattern \u003d \"\"\"(?\u003c\u003d//|)((\\w)+\\.)+\\w+(:\\d*)?\"\"\".r\r\n      return  caseInsensitivePattern.findFirstIn(line).get\r\n      //      line replaceAll (caseInsensitivePattern, )\r\n    }\r\n    catch {\r\n      case ex: Exception \u003d\u003e \"\"\r\n    }\r\n  }",
+      "user": "anonymous",
+      "dateUpdated": "May 16, 2018 4:42:44 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "getHost: (line: String)String\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1525349735513_-1225082432",
+      "id": "20180503-201535_1809088291",
+      "dateCreated": "May 3, 2018 8:15:35 PM",
+      "dateStarted": "May 16, 2018 4:42:44 PM",
+      "dateFinished": "May 16, 2018 4:42:45 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "sql_result.select(\"url\").distinct.rdd.map(x\u003d\u003e(getHost(x(0).toString),1)).reduceByKey(_ + _).sortBy(_._2,false).collect().foreach(println)",
+      "user": "anonymous",
+      "dateUpdated": "May 16, 2018 4:43:37 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "(wenwen.sogou.com,26320)\n(zhidao.baidu.com,23483)\n(www.120ask.com,6034)\n(www.babytree.com,2147)\n(ask.yaolan.com,1991)\n(club.xywy.com,1840)\n(wenda.tianya.cn,1656)\n(ask.familydoctor.com.cn,1383)\n(iask.sina.com.cn,1240)\n(ask.39.net,531)\n(www.haodf.com,482)\n(ask.ci123.com,200)\n(iask.eat.sina.com.cn,1)\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1525349857706_1366017520",
+      "id": "20180503-201737_1246224571",
+      "dateCreated": "May 3, 2018 8:17:37 PM",
+      "dateStarted": "May 16, 2018 4:43:37 PM",
+      "dateFinished": "May 16, 2018 4:43:56 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "Q_all_m3_drop.where(\"QTYPE !\u003d \u00273\u0027\").count()",
+      "user": "anonymous",
+      "dateUpdated": "Apr 24, 2018 7:58:25 PM",
+      "config": {
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "results": {},
+        "enabled": true,
+        "editorSetting": {
+          "language": "scala"
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "res49: Long \u003d 0\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1524561295151_-1876583303",
+      "id": "20180411-210431_389147441",
+      "dateCreated": "Apr 24, 2018 5:14:55 PM",
+      "dateStarted": "Apr 24, 2018 7:58:25 PM",
+      "dateFinished": "Apr 24, 2018 7:58:34 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "Q_all_m3_drop.where(\"QTYPE !\u003d \u00271\u0027\").count()",
+      "user": "anonymous",
+      "dateUpdated": "Apr 24, 2018 8:48:51 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "res5: Long \u003d 0\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1524573482586_-1056405173",
+      "id": "20180424-203802_1122582400",
+      "dateCreated": "Apr 24, 2018 8:38:02 PM",
+      "dateStarted": "Apr 24, 2018 8:48:51 PM",
+      "dateFinished": "Apr 24, 2018 8:49:10 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "sql_result \u003d sql_result.na.fill(\"null\")\nsql_result.registerTempTable(\"sql_result\")",
+      "user": "anonymous",
+      "dateUpdated": "May 16, 2018 4:47:02 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "sql_result: org.apache.spark.sql.Dataset[org.apache.spark.sql.Row] \u003d [query: string, url: string ... 3 more fields]\nwarning: there was one deprecation warning; re-run with -deprecation for details\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1524574165769_-1378830208",
+      "id": "20180424-204925_352172363",
+      "dateCreated": "Apr 24, 2018 8:49:25 PM",
+      "dateStarted": "May 16, 2018 4:47:02 PM",
+      "dateFinished": "May 16, 2018 4:47:03 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "var sql_result2 \u003d sqlContext.sql(\"SELECT CONCAT(op,CONCAT(\u0027\\n@QLEVEL:\u0027,QLEVEL),CONCAT(\u0027\\n@QTYPE:\u0027,QTYPE),CONCAT(\u0027\\n@qpv:\u0027,qpv),CONCAT(\u0027\\n@qclkpv:\u0027,qclkpv),CONCAT(\u0027\\n@urlpv:\u0027,urlpv),CONCAT(\u0027\\n@urlclkpv:\u0027,urlclkpv)) as line FROM sql_result\")\n",
+      "dateUpdated": "Apr 24, 2018 6:33:24 PM",
+      "config": {
+        "tableHide": true,
+        "editorSetting": {
+          "language": "scala"
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "sql_result2: org.apache.spark.sql.DataFrame \u003d [line: string]\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1524561295152_-1866195083",
+      "id": "20180327-121257_1711453893",
+      "dateCreated": "Apr 24, 2018 5:14:55 PM",
+      "status": "READY",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "var sql_result2 \u003d sqlContext.sql(\"SELECT CONCAT(op,\u0027\\n@qpv:\u0027,pv,\u0027\\n@QLEVEL:\u0027,QLEVEL,\u0027\\n@QTYPE:\u0027,QTYPE) as line FROM sql_result\")",
+      "user": "anonymous",
+      "dateUpdated": "Apr 24, 2018 9:31:18 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "sql_result2: org.apache.spark.sql.DataFrame \u003d [line: string]\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1524574191307_1583397546",
+      "id": "20180424-204951_488416827",
+      "dateCreated": "Apr 24, 2018 8:49:51 PM",
+      "dateStarted": "Apr 24, 2018 9:31:18 PM",
+      "dateFinished": "Apr 24, 2018 9:31:19 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "var sql_result2 \u003d sqlContext.sql(\"SELECT CONCAT(op,\u0027\\n@query:\u0027,query) as line FROM sql_result\")",
+      "user": "anonymous",
+      "dateUpdated": "May 16, 2018 4:47:09 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "sql_result2: org.apache.spark.sql.DataFrame \u003d [line: string]\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1525235590798_-413915970",
+      "id": "20180502-123310_102939693",
+      "dateCreated": "May 2, 2018 12:33:10 PM",
+      "dateStarted": "May 16, 2018 4:47:09 PM",
+      "dateFinished": "May 16, 2018 4:47:10 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "sql_result2.count()",
+      "user": "anonymous",
+      "dateUpdated": "May 16, 2018 4:47:13 PM",
+      "config": {
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "results": {},
+        "enabled": true,
+        "editorSetting": {
+          "language": "scala"
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "res10: Long \u003d 263881\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1524561295153_-1866579832",
+      "id": "20180411-203336_251335598",
+      "dateCreated": "Apr 24, 2018 5:14:55 PM",
+      "dateStarted": "May 16, 2018 4:47:13 PM",
+      "dateFinished": "May 16, 2018 4:47:30 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "sql_result2.map(t \u003d\u003et.getAs[String](\"line\")).rdd.take(1)",
+      "user": "anonymous",
+      "dateUpdated": "May 16, 2018 4:48:47 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {
+          "0": {
+            "graph": {
+              "mode": "table",
+              "height": 124.47300000000001,
+              "optionOpen": false
+            }
+          }
+        },
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "res11: Array[String] \u003d\nArray(@ACCEPT:1\n@ANS.CONTENT:一般用户在登陆时，系统会要求输入用户名及密码，然后将这些数据传输到指定页，进行验证，大致的代码如下：SetConn\u003dServer.CreateObject(\"ADODB.Connection\")\u0027定义连接数据库的对象ConstAccessFile\u003d\"jmdcw.mdb\"\u0027数据库地址Conn.ConnectionString\u003d\"Provider\u003dMicrosoft.Jet.OLEDB.4.0;DataSource\u003d\"\u0026Server.MapPath(AccessFile)\u0027连接到数据库Conn.Open\u0027打开数据库....................name\u003drequest(\"name\")\u0027得到所提交的用户名pass\u003drequest(\"pass\")\u0027得到所提交来的密码............SetJmdcw\u003dServer.CreateObject(\"ADODB.RecordSet\")\u0027定义操作数据库的对象SQL\u003d\"SELECTusername,userpassFROMUserWHEREusername\u003d\u0027\"\u0026name\u0026\"\u0027ANDuserpass\u003d\u0027\"\u0026pass\u0026\"\u0027\"\u0027SQL语句Jmdcw.OpenSQL,Conn,1,1\u0027执行查询......IfJmdcw.EOFANDJmdcw.BOFThen\u0027如果没有查询到response.redirect\"onerror.html\"\u0027显示错误页endif\u0027如果正确，就继续执行。..........以上就是一段简单的用户验证代码，当注入漏洞被广泛发掘之后，类似这样的漏洞就越来越少了，但少并不表示程序员在写代码时已经具备了防范意识，无意之中还是会出现这样或那样的漏洞。OK，书归正传，先来测试一下上面的代码。输入的用户名是：jmd..."
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1524574216194_-898804788",
+      "id": "20180424-205016_18230650",
+      "dateCreated": "Apr 24, 2018 8:50:16 PM",
+      "dateStarted": "May 16, 2018 4:48:47 PM",
+      "dateFinished": "May 16, 2018 4:49:18 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "var lograw2 \u003d sql_result2.map(t \u003d\u003et.getAs[String](\"line\")).rdd.map(e \u003d\u003e {\r\n      var m \u003d e.toString.split(\"\\n\")\r\n       .map(_.split(\":\", 2))\r\n         .filter(_.size \u003d\u003d 2)\r\n         .map(e \u003d\u003e (e(0), e(1).trim))\r\n           .toMap\r\n         m\r\n       }).map(m \u003d\u003e{\r\n      var o \u003d \"\"\r\n      for((k,v)\u003c- m ) o \u003d o+k+\":\"+v+\"\\t\"\r\n      o.trim()\r\n    }).map(t \u003d\u003et replaceAll (\"[\\\\n]+\", \"\"))",
+      "user": "anonymous",
+      "dateUpdated": "May 16, 2018 6:23:28 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "ERROR",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "\u003cconsole\u003e:25: error: not found: value sql_result2\n       var lograw2 \u003d sql_result2.map(t \u003d\u003et.getAs[String](\"line\")).rdd.map(e \u003d\u003e {\n                     ^\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1524574230226_1260036615",
+      "id": "20180424-205030_832180370",
+      "dateCreated": "Apr 24, 2018 8:50:30 PM",
+      "dateStarted": "May 16, 2018 6:23:28 PM",
+      "dateFinished": "May 16, 2018 6:23:28 PM",
+      "status": "ERROR",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "lograw2.count()",
+      "user": "anonymous",
+      "dateUpdated": "May 16, 2018 4:49:49 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "res12: Long \u003d 263881\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1524574263939_1627718646",
+      "id": "20180424-205103_1572616432",
+      "dateCreated": "Apr 24, 2018 8:51:03 PM",
+      "dateStarted": "May 16, 2018 4:49:49 PM",
+      "dateFinished": "May 16, 2018 4:50:02 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "lograw2.count()",
+      "user": "anonymous",
+      "dateUpdated": "May 2, 2018 6:23:22 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "res7: Long \u003d 74951\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1524576468758_-1564401248",
+      "id": "20180424-212748_833261126",
+      "dateCreated": "Apr 24, 2018 9:27:48 PM",
+      "dateStarted": "May 2, 2018 6:23:22 PM",
+      "dateFinished": "May 2, 2018 6:23:30 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "lograw2.saveAsTextFile(\"/user/webrank/liuqin/viewpoint/choice_tpye2_m3_maped_ans_atline.csv\")",
+      "user": "anonymous",
+      "dateUpdated": "May 16, 2018 4:50:13 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": []
+      },
+      "apps": [],
+      "jobName": "paragraph_1524574283277_-2050450191",
+      "id": "20180424-205123_1113553829",
+      "dateCreated": "Apr 24, 2018 8:51:23 PM",
+      "dateStarted": "May 16, 2018 4:50:13 PM",
+      "dateFinished": "May 16, 2018 4:50:25 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "lograw2.saveAsTextFile(\"/user/webrank/liuqin/viewpoint/choice_tpye1_m3_maped_ans_atline.csv\")",
+      "user": "anonymous",
+      "dateUpdated": "May 2, 2018 6:23:35 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": []
+      },
+      "apps": [],
+      "jobName": "paragraph_1524574278337_-1194399212",
+      "id": "20180424-205118_722754606",
+      "dateCreated": "Apr 24, 2018 8:51:18 PM",
+      "dateStarted": "May 2, 2018 6:23:35 PM",
+      "dateFinished": "May 2, 2018 6:23:40 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "var  allpcv_anscls \u003d sc.textFile(\"/user/webrank/liuqin/viewpoint/choice_tpye2_m3_maped_ans_atline.csv\")\n",
+      "user": "anonymous",
+      "dateUpdated": "May 16, 2018 6:17:55 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "allpcv_anscls: org.apache.spark.rdd.RDD[String] \u003d /user/webrank/liuqin/viewpoint/choice_tpye2_m3_maped_ans_atline.csv MapPartitionsRDD[1] at textFile at \u003cconsole\u003e:27\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1525267019949_15035999",
+      "id": "20180502-211659_1148725365",
+      "dateCreated": "May 2, 2018 9:16:59 PM",
+      "dateStarted": "May 16, 2018 6:17:55 PM",
+      "dateFinished": "May 16, 2018 6:18:46 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "case class Row_q(query:String)",
+      "user": "anonymous",
+      "dateUpdated": "May 2, 2018 9:51:02 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "defined class Row_q\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1525269060023_1757579387",
+      "id": "20180502-215100_231493470",
+      "dateCreated": "May 2, 2018 9:51:00 PM",
+      "dateStarted": "May 2, 2018 9:51:02 PM",
+      "dateFinished": "May 2, 2018 9:51:03 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "var tq \u003d allpcv_anscls.map(m \u003d\u003elineToM(m).get(\"@ASK.TITLE:\").get).toDF()\ntq.distinct.count()",
+      "user": "anonymous",
+      "dateUpdated": "May 2, 2018 10:04:22 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "tq: org.apache.spark.sql.DataFrame \u003d [value: string]\nres0: Long \u003d 27639\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1525267125896_-1513542082",
+      "id": "20180502-211845_1811038034",
+      "dateCreated": "May 2, 2018 9:18:45 PM",
+      "dateStarted": "May 2, 2018 10:04:22 PM",
+      "dateFinished": "May 2, 2018 10:07:41 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "var tq \u003d allpcv_anscls.map(m \u003d\u003elineToM(m).get(\"@ASK.TITLE:\").get).toDF()\ntq.distinct.count()",
+      "user": "anonymous",
+      "dateUpdated": "May 16, 2018 6:19:23 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "tq: org.apache.spark.sql.DataFrame \u003d [value: string]\nres0: Long \u003d 66829\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1526464781439_-768152170",
+      "id": "20180516-175941_62763811",
+      "dateCreated": "May 16, 2018 5:59:41 PM",
+      "dateStarted": "May 16, 2018 6:19:23 PM",
+      "dateFinished": "May 16, 2018 6:19:39 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "var tq \u003d allpcv_anscls.map(m \u003d\u003elineToM(m).get(\"@ASK.TITLE:\").get).toDF()\ntq.distinct.count()",
+      "user": "anonymous",
+      "dateUpdated": "May 3, 2018 11:43:21 AM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "tq: org.apache.spark.sql.DataFrame \u003d [value: string]\nres8: Long \u003d 190737\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1525318997548_713692990",
+      "id": "20180503-114317_2000803557",
+      "dateCreated": "May 3, 2018 11:43:17 AM",
+      "dateStarted": "May 3, 2018 11:43:21 AM",
+      "dateFinished": "May 3, 2018 11:47:13 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "sc.stop()",
+      "user": "anonymous",
+      "dateUpdated": "May 16, 2018 6:23:16 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": []
+      },
+      "apps": [],
+      "jobName": "paragraph_1526466191418_85271797",
+      "id": "20180516-182311_1569510211",
+      "dateCreated": "May 16, 2018 6:23:11 PM",
+      "dateStarted": "May 16, 2018 6:23:16 PM",
+      "dateFinished": "May 16, 2018 6:23:17 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md ### 上面的保存成行数据，需要进行答案分类，在大部落",
+      "user": "anonymous",
+      "dateUpdated": "May 16, 2018 4:54:27 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "markdown",
+          "editOnDblClick": true
+        },
+        "editorMode": "ace/mode/markdown",
+        "editorHide": true,
+        "tableHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "HTML",
+            "data": "\u003cdiv class\u003d\"markdown-body\"\u003e\n\u003ch3\u003e上面的保存成行数据，需要进行答案分类，在大部落\u003c/h3\u003e\n\u003c/div\u003e"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1524572728876_579102226",
+      "id": "20180424-202528_1354719476",
+      "dateCreated": "Apr 24, 2018 8:25:28 PM",
+      "dateStarted": "May 16, 2018 4:54:27 PM",
+      "dateFinished": "May 16, 2018 4:54:27 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "def lineToM(l : String)\u003d {\r\n    var line \u003d l\r\n    if(line.startsWith(\"\\\"\")\u0026\u0026line.endsWith(\"\\\"\")){\r\n      line \u003d line.substring(1,line.length-1)\r\n    }\r\n    val regex \u003d \"@[A-Za-z._]{1,30}:\".r\r\n    val tags \u003d regex findAllIn line toArray\r\n    val contents \u003d line.split(\"@[A-Za-z._]{1,30}:\",-1)\r\n    \r\n    var M:Map[String,String] \u003d Map()\r\n    \r\n    for(i\u003c-0 until tags.length){\r\n      var tag \u003d tags(i)\r\n      var content \u003d contents(i+1)\r\n      M +\u003d (tag -\u003e content.trim())\r\n    }\r\n    M\r\n  }",
+      "user": "anonymous",
+      "dateUpdated": "May 16, 2018 6:19:19 PM",
+      "config": {
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "results": {},
+        "enabled": true,
+        "editorSetting": {
+          "language": "scala"
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "warning: there was one feature warning; re-run with -feature for details\nlineToM: (l: String)Map[String,String]\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1524561295160_-1869273074",
+      "id": "20180412-153609_410916480",
+      "dateCreated": "Apr 24, 2018 5:14:55 PM",
+      "dateStarted": "May 16, 2018 6:19:19 PM",
+      "dateFinished": "May 16, 2018 6:19:20 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "// sc.hadoopConfiguration.set(\"textinputformat.record.delimiter\",\"\\n\")\nvar  allpcv_anscls \u003d sc.textFile(\"hdfs://master004.diablo.hadoop.nm.ted:8020/user/webkm/liuqin/choice_tpye1_m3_maped_ans_anscls_atline.csv\")\nallpcv_anscls.count()",
+      "user": "anonymous",
+      "dateUpdated": "May 3, 2018 11:51:05 AM",
+      "config": {
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "results": {},
+        "enabled": true,
+        "editorSetting": {
+          "language": "scala"
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "allpcv_anscls: org.apache.spark.rdd.RDD[String] \u003d hdfs://master004.diablo.hadoop.nm.ted:8020/user/webkm/liuqin/choice_tpye1_m3_maped_ans_anscls_atline.csv MapPartitionsRDD[37] at textFile at \u003cconsole\u003e:28\nres14: Long \u003d 74951\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1524561295157_-1868118827",
+      "id": "20180411-171359_1985211278",
+      "dateCreated": "Apr 24, 2018 5:14:55 PM",
+      "dateStarted": "May 3, 2018 11:51:05 AM",
+      "dateFinished": "May 3, 2018 11:55:39 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "var  allpcv_anscls \u003d sc.textFile(\"hdfs://master004.diablo.hadoop.nm.ted:8020/user/webkm/liuqin/choice_tpye3_m3_maped_ans_anscls_atline.csv\")\nallpcv_anscls.count()",
+      "user": "anonymous",
+      "dateUpdated": "May 3, 2018 11:58:10 AM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "allpcv_anscls: org.apache.spark.rdd.RDD[String] \u003d hdfs://master004.diablo.hadoop.nm.ted:8020/user/webkm/liuqin/choice_tpye3_m3_maped_ans_anscls_atline.csv MapPartitionsRDD[42] at textFile at \u003cconsole\u003e:27\nres17: Long \u003d 645403\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1524574805719_-650798278",
+      "id": "20180424-210005_1327848771",
+      "dateCreated": "Apr 24, 2018 9:00:05 PM",
+      "dateStarted": "May 3, 2018 11:58:10 AM",
+      "dateFinished": "May 3, 2018 12:01:42 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "allpcv_anscls.map(m \u003d\u003elineToM(m)).filter(m \u003d\u003e(m.contains(\"@ANS.QACOV_LEVEL:\"))).count()",
+      "user": "anonymous",
+      "dateUpdated": "May 3, 2018 11:49:51 AM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "jobName": "paragraph_1524574876283_-519675524",
+      "id": "20180424-210116_1354189255",
+      "dateCreated": "Apr 24, 2018 9:01:16 PM",
+      "dateStarted": "May 3, 2018 11:49:51 AM",
+      "dateFinished": "May 3, 2018 11:49:51 AM",
+      "status": "ERROR",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "allpcv_anscls.take(1)",
+      "user": "anonymous",
+      "dateUpdated": "Apr 24, 2018 9:38:40 PM",
+      "config": {
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "results": {},
+        "enabled": true,
+        "editorSetting": {
+          "language": "scala"
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "res38: Array[String] \u003d Array(@ID:8c64e0ec465f74d15a8bb42bdf123e2e\t@ASK.HTYPE:EVAL\t@GROUP.EXT:神舟电脑怎么样??\t@ANS.QACOV:NO\t@ACCEPT:false\t@SP_NUM:0\t@ANS.CONTENT:\u003cpre\u003e我感觉还是惠普的还点，戴尔的也可以，IBM的最好可是贵啊！神舟的售后不太好哦！\u003c/pre\u003e\t@qpv:2545\t@AWR.NAME:οｋ、尒囡亾\t@GROUP.ID:567c6772f46ddaa96b695ab16174204a\t@OP_NUM:0\t@SOURCE:sogou_wenwen\t@ASK.VIEWS:好|不好\t@QTYPE:1\t@QER.NAME:执子之手\t@ANS.QACOV_LEVEL:0.6416\t@URI:http://wenwen.sogou.com/z/q14872447.htm\t@ASK.DATE:2007-11-07 02:47:23\t@ANS.DATE:2007-11-17 02:47:23\t@ANS.ID:ed485b740e3d669adb0cc8f5f372cb9e\t@ASK.TITLE:神舟电脑怎么样\t@QLEVEL:5.5824888642\t@ASK.ID:567c6772f46ddaa96b695ab16174204a)\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1524561295158_-1866964581",
+      "id": "20180411-191443_814575826",
+      "dateCreated": "Apr 24, 2018 5:14:55 PM",
+      "dateStarted": "Apr 24, 2018 9:38:40 PM",
+      "dateFinished": "Apr 24, 2018 9:38:50 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "var lograw2 \u003d allpcv_anscls.filter(m \u003d\u003e(lineToM(m).get(\"@ANS.QACOV_LEVEL:\").get.toDouble\u003c0.85)).filter(m \u003d\u003e(lineToM(m).get(\"@ANS.QACOV_LEVEL:\").get.toDouble\u003e0.6))",
+      "user": "anonymous",
+      "dateUpdated": "May 3, 2018 12:02:16 PM",
+      "config": {
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "results": {},
+        "enabled": true,
+        "editorSetting": {
+          "language": "scala"
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "lograw2: org.apache.spark.rdd.RDD[String] \u003d MapPartitionsRDD[44] at filter at \u003cconsole\u003e:31\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1524561295160_-1869273074",
+      "id": "20180412-153821_1373212239",
+      "dateCreated": "Apr 24, 2018 5:14:55 PM",
+      "dateStarted": "May 3, 2018 12:02:16 PM",
+      "dateFinished": "May 3, 2018 12:02:17 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "lograw2.count()",
+      "user": "anonymous",
+      "dateUpdated": "May 3, 2018 11:51:26 AM",
+      "config": {
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "results": {},
+        "enabled": true,
+        "editorSetting": {
+          "language": "scala"
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "res15: Long \u003d 46991\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1524561295160_-1869273074",
+      "id": "20180412-154709_111023074",
+      "dateCreated": "Apr 24, 2018 5:14:55 PM",
+      "dateStarted": "May 3, 2018 11:55:40 AM",
+      "dateFinished": "May 3, 2018 11:56:57 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "lograw2.count()\n",
+      "user": "anonymous",
+      "dateUpdated": "May 3, 2018 12:02:19 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "res18: Long \u003d 302455\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1525257347063_2027807522",
+      "id": "20180502-183547_1189534421",
+      "dateCreated": "May 2, 2018 6:35:47 PM",
+      "dateStarted": "May 3, 2018 12:02:19 PM",
+      "dateFinished": "May 3, 2018 12:03:19 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "lograw2.take(1)",
+      "user": "anonymous",
+      "dateUpdated": "Apr 24, 2018 8:53:54 PM",
+      "config": {
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "results": {},
+        "enabled": true,
+        "editorSetting": {
+          "language": "scala"
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "res14: Array[String] \u003d Array(@ID:bf2e54d31e22871b276d31743885258e\t@ASK.HTYPE:YON\t@GROUP.EXT:爱一个人需要理由吗？\t@ANS.QACOV:NO\t@ACCEPT:false\t@SP_NUM:0\t@QER.URI:http://iask.life.sina.com.cn/user/pcsee/53cf229c11e0ee0837155016-IA-1.html\t@ANS.CONTENT:喜欢一个人，没有什么具体标准的理由，爱了就爱了，说不上为什么的爱才是真爱！不是为了什么而爱！\t@qpv:16777\t@AWR.NAME:灵子miss\t@GROUP.ID:694a86050e788dc4f0cfa6ee93d14a6e\t@OP_NUM:0\t@SOURCE:sina_iask\t@ASK.VIEWS:是|不是\t@ANS.ID:e367e0d98e61b784031be8ddd1a41484\t@QTYPE:3\t@QER.NAME:cl_00789811\t@ANS.QACOV_LEVEL:0.7025\t@URI:http://iask.life.sina.com.cn/b/700276.html\t@ASK.DATE:2005-02-02 17:54:24\t@ANS.DATE:2005-02-03 17:54:24\t@AWR.URI:http://iask.life.sina.com.cn/user/pcsee/53cf233b11e0ee083716bb3f-IA-1.html\t@ASK.EXT:会说清理由吗？\t@ASK.TITLE:爱一个人需要理由吗？\t@QLEVEL:5.36863305068\t@ASK.ID:694a86050e788dc4f0cfa6ee93d14a6e)\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1524561295161_-1869657823",
+      "id": "20180412-160608_1380696898",
+      "dateCreated": "Apr 24, 2018 5:14:55 PM",
+      "dateStarted": "Apr 24, 2018 8:53:54 PM",
+      "dateFinished": "Apr 24, 2018 8:55:56 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "var tpye \u003d lograw2.map(m \u003d\u003e(lineToM(m).get(\"@QTYPE:\").get,1)).reduceByKey(_ + _).collect()",
+      "user": "anonymous",
+      "dateUpdated": "May 2, 2018 1:29:55 PM",
+      "config": {
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "results": {},
+        "enabled": true,
+        "editorSetting": {
+          "language": "scala"
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "jobName": "paragraph_1524561295161_-1869657823",
+      "id": "20180412-170146_727746262",
+      "dateCreated": "Apr 24, 2018 5:14:55 PM",
+      "dateStarted": "May 2, 2018 1:29:55 PM",
+      "dateFinished": "May 2, 2018 1:30:09 PM",
+      "status": "ERROR",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "lograw2.saveAsTextFile(\"/user/webrank/liuqin/viewpoint/choice_tpye3_m3_under_0.85_up_0.65_atline\")",
+      "user": "anonymous",
+      "dateUpdated": "May 3, 2018 12:04:04 PM",
+      "config": {
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "results": {},
+        "enabled": true,
+        "editorSetting": {
+          "language": "scala"
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": []
+      },
+      "apps": [],
+      "jobName": "paragraph_1524561295163_-1868888325",
+      "id": "20180417-174011_344909754",
+      "dateCreated": "Apr 24, 2018 5:14:55 PM",
+      "dateStarted": "May 3, 2018 12:04:04 PM",
+      "dateFinished": "May 3, 2018 12:05:34 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "var lograw2 \u003d allpcv_anscls.map(e \u003d\u003e {\r\n      var m \u003d e.toString.split(\"\\n\")\r\n       .map(_.split(\":\", 2))\r\n         .filter(_.size \u003d\u003d 2)\r\n         .map(e \u003d\u003e (e(0), e(1).trim))\r\n           .toMap\r\n         m\r\n       }).map(m \u003d\u003e{\r\n      var o \u003d \"\"\r\n      for((k,v)\u003c- m ) o \u003d o+k+\":\"+v+\"\\t\"\r\n      o.trim()\r\n    }).map(t \u003d\u003et replaceAll (\"[\\\\n]+\", \"\"))",
+      "dateUpdated": "Apr 24, 2018 5:14:55 PM",
+      "config": {
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "results": {},
+        "enabled": true,
+        "editorSetting": {
+          "language": "scala"
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "jobName": "paragraph_1524561295163_-1868888325",
+      "id": "20180412-152607_1482353842",
+      "dateCreated": "Apr 24, 2018 5:14:55 PM",
+      "status": "READY",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "",
+      "dateUpdated": "Jun 7, 2018 3:11:27 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "jobName": "paragraph_1524561295175_-1885817277",
+      "id": "20180329-184655_1103373663",
+      "dateCreated": "Apr 24, 2018 5:14:55 PM",
+      "status": "READY",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    }
+  ],
+  "name": "/viewpoint/maped_qa_filter",
+  "id": "2DDT6UZXR",
+  "angularObjects": {
+    "2D9M8ATZ9:shared_process": [],
+    "2D859SF5B:shared_process": [],
+    "2D99W32FC:shared_process": [],
+    "2D9NTGN5D::2DDT6UZXR": [],
+    "2DA8NG9YB:shared_process": [],
+    "2DBCA9BMV:shared_process": [],
+    "2DA29EQ39:shared_process": [],
+    "2D86PKHDE:shared_process": [],
+    "2D8ZMX5FY:shared_process": [],
+    "2D8ZFKME2:shared_process": [],
+    "2DBAZD2WP:shared_process": [],
+    "2D8SP4FH8:shared_process": [],
+    "2DAESRJYD:shared_process": [],
+    "2DA7377EZ:shared_process": [],
+    "2D8DH9K51:shared_process": [],
+    "2D85K8KV7:shared_process": [],
+    "2D958F7RN:shared_process": [],
+    "2DAVR7XRG:shared_process": [],
+    "2DBX9FA55:shared_process": []
+  },
+  "config": {},
+  "info": {}
+}

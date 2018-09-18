@@ -1,0 +1,367 @@
+{
+  "paragraphs": [
+    {
+      "text": "%spark\nsc.hadoopConfiguration.set(\"textinputformat.record.delimiter\",\"\\n\")\nval tauaPath \u003d \"/user/webrank/liuqin/viewpoint/choice_tpye1_m3_maped_ans_atline.csv\"\nval raw \u003d sc.textFile(tauaPath)",
+      "user": "anonymous",
+      "dateUpdated": "Sep 3, 2018 11:43:16 AM",
+      "config": {
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "results": {},
+        "enabled": true,
+        "editorSetting": {
+          "language": "scala"
+        },
+        "tableHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "tauaPath: String \u003d /user/webrank/liuqin/viewpoint/choice_tpye1_m3_maped_ans_atline.csv\nraw: org.apache.spark.rdd.RDD[String] \u003d /user/webrank/liuqin/viewpoint/choice_tpye1_m3_maped_ans_atline.csv MapPartitionsRDD[11] at textFile at \u003cconsole\u003e:29\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1526465339038_-456893599",
+      "id": "20180319-184727_672584883",
+      "dateCreated": "May 16, 2018 6:08:59 PM",
+      "dateStarted": "May 16, 2018 6:38:26 PM",
+      "dateFinished": "May 16, 2018 6:38:27 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%spark\nraw.count()",
+      "user": "anonymous",
+      "dateUpdated": "Sep 3, 2018 11:43:16 AM",
+      "config": {
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "results": {},
+        "enabled": true,
+        "editorSetting": {
+          "language": "scala"
+        },
+        "tableHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "res14: Long \u003d 74951\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1526465339040_-471514057",
+      "id": "20180510-130013_1373824239",
+      "dateCreated": "May 16, 2018 6:08:59 PM",
+      "dateStarted": "May 16, 2018 6:38:31 PM",
+      "dateFinished": "May 16, 2018 6:38:34 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "def lineToM(l : String)\u003d {\n    var line \u003d l\n    if(line.startsWith(\"\\\"\")\u0026\u0026line.endsWith(\"\\\"\")){\n      line \u003d line.substring(1,line.length-1)\n    }\n    val regex \u003d \"@[A-Za-z._]{1,30}:\".r\n    val tags \u003d regex findAllIn line toArray\n    val contents \u003d line.split(\"@[A-Za-z._]{1,30}:\",-1)\n    \n    var M:Map[String,String] \u003d Map()\n    \n    for(i\u003c-0 until tags.length){\n      var tag \u003d tags(i)\n      var content \u003d contents(i+1)\n      M +\u003d (tag -\u003e content.trim())\n    }\n    M\n  }\n  \n",
+      "user": "anonymous",
+      "dateUpdated": "Sep 3, 2018 11:43:16 AM",
+      "config": {
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "results": {},
+        "enabled": true,
+        "editorSetting": {
+          "language": "scala"
+        },
+        "tableHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "warning: there was one feature warning; re-run with -feature for details\nlineToM: (l: String)Map[String,String]\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1526465339041_-471898806",
+      "id": "20180510-125427_1225282630",
+      "dateCreated": "May 16, 2018 6:08:59 PM",
+      "dateStarted": "May 16, 2018 6:28:58 PM",
+      "dateFinished": "May 16, 2018 6:29:45 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "var lograw \u003d raw.map(x\u003d\u003elineToM(x)).map(m \u003d\u003e{\n      var o \u003d \"\"\n      for((k,v)\u003c- m ) o \u003d o+k+v+\"\\n\"\n      o.trim()\n      o \u003d o+\"@\"\n      o\n    })\n",
+      "user": "anonymous",
+      "dateUpdated": "Sep 3, 2018 11:43:16 AM",
+      "config": {
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "results": {},
+        "enabled": true,
+        "editorSetting": {
+          "language": "scala"
+        },
+        "tableHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "lograw: org.apache.spark.rdd.RDD[String] \u003d MapPartitionsRDD[6] at map at \u003cconsole\u003e:33\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1526465339042_-470744559",
+      "id": "20180510-125916_1444964871",
+      "dateCreated": "May 16, 2018 6:08:59 PM",
+      "dateStarted": "May 16, 2018 6:32:40 PM",
+      "dateFinished": "May 16, 2018 6:32:40 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "lograw.take(10)",
+      "user": "anonymous",
+      "dateUpdated": "Sep 3, 2018 11:43:16 AM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala",
+        "tableHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "res5: Array[String] \u003d\nArray(@ASK.DATE:2016-10-10 16:46:24\n@ID:ad8984d1228a95a794647d15bad4618a\n@GROUP.EXT:广州的皮肤病防治所?广州中医研究院好吗\n@AWR.NAME:刘惠珍\n@ASK.VIEWS:是|不是\n@SOURCE:xywy_wenda\n@AWR.MAJOR:擅长中西医结合治疗各类型白癜风\n@GROUP.ID:f244a96c3ff280a7023ec1e8c05b307a\n@ASK.TITLE:广州的皮肤病防治所?广州中医研究院好吗\n@ASK.HTYPE:YON\n@ANS.ID:53efbae37ac98566fb4a7c785cfe0ebc\n@ANS.CONTENT:问题分析： 白癜风这种皮肤病在身体任何位置都有出现的可能，有些患者不拿着当回事，忽视了治疗，这样给患者身心带来伤害，所以患者需要在发现患病的时候尽早治疗，这样从根源入手祛白效果好。意见建议：专家建议白癜风患者治疗时，饮食中要忌服维生素C类药物，少食用西红柿等，如能早期发现病灶，应及早治疗，经过很短一段时间的正规诊疗，一般能恢复正常皮肤。\n@AWR.URI:http://club.xywy.com/doc_card/65384924\n@query:.广州中医皮 肤.系肤 康放心\n@OP_NUM:0\n@QER.NAME:会员108293607\n@SP_NUM:0\n@ASK.EXT:病情描述（发病时间、主要症状、症状变化等）：广州的皮肤病防治所?广州中医研究院好吗我身体上有身体上的白斑，面积大，还需要多长时间完全好要治疗很久？广州中医研究院好吗?想得到怎样的帮助：广州的皮肤病防治所\n@ANS.QACOV:NO\n@ANS.QACOV_LEVEL:0.8115\n@ASK.ID:f244a96c3ff2..."
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1526465616738_-418223307",
+      "id": "20180516-181336_139900502",
+      "dateCreated": "May 16, 2018 6:13:36 PM",
+      "dateStarted": "May 16, 2018 6:32:44 PM",
+      "dateFinished": "May 16, 2018 6:32:49 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "lograw.count()",
+      "user": "anonymous",
+      "dateUpdated": "Sep 3, 2018 11:43:16 AM",
+      "config": {
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "results": {},
+        "enabled": true,
+        "editorSetting": {
+          "language": "scala"
+        },
+        "tableHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "res12: Long \u003d 74951\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1526465339043_-471129308",
+      "id": "20180510-130702_1753301956",
+      "dateCreated": "May 16, 2018 6:08:59 PM",
+      "dateStarted": "May 16, 2018 6:37:58 PM",
+      "dateFinished": "May 16, 2018 6:38:05 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "lograw.saveAsTextFile(\"/user/webrank/liuqin/test_line2mult\")",
+      "user": "anonymous",
+      "dateUpdated": "Sep 3, 2018 11:43:16 AM",
+      "config": {
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "results": {},
+        "enabled": true,
+        "editorSetting": {
+          "language": "scala"
+        },
+        "tableHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": []
+      },
+      "apps": [],
+      "jobName": "paragraph_1526465339044_-473053052",
+      "id": "20180510-130816_652561126",
+      "dateCreated": "May 16, 2018 6:08:59 PM",
+      "dateStarted": "May 16, 2018 6:33:01 PM",
+      "dateFinished": "May 16, 2018 6:33:12 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "sc.stop()",
+      "user": "anonymous",
+      "dateUpdated": "Sep 3, 2018 11:43:16 AM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala",
+        "tableHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": []
+      },
+      "apps": [],
+      "jobName": "paragraph_1526465339044_-473053052",
+      "id": "20180510-130959_1507507444",
+      "dateCreated": "May 16, 2018 6:08:59 PM",
+      "dateStarted": "May 16, 2018 7:08:39 PM",
+      "dateFinished": "May 16, 2018 7:08:40 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "sc.hadoopConfiguration.set(\"textinputformat.record.delimiter\",\"\\n@\\n\")\nval tauaPath \u003d \"/user/webrank/liuqin/test_line2mult\"\nval raw \u003d sc.textFile(tauaPath)\nraw.count()",
+      "user": "anonymous",
+      "dateUpdated": "Sep 3, 2018 11:43:16 AM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala",
+        "tableHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "tauaPath: String \u003d /user/webrank/liuqin/test_line2mult\nraw: org.apache.spark.rdd.RDD[String] \u003d /user/webrank/liuqin/test_line2mult MapPartitionsRDD[9] at textFile at \u003cconsole\u003e:29\nres8: Long \u003d 74951\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1526466152548_-577327106",
+      "id": "20180516-182232_1354537145",
+      "dateCreated": "May 16, 2018 6:22:32 PM",
+      "dateStarted": "May 16, 2018 6:34:41 PM",
+      "dateFinished": "May 16, 2018 6:34:47 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "user": "anonymous",
+      "dateUpdated": "Sep 3, 2018 11:43:16 AM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala",
+        "tableHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "jobName": "paragraph_1526466953526_-303249092",
+      "id": "20180516-183553_456075560",
+      "dateCreated": "May 16, 2018 6:35:53 PM",
+      "status": "READY",
+      "progressUpdateIntervalMs": 500
+    }
+  ],
+  "name": "/util/line2mult",
+  "id": "2DEJSE6PW",
+  "angularObjects": {
+    "2D9M8ATZ9:shared_process": [],
+    "2D859SF5B:shared_process": [],
+    "2D99W32FC:shared_process": [],
+    "2DA8NG9YB:shared_process": [],
+    "2DBCA9BMV:shared_process": [],
+    "2D9NTGN5D::2DEJSE6PW": [],
+    "2DA29EQ39:shared_process": [],
+    "2D86PKHDE:shared_process": [],
+    "2D8ZMX5FY:shared_process": [],
+    "2D8ZFKME2:shared_process": [],
+    "2DBAZD2WP:shared_process": [],
+    "2D8SP4FH8:shared_process": [],
+    "2DAESRJYD:shared_process": [],
+    "2DA7377EZ:shared_process": [],
+    "2D8DH9K51:shared_process": [],
+    "2D85K8KV7:shared_process": [],
+    "2D958F7RN:shared_process": [],
+    "2DAVR7XRG:shared_process": [],
+    "2DBX9FA55:shared_process": []
+  },
+  "config": {},
+  "info": {}
+}

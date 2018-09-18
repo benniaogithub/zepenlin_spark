@@ -1,0 +1,815 @@
+{
+  "paragraphs": [
+    {
+      "text": "%md ## 评价类数据点击ugc占比,非ugc点击站点分布，医疗和非医疗占比",
+      "dateUpdated": "Jul 17, 2018 1:09:04 PM",
+      "config": {
+        "tableHide": true,
+        "editorSetting": {
+          "language": "markdown",
+          "editOnDblClick": true
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/markdown",
+        "editorHide": false,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "HTML",
+            "data": "\u003cdiv class\u003d\"markdown-body\"\u003e\n\u003ch2\u003e采样评价和选择问答案分类准确率\u003c/h2\u003e\n\u003c/div\u003e"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1531804144940_-1756486164",
+      "id": "20180426-125946_729598550",
+      "dateCreated": "Jul 17, 2018 1:09:04 PM",
+      "status": "READY",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": " def removeCbrackets(line : String) : String \u003d {\r\n    try {\r\n      return  line replaceAll (\"\u003c.*?\u003e\", \"\")\r\n    }\r\n    catch {\r\n      case ex: Exception \u003d\u003e \"\"\r\n    }\r\n  }\r\n\r\n  \r\n  def removePunc(line : String) : String \u003d {\r\n    try {\r\n      return  line replaceAll (\"[\\\\s+\\\\.\\\\!\\\\/_,，。？\\\\$%\\\\^\\\\*\\\\\\\"\\\u0027+｀｀`\\\\｀·——《》｀()?【】:：;～；;“”！，。？、~@#￥%……\u0026*（）]+\", \"\")\r\n    }\r\n    catch {\r\n      case ex: Exception \u003d\u003e \"\"\r\n    }\r\n  }\r\n\r\n  def hash(s:String)\u003d{\r\n    val m \u003d java.security.MessageDigest.getInstance(\"MD5\")\r\n    val b \u003d s.getBytes(\"UTF-8\")\r\n    m.update(b,0,b.length)\r\n    new java.math.BigInteger(1,m.digest()).toString(16).trim()\r\n  }\r\n  \r\n  val  queryhash \u003d (s: String) \u003d\u003e{\r\n    var ask \u003d s.trim()\r\n    ask \u003d removeCbrackets(ask)\r\n    ask \u003d removePunc(ask)\r\n    var ID \u003d hash(ask)\r\n    ID\r\n  }\r\n  \r\n \r\n  def lineToQHType(line : String)\u003d {\r\n\r\n    val regex \u003d \"@[A-Za-z._]{1,30}:\".r\r\n    val tags \u003d regex findAllIn line toArray\r\n    val contents \u003d line.split(\"@[A-Za-z._]{1,30}:\",-1)\r\n   \r\n    var htype \u003d \"\"\r\n    var ask \u003d \"\"\r\n    var mainAns \u003d \"\"\r\n    var ID \u003d \"\"\r\n    var ask2\u003d\"\"\r\n    try{\r\n      for(i\u003c-0 until tags.length){\r\n        var tag \u003d tags(i)\r\n        var content \u003d contents(i+1)\r\n     \r\n        if(tag\u003d\u003d\"@ASK.HTYPE:\"){\r\n          htype \u003d content.trim()\r\n        }\r\n        else if(tag\u003d\u003d\"@GROUP.EXT:\"){\r\n          ask \u003d content.trim()\r\n        } else if(tag\u003d\u003d\"@ANS.MAIN_ANS:\"){\r\n          mainAns \u003d content.trim()\r\n        //   ask \u003d queryhash(ask)\r\n        }else if(tag\u003d\u003d\"@ASK.TITLE:\"){\r\n          ask2 \u003d content.trim()\r\n          ask2 \u003d removeCbrackets(ask2)\r\n          ask2 \u003d removePunc(ask2)\r\n          ID \u003d hash(ask2)\r\n        }\r\n\r\n        //     M +\u003d (tag -\u003e content)\r\n      }\r\n    }catch{\r\n      case e: Exception \u003d\u003e {\r\n        ask \u003d \"\"\r\n        htype \u003d \"\"\r\n        mainAns \u003d \"\"\r\n        ID \u003d \"\"\r\n      }\r\n    }\r\n    (ask,ID,htype,mainAns)\r\n  }\r\n  \r\n  \r\n  def lineToM(l : String)\u003d {\r\n    var line \u003d l\r\n    if(line.startsWith(\"\\\"\")\u0026\u0026line.endsWith(\"\\\"\")){\r\n      line \u003d line.substring(1,line.length-1)\r\n    }\r\n    val regex \u003d \"@[A-Za-z._]{1,30}:\".r\r\n    val tags \u003d regex findAllIn line toArray\r\n    val contents \u003d line.split(\"@[A-Za-z._]{1,30}:\",-1)\r\n    \r\n    var M:Map[String,String] \u003d Map()\r\n    \r\n    for(i\u003c-0 until tags.length){\r\n      var tag \u003d tags(i)\r\n      var content \u003d contents(i+1)\r\n      M +\u003d (tag -\u003e content.trim())\r\n    }\r\n    M\r\n  }\r\n  \r\n  \r\n   ",
+      "user": "anonymous",
+      "dateUpdated": "Jul 17, 2018 8:59:23 PM",
+      "config": {
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "results": {},
+        "enabled": true,
+        "editorSetting": {
+          "language": "scala"
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "removeCbrackets: (line: String)String\nremovePunc: (line: String)String\nhash: (s: String)String\nqueryhash: String \u003d\u003e String \u003d \u003cfunction1\u003e\nwarning: there was one feature warning; re-run with -feature for details\nlineToQHType: (line: String)(String, String, String, String)\nwarning: there was one feature warning; re-run with -feature for details\nlineToM: (l: String)Map[String,String]\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1531804144944_-1745713195",
+      "id": "20180425-182839_1949268193",
+      "dateCreated": "Jul 17, 2018 1:09:04 PM",
+      "dateStarted": "Jul 17, 2018 8:59:23 PM",
+      "dateFinished": "Jul 17, 2018 9:00:42 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "import java.net.{URLDecoder, URLEncoder}\r\nimport java.text.SimpleDateFormat\r\nimport java.util.Date\r\nimport scala.util.matching.Regex\r\n\r\ncase class Logrow(userid:String,uuid:String, page:String, time : String, search_type : String, query : String,urls:List[Map[String,String]])\r\ncase class DFrow(query: String,clk_ugc:Int,clk_o:Int)\r\n\r\ndef qaviewFilter(line:String):Boolean\u003d{\r\n    try {\r\n    val patterns: List[String] \u003d List(\"(?:是否|能否|可否|应否|该不该|会不会|可不可以|能不能|是不是|要不要|应不应|应不应该|有么有|有没|有没有|有木有|有无|还是不|还是没)\", \"(?:可以吗|可以么|行不行|好不好|如何|怎样|好吗|怎么样|肿么样|咋样|好么|行吗|好嘛|好不|何如|刻印吗|厉害吗|行么|真的吗)$\", \"(?:是|要|能|不能|可以|能够|还能|有|会|可能|能用|含有|也会).+?(?:吗|吧|么|嘛|不)$\")\r\n    for (pattern \u003c- patterns) {\r\n      var patternp \u003d new Regex(pattern)\r\n      if(patternp.findFirstMatchIn(line) !\u003d None){\r\n        return true\r\n      }\r\n    }\r\n    }catch {\r\n      case ex: Exception \u003d\u003e return false\r\n    }\r\n    return false\r\n  }\r\n  \r\ndef filter(row:Logrow): Boolean \u003d {\r\n      var query \u003d row.query.trim()\r\n      return qaviewFilter(query)\r\n    }\r\n\r\ndef filterQa(x: Option[Logrow]) \u003d x match {\r\n  case Some(s) \u003d\u003e filter(s)\r\n  case None \u003d\u003e false\r\n}\r\n\r\n\r\n\r\ndef filtervr(row:Logrow): Boolean \u003d {\r\n    var flag \u003d true\r\n      for (i \u003c- 0 to row.urls.length - 1) {\r\n        var urlblock \u003d row.urls(i)\r\n        var url \u003d \"\"\r\n        var vrid \u003d  urlblock.get(\"vrid\").get.toString.trim()\r\n\r\n        if (vrid!\u003d\"-1\" \u0026\u0026 vrid!\u003d\"\" \u0026\u0026 !vrid.startsWith(\"500\") \u0026\u0026 !vrid.startsWith(\"300\") \u0026\u0026 !vrid.startsWith(\"800\")) {\r\n          \r\n            return false\r\n        }\r\n        // if (vrid\u003d\u003d\"\") {\r\n        //     return true\r\n        // }\r\n        \r\n        if (i \u003e 3) {\r\n          return true\r\n        }\r\n      }\r\n      return flag\r\n}\r\n\r\ndef filterVR(x: Option[Logrow]) \u003d x match {\r\n  case Some(s) \u003d\u003e filtervr(s)\r\n  case None \u003d\u003e false\r\n}\r\n    \r\n\r\ndef DateFormat(time:String):String\u003d{\r\n    var sdf:SimpleDateFormat \u003d new SimpleDateFormat(\"yyyyMMdd\")\r\n    var date:String \u003d sdf.format(new Date((time.toLong*1000)))\r\n    return date\r\n}\r\n\r\ndef decode(value:String): String \u003d URLDecoder.decode(value, \"gbk\")\r\n\r\ndef getRow(line : String):Option[Logrow]\u003d {\r\n    //    var userid, uuid, page, time, search_type \u003d \"\"\r\n    val regex\u003d\"\"\"^\\d+$\"\"\".r\r\n    var userid, uuid, page,time,search_type,unknown \u003d \"\"\r\n    var tmp \u003d line.trim().split(\u0027\\t\u0027)\r\n    if (tmp.length \u003c 2) {\r\n      return None\r\n    }\r\n    var tmp0 \u003d tmp(0).trim().split(\u0027#\u0027)\r\n    if (tmp0.length !\u003d 5 \u0026\u0026 tmp0.length !\u003d 6) {\r\n      return None\r\n    }\r\n    if(tmp0.length \u003d\u003d 5){\r\n      userid \u003d tmp0(0)\r\n      uuid \u003d tmp0(1)\r\n      page \u003d tmp0(2)\r\n      time \u003d tmp0(3)\r\n      search_type \u003d tmp0(4)\r\n    }else if(tmp0.length \u003d\u003d 6){\r\n      userid \u003d tmp0(0)\r\n      uuid \u003d tmp0(1)\r\n      page \u003d tmp0(2)\r\n      time \u003d tmp0(3)\r\n      search_type \u003d tmp0(4)\r\n      unknown \u003d tmp0(5)\r\n    }\r\n    var query \u003d decode(tmp(1))\r\n    var urls:List[Map[String,String]] \u003d List()\r\n    var urlblock:Map[String,String]\u003d Map()\r\n    var cnt \u003d 0\r\n    for(i \u003c- 2 to tmp.length-1){\r\n      //      println(tmp(i))\r\n      //      println(tmp(i).trim().split(\"#\",-1).length)\r\n      if (((tmp(i).trim().split(\"#\",-1).length) \u003e\u003d 4) \u0026\u0026 regex.findFirstMatchIn((tmp(i).trim().split(\"#\",-1)(1))) !\u003d None){\r\n        var tmp_i \u003d tmp(i).trim().split(\"#\",-1)\r\n        if(tmp_i.length !\u003d 4){\r\n          tmp_i \u003d Array(\"\",\"\",\"\",\"\")\r\n        }\r\n        var Array(vrid, ph_3_1, ph_3_2, baseurl) \u003d tmp_i\r\n        baseurl \u003d decode(baseurl)\r\n        urlblock +\u003d (\"vrid\" -\u003e vrid)\r\n        urlblock +\u003d (\"3_1\" -\u003e ph_3_1)\r\n        urlblock +\u003d (\"3_2\" -\u003e ph_3_2)\r\n        urlblock +\u003d (\"baseurl\" -\u003e baseurl)\r\n        urls \u003d urls :+ urlblock\r\n        urlblock \u003d Map()\r\n        cnt \u003d 0\r\n      }else{\r\n        if(cnt\u003d\u003d0){\r\n          urlblock +\u003d (\"wapurl\" -\u003e tmp(i))\r\n          cnt \u003d cnt+1\r\n        }else if(cnt\u003d\u003d1){\r\n          urlblock +\u003d (\"clk\" -\u003e tmp(i))\r\n          cnt \u003d cnt+1\r\n        }else if(cnt\u003d\u003d2){\r\n          urlblock +\u003d (\"2\" -\u003e tmp(i))\r\n          cnt \u003d cnt+1\r\n        }\r\n      }\r\n    }\r\n    return Some(new Logrow(userid, uuid, page, time, search_type, query, urls))\r\n  }\r\n\r\ndef trans_dataframe(row:Logrow)\u003d{\r\n  var query \u003d row.query\r\n  var clk_o \u003d 0\r\n  var clk_ugc \u003d 0\r\n  for (i \u003c- 0 to row.urls.length - 1) {\r\n    var urlblock \u003d row.urls(i)\r\n    var vrid \u003d  urlblock.get(\"vrid\").get.toString.trim()\r\n    if(vrid \u003d\u003d \"50026601\" || vrid \u003d\u003d \"30000201\" || vrid \u003d\u003d \"50024501\" || vrid \u003d\u003d \"50026501\" || vrid \u003d\u003d \"30000202\" || vrid \u003d\u003d \"30010125\" ){\r\n        clk_ugc +\u003d urlblock.get(\"clk\").getOrElse(\"0\").toInt\r\n    }else{\r\n        clk_o +\u003d urlblock.get(\"clk\").getOrElse(\"0\").toInt\r\n    }\r\n  }\r\n  if(clk_o\u003e0){\r\n      clk_o\u003d1\r\n  }\r\n  (query,clk_ugc,clk_o)\r\n}\r\n\r\ndef filterNone(x: Option[Logrow]) \u003d x match {\r\n      case Some(s) \u003d\u003e true\r\n      case None \u003d\u003e false\r\n    }\r\n\r\n   ",
+      "user": "anonymous",
+      "dateUpdated": "Jul 17, 2018 8:59:25 PM",
+      "config": {
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "results": {},
+        "enabled": true,
+        "editorSetting": {
+          "language": "scala"
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "import java.net.{URLDecoder, URLEncoder}\nimport java.text.SimpleDateFormat\nimport java.util.Date\nimport scala.util.matching.Regex\ndefined class Logrow\ndefined class DFrow\nqaviewFilter: (line: String)Boolean\nfilter: (row: Logrow)Boolean\nfilterQa: (x: Option[Logrow])Boolean\nfiltervr: (row: Logrow)Boolean\nfilterVR: (x: Option[Logrow])Boolean\nDateFormat: (time: String)String\ndecode: (value: String)String\ngetRow: (line: String)Option[Logrow]\ntrans_dataframe: (row: Logrow)(String, Int, Int)\nfilterNone: (x: Option[Logrow])Boolean\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1531804144944_-1745713195",
+      "id": "20180711-192315_1651061954",
+      "dateCreated": "Jul 17, 2018 1:09:04 PM",
+      "dateStarted": "Jul 17, 2018 8:59:26 PM",
+      "dateFinished": "Jul 17, 2018 9:00:46 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "case class Row_qtype(ask:String,ID:String,htype:String,mainAns:String)",
+      "user": "anonymous",
+      "dateUpdated": "Jul 17, 2018 8:59:36 PM",
+      "config": {
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "results": {},
+        "enabled": true,
+        "editorSetting": {
+          "language": "scala"
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "defined class Row_qtype\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1531804144945_-1746097943",
+      "id": "20180711-153014_88717447",
+      "dateCreated": "Jul 17, 2018 1:09:04 PM",
+      "dateStarted": "Jul 17, 2018 9:00:42 PM",
+      "dateFinished": "Jul 17, 2018 9:00:46 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "sc.hadoopConfiguration.set(\"textinputformat.record.delimiter\",\"\\n\")",
+      "dateUpdated": "Jul 17, 2018 1:09:04 PM",
+      "config": {
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "results": {},
+        "enabled": true,
+        "editorSetting": {
+          "language": "scala"
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": []
+      },
+      "apps": [],
+      "jobName": "paragraph_1531804144955_-1748406437",
+      "id": "20180712-172032_462290675",
+      "dateCreated": "Jul 17, 2018 1:09:04 PM",
+      "status": "READY",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "// val inputPath \u003d \"/user/webrank/clicklog/ms/201804/*,/user/webrank/clicklog/ms/201805/*,/user/webrank/clicklog/ms/201806/*,/user/webrank/clicklog/ms/201807/*\"\nval inputPath \u003d \"/user/webrank/clicklog/ms/201807/20180711/*\"\nprintln(inputPath)\nvar lograw \u003d sc.textFile(inputPath)\nlograw.count()",
+      "user": "anonymous",
+      "dateUpdated": "Jul 17, 2018 2:30:03 PM",
+      "config": {
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "results": {},
+        "enabled": true,
+        "editorSetting": {
+          "language": "scala"
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "inputPath: String \u003d /user/webrank/clicklog/ms/201807/*\n/user/webrank/clicklog/ms/201807/*\nlograw: org.apache.spark.rdd.RDD[String] \u003d /user/webrank/clicklog/ms/201807/* MapPartitionsRDD[1] at textFile at \u003cconsole\u003e:29\nres2: Long \u003d 5738144000\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1531804144956_-1750330181",
+      "id": "20180712-211538_1919452188",
+      "dateCreated": "Jul 17, 2018 1:09:04 PM",
+      "dateStarted": "Jul 17, 2018 1:42:57 PM",
+      "dateFinished": "Jul 17, 2018 1:54:33 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "val inputPath \u003d \"/user/webrank/clicklog/ms/201805/*,/user/webrank/clicklog/ms/201806/*,/user/webrank/clicklog/ms/201807/*\"\nprintln(inputPath)\nvar lograw \u003d sc.textFile(inputPath)\n",
+      "user": "anonymous",
+      "dateUpdated": "Jul 17, 2018 8:59:46 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "inputPath: String \u003d /user/webrank/clicklog/ms/201805/*,/user/webrank/clicklog/ms/201806/*,/user/webrank/clicklog/ms/201807/*\n/user/webrank/clicklog/ms/201805/*,/user/webrank/clicklog/ms/201806/*,/user/webrank/clicklog/ms/201807/*\nlograw: org.apache.spark.rdd.RDD[String] \u003d /user/webrank/clicklog/ms/201805/*,/user/webrank/clicklog/ms/201806/*,/user/webrank/clicklog/ms/201807/* MapPartitionsRDD[1] at textFile at \u003cconsole\u003e:33\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1531809012513_1707196337",
+      "id": "20180717-143012_734243174",
+      "dateCreated": "Jul 17, 2018 2:30:12 PM",
+      "dateStarted": "Jul 17, 2018 9:00:47 PM",
+      "dateFinished": "Jul 17, 2018 9:00:48 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "var filterVR_RDD \u003d lograw.map(x\u003d\u003egetRow(x)).filter(filterVR)",
+      "user": "anonymous",
+      "dateUpdated": "Jul 17, 2018 8:59:52 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "filterVR_RDD: org.apache.spark.rdd.RDD[Option[Logrow]] \u003d MapPartitionsRDD[3] at filter at \u003cconsole\u003e:45\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1531807277918_299513435",
+      "id": "20180717-140117_338095396",
+      "dateCreated": "Jul 17, 2018 2:01:17 PM",
+      "dateStarted": "Jul 17, 2018 9:00:47 PM",
+      "dateFinished": "Jul 17, 2018 9:00:48 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "filterVR_RDD.cache()",
+      "user": "anonymous",
+      "dateUpdated": "Jul 17, 2018 8:04:37 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "res44: org.apache.spark.rdd.RDD[Option[Logrow]] \u003d MapPartitionsRDD[11] at filter at \u003cconsole\u003e:49\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1531829018227_-757732959",
+      "id": "20180717-200338_1713868376",
+      "dateCreated": "Jul 17, 2018 8:03:38 PM",
+      "dateStarted": "Jul 17, 2018 8:04:37 PM",
+      "dateFinished": "Jul 17, 2018 8:04:37 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "filterVR_RDD.count()",
+      "user": "anonymous",
+      "dateUpdated": "Jul 17, 2018 3:30:51 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "res21: Long \u003d 12002991703\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1531809153982_138954363",
+      "id": "20180717-143233_1782532793",
+      "dateCreated": "Jul 17, 2018 2:32:33 PM",
+      "dateStarted": "Jul 17, 2018 3:30:52 PM",
+      "dateFinished": "Jul 17, 2018 4:16:01 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "filterVR_RDD.take(1)",
+      "user": "anonymous",
+      "dateUpdated": "Jul 17, 2018 3:24:49 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {
+          "0": {
+            "graph": {
+              "mode": "table",
+              "height": 124.0,
+              "optionOpen": false
+            }
+          }
+        },
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "res71: Array[Option[Logrow]] \u003d Array(Some(Logrow(00F630DCDA4392DF5AE30880C147E020,0004b853-b158-42b0-9f0e-e4bfb16a65a0,1,1531300625,5,火龙果刺有毒吗,List(Map(clk -\u003e 0, baseurl -\u003e http://wenwen.sogou.com/z/q752353978.htm, vrid -\u003e 50024501, 3_1 -\u003e 0, wapurl -\u003e http://wenwen.sogou.com/z/q752353978.htm, 2 -\u003e -1, 3_2 -\u003e 0), Map(clk -\u003e 0, baseurl -\u003e , vrid -\u003e 70088301, 3_1 -\u003e 1, wapurl -\u003e https://m.169kang.com/question/165313265.html?from\u003dsgoaw, 2 -\u003e -1, 3_2 -\u003e 0), Map(clk -\u003e 0, baseurl -\u003e https://zhidao.baidu.com/question/712035674723067885?0?-1?http://wenwen.sogou.com/z/q122094914.htm?0?-1, vrid -\u003e 30010125, 3_1 -\u003e 2, wapurl -\u003e http://wap.sogou.com/zhishi/result.jsp?keyword\u003d%E7%81%AB%E9%BE%99%E6%9E%9C%E5%88%BA%E6%9C%89%E6%AF%92%E5%90%97, 2 -\u003e -1, 3_2 -\u003e 0), Map(clk -\u003e 0, baseurl -\u003e http://baike.pc..."
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1531809163514_2145435201",
+      "id": "20180717-143243_2029174316",
+      "dateCreated": "Jul 17, 2018 2:32:43 PM",
+      "dateStarted": "Jul 17, 2018 3:22:36 PM",
+      "dateFinished": "Jul 17, 2018 3:22:48 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "var filterQA_RDD \u003d filterVR_RDD.filter(filterQa)",
+      "user": "anonymous",
+      "dateUpdated": "Jul 17, 2018 9:00:09 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "filterQA_RDD: org.apache.spark.rdd.RDD[Option[Logrow]] \u003d MapPartitionsRDD[4] at filter at \u003cconsole\u003e:53\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1531812662944_2065912302",
+      "id": "20180717-153102_1575630279",
+      "dateCreated": "Jul 17, 2018 3:31:02 PM",
+      "dateStarted": "Jul 17, 2018 9:00:48 PM",
+      "dateFinished": "Jul 17, 2018 9:00:49 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "filterQA_RDD.cache()",
+      "user": "anonymous",
+      "dateUpdated": "Jul 17, 2018 9:00:48 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "res30: org.apache.spark.rdd.RDD[Option[Logrow]] \u003d MapPartitionsRDD[4] at filter at \u003cconsole\u003e:53\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1531829598736_-1159813649",
+      "id": "20180717-201318_467739573",
+      "dateCreated": "Jul 17, 2018 8:13:18 PM",
+      "dateStarted": "Jul 17, 2018 9:00:48 PM",
+      "dateFinished": "Jul 17, 2018 9:00:49 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "filterQA_RDD.count()",
+      "user": "anonymous",
+      "dateUpdated": "Jul 17, 2018 9:00:49 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "res31: Long \u003d 420131033\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1531829615944_994041342",
+      "id": "20180717-201335_1193880704",
+      "dateCreated": "Jul 17, 2018 8:13:35 PM",
+      "dateStarted": "Jul 17, 2018 9:00:49 PM",
+      "dateFinished": "Jul 17, 2018 10:27:24 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "var result \u003d filterQA_RDD.map(x\u003d\u003ex.get).map(trans_dataframe).map(r \u003d\u003e DFrow(r._1,r._2.toInt,r._3.toInt)).toDF()",
+      "user": "anonymous",
+      "dateUpdated": "Jul 17, 2018 9:01:00 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "result: org.apache.spark.sql.DataFrame \u003d [query: string, clk_ugc: int ... 1 more field]\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1531817993912_725859765",
+      "id": "20180717-165953_838778285",
+      "dateCreated": "Jul 17, 2018 4:59:53 PM",
+      "dateStarted": "Jul 17, 2018 9:01:00 PM",
+      "dateFinished": "Jul 17, 2018 10:27:26 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "result.registerTempTable(\"t_log\")",
+      "user": "anonymous",
+      "dateUpdated": "Jul 17, 2018 9:01:03 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "warning: there was one deprecation warning; re-run with -deprecation for details\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1531818094753_1646284759",
+      "id": "20180717-170134_1290435855",
+      "dateCreated": "Jul 17, 2018 5:01:34 PM",
+      "dateStarted": "Jul 17, 2018 10:27:24 PM",
+      "dateFinished": "Jul 17, 2018 10:27:27 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "var sql_result \u003d sqlContext.sql(\"SELECT  sum(clk_ugc) as clk_ugc,sum(clk_o) as clk_o  FROM t_log \")",
+      "user": "anonymous",
+      "dateUpdated": "Jul 17, 2018 9:01:11 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "sql_result: org.apache.spark.sql.DataFrame \u003d [clk_ugc: bigint, clk_o: bigint]\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1531818133852_-1977234409",
+      "id": "20180717-170213_1335128199",
+      "dateCreated": "Jul 17, 2018 5:02:13 PM",
+      "dateStarted": "Jul 17, 2018 10:27:27 PM",
+      "dateFinished": "Jul 17, 2018 10:27:27 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "sql_result.show()",
+      "user": "anonymous",
+      "dateUpdated": "Jul 17, 2018 10:27:27 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "+---------+---------+\n|  clk_ugc|    clk_o|\n+---------+---------+\n|137566962|140755331|\n+---------+---------+\n\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1531832490073_-1778940859",
+      "id": "20180717-210130_1037590559",
+      "dateCreated": "Jul 17, 2018 9:01:30 PM",
+      "dateStarted": "Jul 17, 2018 10:27:27 PM",
+      "dateFinished": "Jul 17, 2018 11:36:51 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "sql_result.show()",
+      "user": "anonymous",
+      "dateUpdated": "Jul 17, 2018 5:03:42 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "+-------+---------+\n|clk_ugc|    clk_o|\n+-------+---------+\n|3223968|211296244|\n+-------+---------+\n\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1531818215492_-1457299083",
+      "id": "20180717-170335_852661214",
+      "dateCreated": "Jul 17, 2018 5:03:35 PM",
+      "dateStarted": "Jul 17, 2018 5:03:42 PM",
+      "dateFinished": "Jul 17, 2018 5:47:36 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "result.where(\"clk_ugc \u003e 0 or clk_o \u003e 0 \").count()",
+      "user": "anonymous",
+      "dateUpdated": "Jul 17, 2018 10:27:28 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "res34: Long \u003d 213125206\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1531832509095_-1962604002",
+      "id": "20180717-210149_339636872",
+      "dateCreated": "Jul 17, 2018 9:01:49 PM",
+      "dateStarted": "Jul 17, 2018 10:27:28 PM",
+      "dateFinished": "Jul 18, 2018 12:35:19 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "result.where(\"clk_ugc \u003e 0 or clk_o \u003e 0 \").count()",
+      "user": "anonymous",
+      "dateUpdated": "Jul 17, 2018 5:54:04 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "res25: Long \u003d 213125206\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1531821214126_76154549",
+      "id": "20180717-175334_91047129",
+      "dateCreated": "Jul 17, 2018 5:53:34 PM",
+      "dateStarted": "Jul 17, 2018 5:54:04 PM",
+      "dateFinished": "Jul 17, 2018 6:38:36 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "var result_q \u003d result.where(\"clk_ugc \u003e 0\").select(\"query\").distinct()",
+      "user": "anonymous",
+      "dateUpdated": "Jul 17, 2018 9:03:18 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "result_q: org.apache.spark.sql.Dataset[org.apache.spark.sql.Row] \u003d [query: string]\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1531825822311_430514267",
+      "id": "20180717-191022_1609518167",
+      "dateCreated": "Jul 17, 2018 7:10:22 PM",
+      "dateStarted": "Jul 17, 2018 11:36:52 PM",
+      "dateFinished": "Jul 18, 2018 12:35:19 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "user": "anonymous",
+      "config": {},
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "jobName": "paragraph_1531890473290_609655592",
+      "id": "20180718-130753_114242619",
+      "dateCreated": "Jul 18, 2018 1:07:53 PM",
+      "status": "READY",
+      "progressUpdateIntervalMs": 500
+    }
+  ],
+  "name": "medical/medical_eval_new",
+  "id": "2DMSKAAKF",
+  "angularObjects": {
+    "2D9M8ATZ9:shared_process": [],
+    "2D859SF5B:shared_process": [],
+    "2D99W32FC:shared_process": [],
+    "2DA8NG9YB:shared_process": [],
+    "2DBCA9BMV:shared_process": [],
+    "2DA29EQ39:shared_process": [],
+    "2D86PKHDE:shared_process": [],
+    "2D8ZMX5FY:shared_process": [],
+    "2D8ZFKME2:shared_process": [],
+    "2D9NTGN5D::2DMSKAAKF": [],
+    "2DBAZD2WP:shared_process": [],
+    "2D8SP4FH8:shared_process": [],
+    "2DAESRJYD:shared_process": [],
+    "2DA7377EZ:shared_process": [],
+    "2D8DH9K51:shared_process": [],
+    "2D85K8KV7:shared_process": [],
+    "2D958F7RN:shared_process": [],
+    "2DAVR7XRG:shared_process": [],
+    "2DBX9FA55:shared_process": []
+  },
+  "config": {},
+  "info": {}
+}

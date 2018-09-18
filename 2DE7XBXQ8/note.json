@@ -1,0 +1,289 @@
+{
+  "paragraphs": [
+    {
+      "text": "var lines \u003d sc.textFile(\"/user/webrank/liuqin/viewpoint/weight_choice_tpye3_m3\")",
+      "user": "anonymous",
+      "dateUpdated": "Apr 24, 2018 6:58:22 PM",
+      "config": {
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "results": {},
+        "enabled": true,
+        "editorSetting": {
+          "language": "scala"
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "lines: org.apache.spark.rdd.RDD[String] \u003d /user/webrank/liuqin/viewpoint/weight_choice_tpye3_m3 MapPartitionsRDD[3] at textFile at \u003cconsole\u003e:31\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1524567215948_732160077",
+      "id": "20180326-124149_489368593",
+      "dateCreated": "Apr 24, 2018 6:53:35 PM",
+      "dateStarted": "Apr 24, 2018 6:58:22 PM",
+      "dateFinished": "Apr 24, 2018 6:58:23 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "lines.count()",
+      "user": "anonymous",
+      "dateUpdated": "Apr 24, 2018 6:58:25 PM",
+      "config": {
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "results": {},
+        "enabled": true,
+        "editorSetting": {
+          "language": "scala"
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "res2: Long \u003d 163195\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1524567215950_732929575",
+      "id": "20180411-142637_1674197438",
+      "dateCreated": "Apr 24, 2018 6:53:35 PM",
+      "dateStarted": "Apr 24, 2018 6:58:25 PM",
+      "dateFinished": "Apr 24, 2018 6:58:32 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "import java.util.Collections\r\nimport scala.math.min\r\n\r\n\r\n  def removeCbrackets(line : String) : String \u003d {\r\n    try {\r\n      return  line replaceAll (\"\u003c.*?\u003e\", \"\")\r\n    }\r\n    catch {\r\n      case ex: Exception \u003d\u003e \"\"\r\n    }\r\n  }\r\n\r\n  def removePunc(line : String) : String \u003d {\r\n    try {\r\n      return  line replaceAll (\"[\\\\s+\\\\.\\\\!\\\\/_,，。？\\\\$%\\\\^\\\\*\\\\\\\"\\\u0027+｀｀`\\\\｀·——《》｀()?【】:：;～；;“”！，。？、~@#￥%……\u0026*（）]+\", \"\")\r\n    }\r\n    catch {\r\n      case ex: Exception \u003d\u003e \"\"\r\n    }\r\n  }\r\n\r\n  def hash(s:String)\u003d{\r\n    val m \u003d java.security.MessageDigest.getInstance(\"MD5\")\r\n    val b \u003d s.getBytes(\"UTF-8\")\r\n    m.update(b,0,b.length)\r\n    new java.math.BigInteger(1,m.digest()).toString(16).trim()\r\n  }\r\n\r\n\r\n  \r\n \r\n\r\n  def lineToID(l : String)\u003d {\r\n    //    val regex \u003d \"@[A-Z._]{1,15}:\".r\r\n    //    val tags \u003d regex findAllIn line toArray\r\n    //    val contents \u003d line.split(\"@[A-Z_.]{1,15}:\",-1)\r\n    var line \u003d l\r\n    if(line.startsWith(\"\\\"\")\u0026\u0026line.endsWith(\"\\\"\")){\r\n      line \u003d line.substring(1,line.length-1)\r\n    }\r\n    val regex \u003d \"@[A-Za-z._]{1,30}:\".r\r\n    val tags \u003d regex findAllIn line toArray\r\n    val contents \u003d line.split(\"@[A-Za-z._]{1,30}:\",-1)\r\n    //         println(tags.length)\r\n    //         println(contents.length)\r\n    //         var M:Map[String,String] \u003d Map()\r\n  \r\n    var QLEVEL \u003d \"\"\r\n    var QTYPE \u003d \"\"\r\n    var pv \u003d \"\"\r\n    var query \u003d \"\"\r\n\r\n    try{\r\n      for(i\u003c-0 until tags.length){\r\n        var tag \u003d tags(i)\r\n        var content \u003d contents(i+1)\r\n        //     print(tag)\r\n        //     println(content)\r\n        if(tag\u003d\u003d\"@QLEVEL:\"){\r\n          QLEVEL \u003d content.trim()\r\n        }\r\n        else if(tag\u003d\u003d\"@QTYPE:\"){\r\n          QTYPE \u003d content.trim()\r\n        }\r\n        else if(tag\u003d\u003d\"@query:\"){\r\n          query \u003d content.trim()\r\n        }else if(tag\u003d\u003d\"@pv:\"){\r\n          pv \u003d content.trim()\r\n        }\r\n      }\r\n    }catch{\r\n      case e: Exception \u003d\u003e {\r\n    \r\n        QLEVEL \u003d \"\"\r\n        QTYPE \u003d \"\"\r\n        pv \u003d \"\"\r\n        query \u003d \"\"\r\n      }\r\n    }\r\n    if(QTYPE!\u003d\"3\"){\r\n        true\r\n    }else{\r\n        false\r\n    }\r\n  }",
+      "user": "anonymous",
+      "dateUpdated": "Apr 24, 2018 7:28:40 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "import java.util.Collections\nimport scala.math.min\nremoveCbrackets: (line: String)String\nremovePunc: (line: String)String\nhash: (s: String)String\nwarning: there was one feature warning; re-run with -feature for details\nlineToID: (l: String)Boolean\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1524567305498_-458314317",
+      "id": "20180424-185505_1344646259",
+      "dateCreated": "Apr 24, 2018 6:55:05 PM",
+      "dateStarted": "Apr 24, 2018 7:28:40 PM",
+      "dateFinished": "Apr 24, 2018 7:28:41 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "case class Row_tpq(QLEVEL: String,QTYPE: String,pv: String,query: String)",
+      "user": "anonymous",
+      "dateUpdated": "Apr 24, 2018 7:03:39 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "defined class Row_tpq\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1524567590943_79394435",
+      "id": "20180424-185950_1477589564",
+      "dateCreated": "Apr 24, 2018 6:59:50 PM",
+      "dateStarted": "Apr 24, 2018 7:03:39 PM",
+      "dateFinished": "Apr 24, 2018 7:03:40 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "\nvar tqpv \u003d lines.map(x \u003d\u003elineToID(x)).map(r \u003d\u003e Row_tpq(r._1,r._2,r._3,r._4)).toDF()\ntqpv.where(\"QTYPE !\u003d \u00273\u0027\").show()",
+      "user": "anonymous",
+      "dateUpdated": "Apr 24, 2018 7:05:10 PM",
+      "config": {
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "results": {},
+        "enabled": true,
+        "editorSetting": {
+          "language": "scala"
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "tqpv: org.apache.spark.sql.DataFrame \u003d [QLEVEL: string, QTYPE: string ... 2 more fields]\n+-------------+-----+------+--------------------+\n|       QLEVEL|QTYPE|    pv|               query|\n+-------------+-----+------+--------------------+\n|5.31560797305|   3\"|     5|        c反应蛋白0,19正常吗|\n|4.17975708144|   3\"|    36|Foreign sex video...|\n|3.94022783239|   3\"| 57311|         日日夜夜鲁,??鲁播放|\n|4.57304601017|   3\"|124481|            试婚老公,要给力|\n|4.66583914974|   3\"|   269|     乾隆江南遇美女,春宵一夜不认账|\n| 3.8825535937|   3\"|   947|     原指男子同性恋行为,现男女不限|\n|5.51232612122|   3\"| 23333|       见过\"\"水煮人民币\"\"吗?|\n|1.85493609387|   3\"|    12|军门女枭,黑道之王1002军门女枭...|\n|5.06427042762|   3\"|     5|老公是肝硬化晚期,最近浑身没劲是不...|\n|5.85260847407|   3\"|     6|        月经前一天爱爱,会怀孕吗|\n|3.67320634445|   3\"|   662|   ,微信1001,???-?????|\n|4.15328444329|   3\"| 64378|   师弟,节操何在? 七分熟的牛 小说|\n|4.07709495292|   3\"|  1246|    风萧萧兮易水寒,壮士一去兮不复还|\n|4.45480739542|   3\"|    54|        首同末合十,末同首合十?|\n|3.05029144806|   3\"|    10|韩剧观看-最新韩剧,韩国电视剧,1...|\n|3.83877781964|   3\"|     4|    7:\"\" 7,-“1001???|\n|4.56930640738|   3\"|     4|“I am glad that y...|\n|5.32220448008|   3\"|     5|目前人类发现有超越光速的东西存在了...|\n|4.77353233657|   3\"|    38|         强势壁咚:大神,恋爱么|\n| 3.6777676491|   3\"|   212|同指数底数不同是不是底数相乘,指数...|\n+-------------+-----+------+--------------------+\nonly showing top 20 rows\n\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1524567215951_732544826",
+      "id": "20180327-114551_1149172972",
+      "dateCreated": "Apr 24, 2018 6:53:35 PM",
+      "dateStarted": "Apr 24, 2018 7:05:11 PM",
+      "dateFinished": "Apr 24, 2018 7:05:25 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "lines.filter(x \u003d\u003elineToID(x)).take(1)",
+      "user": "anonymous",
+      "dateUpdated": "Apr 24, 2018 7:28:51 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "res47: Array[String] \u003d Array()\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1524567922527_1582262510",
+      "id": "20180424-190522_490675429",
+      "dateCreated": "Apr 24, 2018 7:05:22 PM",
+      "dateStarted": "Apr 24, 2018 7:28:51 PM",
+      "dateFinished": "Apr 24, 2018 7:29:03 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "lines.take(1)",
+      "user": "anonymous",
+      "dateUpdated": "Apr 24, 2018 7:18:16 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "res37: Array[String] \u003d Array(@query:金首饰对身体有好处吗\t@QLEVEL:5.62352930026\t@pv:193\t@QTYPE:3)\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1524568688735_1941324058",
+      "id": "20180424-191808_1593395927",
+      "dateCreated": "Apr 24, 2018 7:18:08 PM",
+      "dateStarted": "Apr 24, 2018 7:18:16 PM",
+      "dateFinished": "Apr 24, 2018 7:18:17 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "dateUpdated": "Apr 24, 2018 6:53:35 PM",
+      "config": {},
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "jobName": "paragraph_1524567215974_723695601",
+      "id": "20180329-184655_1103373663",
+      "dateCreated": "Apr 24, 2018 6:53:35 PM",
+      "status": "READY",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    }
+  ],
+  "name": "/viewpoint/check_num",
+  "id": "2DE7XBXQ8",
+  "angularObjects": {
+    "2D9M8ATZ9:shared_process": [],
+    "2D859SF5B:shared_process": [],
+    "2D99W32FC:shared_process": [],
+    "2DA8NG9YB:shared_process": [],
+    "2DBCA9BMV:shared_process": [],
+    "2DA29EQ39:shared_process": [],
+    "2D86PKHDE:shared_process": [],
+    "2D8ZMX5FY:shared_process": [],
+    "2D8ZFKME2:shared_process": [],
+    "2DBAZD2WP:shared_process": [],
+    "2D8SP4FH8:shared_process": [],
+    "2DAESRJYD:shared_process": [],
+    "2DA7377EZ:shared_process": [],
+    "2D8DH9K51:shared_process": [],
+    "2D9NTGN5D::2DE7XBXQ8": [],
+    "2D85K8KV7:shared_process": [],
+    "2D958F7RN:shared_process": [],
+    "2DAVR7XRG:shared_process": [],
+    "2DBX9FA55:shared_process": []
+  },
+  "config": {},
+  "info": {}
+}

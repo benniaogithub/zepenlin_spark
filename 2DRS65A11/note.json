@@ -1,0 +1,430 @@
+{
+  "paragraphs": [
+    {
+      "text": "%md ##长答案挖掘的数据拼接query,来源数据是GBK编码",
+      "dateUpdated": "Sep 3, 2018 4:25:00 PM",
+      "config": {
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/markdown",
+        "results": {},
+        "enabled": true,
+        "editorSetting": {
+          "language": "markdown",
+          "editOnDblClick": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "jobName": "paragraph_1535963100798_-2107401073",
+      "id": "20180903-162217_428414874",
+      "dateCreated": "Sep 3, 2018 4:25:00 PM",
+      "status": "READY",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%spark\n\nval  tauaPath \u003d \"hdfs://master004.diablo.hadoop.nm.ted:8020/user/webkm/WebKE_data/qa_long\"\n",
+      "dateUpdated": "Sep 3, 2018 4:25:00 PM",
+      "config": {
+        "tableHide": false,
+        "editorSetting": {
+          "language": "scala"
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "tauaPath: String \u003d hdfs://master004.diablo.hadoop.nm.ted:8020/user/webkm/WebKE_data/qa_long\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1535963100803_-2023141063",
+      "id": "20180319-184727_672584883",
+      "dateCreated": "Sep 3, 2018 4:25:00 PM",
+      "status": "READY",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%spark\nimport org.apache.hadoop.io.{LongWritable, Text}\nimport org.apache.hadoop.mapred.TextInputFormat\nimport org.apache.spark.rdd.RDD\nimport org.apache.spark.{SparkConf, SparkContext}\n\ndef transfer(sc:SparkContext,path:String):RDD[String]\u003d{\n    sc.hadoopFile(path,classOf[TextInputFormat],classOf[LongWritable],classOf[Text],1)\n      .map(p \u003d\u003e new String(p._2.getBytes, 0, p._2.getLength, \"GBK\"))\n}",
+      "dateUpdated": "Sep 3, 2018 4:25:00 PM",
+      "config": {
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "results": {},
+        "enabled": true,
+        "editorSetting": {
+          "language": "scala"
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "import org.apache.hadoop.io.{LongWritable, Text}\nimport org.apache.hadoop.mapred.TextInputFormat\nimport org.apache.spark.rdd.RDD\nimport org.apache.spark.{SparkConf, SparkContext}\ntransfer: (sc: org.apache.spark.SparkContext, path: String)org.apache.spark.rdd.RDD[String]\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1535963100804_-2025064808",
+      "id": "20180903-114810_823125388",
+      "dateCreated": "Sep 3, 2018 4:25:00 PM",
+      "status": "READY",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%spark\ntransfer(sc,tauaPath).take(10).foreach(println)\n",
+      "dateUpdated": "Sep 3, 2018 4:25:00 PM",
+      "config": {
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "results": {},
+        "enabled": true,
+        "editorSetting": {
+          "language": "scala"
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "http://000982.aniu.tv/news_7347360.html\thttp://000982.aniu.tv/news_7347360.html##s6\t本次股东会表决投赞成、反对还弃权票？\t假设上面部分观点分析正确，投什么票自然明白了。单凭在如此环境下大股东未在承诺期兑现承诺确实有原因，非大股东不愿意，确实难以推进，而失去了继续履行承诺的必定条件，无论今天或明天如何如何，反正承诺已兑现不了，这已成铁定事实，要顺利注入４１％股权已成为不可能。与其这样，还不如放行。理由有：１大股东推行优质资产的收购，如果资产确实优质，说明大股东及一致行动人是真心的。２盛大题材仍存，并非豁免大股东后就此消灭，也许更多的收购（盛大借壳）就在后面。因为，这项目已不再单纯是市场行为或大股东意志，而是政府意志了。因此，退后一步自然宽，借道一下，大家通行了。我个人意志，倾向投造成票。其实从前十六天成交量看，基本暗示，大股东推动第二次豁免已必定通过。\t00假设上面部分观点分析正确，投什么票自然明白了。单凭在如此环境下大股东未在承诺期兑现承诺确实有原因，非大股东不愿意，确实难以推进，而失去了继续履行承诺的必定条件，无论今天或明天如何如何，反正承诺已兑现不了，这已成铁定事实，要顺利注入４１％股权已成为不可能。与其这样，还不如放行。理由有：１大股东推行优质资产的收购，如果资产确实优质，说明大股东及一致行动人是真心的。２盛大题材仍存，并非豁免大股东后就此消灭，也许更多的收购（盛大借壳）就在后面。因为，这项目已不再单纯是市场行为或大股东意志，而是政府意志了。因此，退后一步自然宽，借道一下，大家通行了。我个人意志，倾向投造成票。其实从前十六天成交量看，基本暗示，大股东推动第二次豁免已必定通过。\nhttp://000982.aniu.tv/news_7347360.html\thttp://000982.aniu.tv/news_7347360.html##s1\t豁免为什么第二次提出？\t大股东第二次提出豁免承诺，因为在承诺期或证监局规定的期限内难以改变环境，根本无法在规定的期限内完成承诺。若不进行豁免，将严重影响大股东信用，也会给公司造成较大负面影响。大股东提出第二请求豁免，确实是无奈之举。不单是实体权益处置，其实更多是程序的问题。若不通过豁免，对公司百害无一益。因为，过去承诺的期限早已过去，要么变更要么豁免，因此，无论现在局面或未来怎么，这个豁免是必经之路。所以无论大小股东均应顺应这个请求。\t00大股东第二次提出豁免承诺，因为在承诺期或证监局规定的期限内难以改变环境，根本无法在规定的期限内完成承诺。若不进行豁免，将严重影响大股东信用，也会给公司造成较大负面影响。大股东提出第二请求豁免，确实是无奈之举。不单是实体权益处置，其实更多是程序的问题。若不通过豁免，对公司百害无一益。因为，过去承诺的期限早已过去，要么变更要么豁免，因此，无论现在局面或未来怎么，这个豁免是必经之路。所以无论大小股东均应顺应这个请求。\nhttp://000982.aniu.tv/news_7347360.html\thttp://000982.aniu.tv/news_7347360.html##s2\t豁免的前提条件是什么？\t公司公告已提到大股东正在进行重要资产收购，有可能构成重大资产重组。且表明是优质资产收购。其实这个题材已完全能满足炒作题材了。假设优质资产是非常优质的，且不亚于或略小于盛大股权题材，大家可想想，这个题材是不是也大。因此，我认为豁免可以，但优先资产必须是优质的，真实的，确实能全面改变现９８２现状的，甚至是根本性改变的资产。\t00公司公告已提到大股东正在进行重要资产收购，有可能构成重大资产重组。且表明是优质资产收购。其实这个题材已完全能满足炒作题材了。假设优质资产是非常优质的，且不亚于或略小于盛大股权题材，大家可想想，这个题材是不是也大。因此，我认为豁免可以，但优先资产必须是优质的，真实的，确实能全面改变现９８２现状的，甚至是根本性改变的资产。\nhttp://000982.aniu.tv/news_7347360.html\thttp://000982.aniu.tv/news_7347360.html##s7\t什么时间复牌？复牌速度、股价变化与盛大关联是什么？\t大多数股民很关心这个问题，我觉得短期复牌可能性不大，当然如果大股东或政府彻底放弃盛大的话，那复牌就非常快速。反向思维一下，如果下周复牌，正常情况下必定上涨，因为有优质资产收购，这也算重大利好，如果收购的资产确实优质，按目前价位看再来涨停板一点问题没有。假股价一下涨得很高了，盛大股东潜在权益大大缩水，那盛大还会装入９８２吗？肯定不会了。因此，从复牌时间速度及短线股价情况来侧面判断，后续是否有盛大注入或借壳，也是个比较有力的指标。在没有任何盛大注入或借壳新消息公告前，个人倾向如果这次复牌越快，盛大注入或借壳的可能就越小。如果快速复牌且股价涨得越高，那盛大注入或借壳可能性就越小。\t00大多数股民很关心这个问题，我觉得短期复牌可能性不大，当然如果大股东或政府彻底放弃盛大的话，那复牌就非常快速。反向思维一下，如果下周复牌，正常情况下必定上涨，因为有优质资产收购，这也算重大利好，如果收购的资产确实优质，按目前价位看再来涨停板一点问题没有。假股价一下涨得很高了，盛大股东潜在权益大大缩水，那盛大还会装入９８２吗？肯定不会了。因此，从复牌时间速度及短线股价情况来侧面判断，后续是否有盛大注入或借壳，也是个比较有力的指标。在没有任何盛大注入或借壳新消息公告前，个人倾向如果这次复牌越快，盛大注入或借壳的可能就越小。如果快速复牌且股价涨得越高，那盛大注入或借壳可能性就越小。\nhttp://005.dionly.com/baike/4628/\thttp://005.dionly.com/baike/4628/##s1\t芙蓉晶：＃芙蓉玉和芙蓉晶有什么区别\t芙蓉晶是稍具透明度，以晶体质感圆润、色泽娇嫩的粉晶。优质的芙蓉晶是不带任何的白色石纹，其颜色娇嫩明亮而灵活，晶体表面的光泽呈现如水分饱满甚至油脂般光滑温润的质地。　芙蓉晶有着舒援紧张、烦燥情绪，保特心境平静的特殊功效。同时若用於治疗方面，芙蓉晶有助於心轮附近器官的健康，促进循环系统和呼吸器官的健康。粉晶所散发出来的是温和而夺目的粉红色光芒更是吸引人们的眼球。\t00芙蓉晶是稍具透明度，以晶体质感圆润、色泽娇嫩的粉晶。优质的芙蓉晶是不带任何的白色石纹，其颜色娇嫩明亮而灵活，晶体表面的光泽呈现如水分饱满甚至油脂般光滑温润的质地。\u003cp\u003e芙蓉晶有着舒援紧张、烦燥情绪，保特心境平静的特殊功效。同时若用於治疗方面，芙蓉晶有助於心轮附近器官的健康，促进循环系统和呼吸器官的健康。粉晶所散发出来的是温和而夺目的粉红色光芒更是吸引人们的眼球。\nhttp://005.dionly.com/baike/4628/\thttp://005.dionly.com/baike/4628/##s2\t芙蓉玉：＃芙蓉玉和芙蓉晶有什么区别\t芙蓉玉是水晶科的一种美丽宝石，颜色温润怡人。传说它是当年李隆基送给杨玉环的爱情信物　，　又因为它的纹理结构像冰块撕裂一样　，　所以后来人们用杨玉环的小名芙蓉来命名　，　也叫“冰花芙蓉玉”。犹如出水芙蓉，清新亮丽。同时它象征着美好的爱情，所以特别适合年轻人群佩带。还有由于它的形成位于泉水眼部分，接受温泉水冲涮的次数特别多，所以可溶性的矿物质非常多，如果用它泡水洗脸，对皮肤有很好的保养功效，可以杀菌消炎、美白肌肤的神奇功效。此外，芙蓉玉变色快也是它最为显著的一个特点。　芙蓉玉和芙蓉晶有什么区别？蓝田玉种类中的芙蓉玉因其怡人的粉色深受人们的喜爱，同时在市场中我们经常也会看到乍看上去与芙蓉玉有着几分神似的芙蓉晶，由于二者有些相像，所以人们常常会将芙蓉玉和芙蓉晶相混淆。\t00芙蓉玉是水晶科的一种美丽宝石，颜色温润怡人。传说它是当年李隆基送给杨玉环的爱情信物　，　又因为它的纹理结构像冰块撕裂一样　，　所以后来人们用杨玉环的小名芙蓉来命名　，　也叫“冰花芙蓉玉”。犹如出水芙蓉，清新亮丽。同时它象征着美好的爱情，所以特别适合年轻人群佩带。还有由于它的形成位于泉水眼部分，接受温泉水冲涮的次数特别多，所以可溶性的矿物质非常多，如果用它泡水洗脸，对皮肤有很好的保养功效，可以杀菌消炎、美白肌肤的神奇功效。此外，芙蓉玉变色快也是它最为显著的一个特点。\u003cp\u003e芙蓉玉和芙蓉晶有什么区别？蓝田玉种类中的芙蓉玉因其怡人的粉色深受人们的喜爱，同时在市场中我们经常也会看到乍看上去与芙蓉玉有着几分神似的芙蓉晶，由于二者有些相像，所以人们常常会将芙蓉玉和芙蓉晶相混淆。\nhttp://0065.com/faq/139290.html\thttp://0065.com/faq/139290.html##1\t留学咨询服务＃服务体系\t１、为您提供出国留学解决方案及全面规划。　２、专业留学指导及后续服务保障助您踏上留学之路。\t11为您提供出国留学解决方案及全面规划。\u003cbr\u003e专业留学指导及后续服务保障助您踏上留学之路。\nhttp://0065.com/faq/156859.html\thttp://0065.com/faq/156859.html##1\t留学咨询服务＃服务体系\t１、为您提供出国留学解决方案及全面规划。　２、专业留学指导及后续服务保障助您踏上留学之路。\t11为您提供出国留学解决方案及全面规划。\u003cbr\u003e专业留学指导及后续服务保障助您踏上留学之路。\nhttp://0065.com/faq/169086.html\thttp://0065.com/faq/169086.html##1\t留学咨询服务＃服务体系\t１、为您提供出国留学解决方案及全面规划。　２、专业留学指导及后续服务保障助您踏上留学之路。\t11为您提供出国留学解决方案及全面规划。\u003cbr\u003e专业留学指导及后续服务保障助您踏上留学之路。\nhttp://0065.com/faq/179892.html\thttp://0065.com/faq/179892.html##1\t留学咨询服务＃服务体系\t１、为您提供出国留学解决方案及全面规划。　２、专业留学指导及后续服务保障助您踏上留学之路。\t11为您提供出国留学解决方案及全面规划。\u003cbr\u003e专业留学指导及后续服务保障助您踏上留学之路。\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1535963100806_-2024295310",
+      "id": "20180903-115149_1702542101",
+      "dateCreated": "Sep 3, 2018 4:25:00 PM",
+      "status": "READY",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%spark\ncase class UTRow(URL : String,title:String)\ndef httpNom(line : String) : String \u003d {\ntry {\n  val caseInsensitivePattern \u003d \"\"\"^(?i)(http|ftp|https)://\"\"\".r\n  return  caseInsensitivePattern.replaceFirstIn(line.trim(),\"http://\")\n  //      line replaceAll (caseInsensitivePattern, )\n}\ncatch {\n  case ex: Exception \u003d\u003e \"\"\n}\n}\n\ndef lineTo_URI_Title(line : String)\u003d {\nvar title \u003d \"\"\nvar URI \u003d \"\"\nvar tmp \u003d line.trim().split(\"\\t\",4)\nif (tmp.length \u003d\u003d 4) {\n  title \u003d tmp(2)\n  URI \u003d httpNom(tmp(0))\n}\n(URI,title)\n}\n",
+      "dateUpdated": "Sep 3, 2018 4:25:00 PM",
+      "config": {
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "results": {},
+        "enabled": true,
+        "editorSetting": {
+          "language": "scala"
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "defined class UTRow\nhttpNom: (line: String)String\nlineTo_URI_Title: (line: String)(String, String)\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1535963100807_-2024680059",
+      "id": "20180903-155321_1007836885",
+      "dateCreated": "Sep 3, 2018 4:25:00 PM",
+      "status": "READY",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%spark\nvar tuq \u003d transfer(sc,tauaPath).map(x\u003d\u003elineTo_URI_Title(x)).filter(_._1!\u003d\"\").filter(_._2!\u003d\"\").map(r \u003d\u003e UTRow(r._1,r._2)).toDF()\ntuq \u003d tuq.distinct\ntuq.registerTempTable(\"t_tuq\")",
+      "dateUpdated": "Sep 3, 2018 4:25:00 PM",
+      "config": {
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "results": {},
+        "enabled": true,
+        "editorSetting": {
+          "language": "scala"
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "tuq: org.apache.spark.sql.DataFrame \u003d [URL: string, title: string]\ntuq: org.apache.spark.sql.DataFrame \u003d [URL: string, title: string]\nwarning: there was one deprecation warning; re-run with -deprecation for details\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1535963100808_-2026603804",
+      "id": "20180903-155344_1896246961",
+      "dateCreated": "Sep 3, 2018 4:25:00 PM",
+      "status": "READY",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%spark\nimport java.net.{URLDecoder, URLEncoder}\nimport java.text.SimpleDateFormat\nimport java.util.Date\n\ncase class Logrow(userid:String,uuid:String, page:String, time : String, search_type : String, query : String,urls:List[Map[String,String]])\ncase class QURow(query : String,URL:String)\n\n\ndef DateFormat(time:String):String\u003d{\n    var sdf:SimpleDateFormat \u003d new SimpleDateFormat(\"yyyyMMdd\")\n    var date:String \u003d sdf.format(new Date((time.toLong*1000)))\n    return date\n}\n\ndef decode(value:String): String \u003d URLDecoder.decode(value, \"gbk\")\n\ndef getRow(line : String):Option[Logrow]\u003d {\n    //    var userid, uuid, page, time, search_type \u003d \"\"\n    val regex\u003d\"\"\"^\\d+$\"\"\".r\n    var userid, uuid, page,time,search_type,unknown \u003d \"\"\n    var tmp \u003d line.trim().split(\u0027\\t\u0027)\n    if (tmp.length \u003c 2) {\n      return None\n    }\n    var tmp0 \u003d tmp(0).trim().split(\u0027#\u0027)\n    if (tmp0.length !\u003d 5 \u0026\u0026 tmp0.length !\u003d 6) {\n      return None\n    }\n    if(tmp0.length \u003d\u003d 5){\n      userid \u003d tmp0(0)\n      uuid \u003d tmp0(1)\n      page \u003d tmp0(2)\n      time \u003d tmp0(3)\n      search_type \u003d tmp0(4)\n    }else if(tmp0.length \u003d\u003d 6){\n      userid \u003d tmp0(0)\n      uuid \u003d tmp0(1)\n      page \u003d tmp0(2)\n      time \u003d tmp0(3)\n      search_type \u003d tmp0(4)\n      unknown \u003d tmp0(5)\n    }\n    var query \u003d decode(tmp(1))\n    var urls:List[Map[String,String]] \u003d List()\n    var urlblock:Map[String,String]\u003d Map()\n    var cnt \u003d 0\n    for(i \u003c- 2 to tmp.length-1){\n      //      println(tmp(i))\n      //      println(tmp(i).trim().split(\"#\",-1).length)\n      if (((tmp(i).trim().split(\"#\",-1).length) \u003e\u003d 4) \u0026\u0026 regex.findFirstMatchIn((tmp(i).trim().split(\"#\",-1)(1))) !\u003d None){\n        var tmp_i \u003d tmp(i).trim().split(\"#\",-1)\n        if(tmp_i.length !\u003d 4){\n          tmp_i \u003d Array(\"\",\"\",\"\",\"\")\n        }\n        var Array(vrid, ph_3_1, ph_3_2, baseurl) \u003d tmp_i\n        baseurl \u003d decode(baseurl)\n        urlblock +\u003d (\"vrid\" -\u003e vrid)\n        urlblock +\u003d (\"3_1\" -\u003e ph_3_1)\n        urlblock +\u003d (\"3_2\" -\u003e ph_3_2)\n        urlblock +\u003d (\"baseurl\" -\u003e baseurl)\n        urls \u003d urls :+ urlblock\n        urlblock \u003d Map()\n        cnt \u003d 0\n      }else{\n        if(cnt\u003d\u003d0){\n          urlblock +\u003d (\"wapurl\" -\u003e tmp(i))\n          cnt \u003d cnt+1\n        }else if(cnt\u003d\u003d1){\n          urlblock +\u003d (\"clk\" -\u003e tmp(i))\n          cnt \u003d cnt+1\n        }else if(cnt\u003d\u003d2){\n          urlblock +\u003d (\"2\" -\u003e tmp(i))\n          cnt \u003d cnt+1\n        }\n      }\n    }\n    return Some(new Logrow(userid, uuid, page, time, search_type, query, urls))\n  }\n\ndef trans_dataframe(row:Logrow)\u003d{\n    \n    var query \u003d row.query.trim()\n   \n    var urls \u003d row.urls.map(urlblock \u003d\u003e {\n       var url \u003d \"\"\n       \n       if (urlblock.get(\"baseurl\").getOrElse(\"\") \u003d\u003d \"\") {\n        url \u003d urlblock.get(\"wapurl\").getOrElse(\"\").toString\n       } else {\n        url \u003d urlblock.get(\"baseurl\").getOrElse(\"\").toString\n       }\n       url \u003d httpNom(url)\n       (query,url)\n      })\n     urls\n }\n \n \n\ndef filterNone(x: Option[Logrow]) \u003d x match {\n      case Some(s) \u003d\u003e true\n      case None \u003d\u003e false\n    }\n\n   \n",
+      "dateUpdated": "Sep 3, 2018 4:25:00 PM",
+      "config": {
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "results": {},
+        "enabled": true,
+        "editorSetting": {
+          "language": "scala"
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "import java.net.{URLDecoder, URLEncoder}\nimport java.text.SimpleDateFormat\nimport java.util.Date\ndefined class Logrow\ndefined class QURow\nDateFormat: (time: String)String\ndecode: (value: String)String\ngetRow: (line: String)Option[Logrow]\ntrans_dataframe: (row: Logrow)List[(String, String)]\nfilterNone: (x: Option[Logrow])Boolean\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1535963100810_-2025834306",
+      "id": "20180903-160145_1586586791",
+      "dateCreated": "Sep 3, 2018 4:25:00 PM",
+      "status": "READY",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%spark\nval inputPath \u003d \"/user/webrank/clicklog/ms/201808/20180830\"\nprintln(inputPath)\nvar lograw \u003d sc.textFile(inputPath)\nvar result \u003d lograw.map(x\u003d\u003egetRow(x)).filter(filterNone).map(x\u003d\u003ex.get).filter(_.urls!\u003dNone).filter(_.urls.length \u003e 0).map(trans_dataframe).flatMap(list \u003d\u003e list).map(r \u003d\u003e QURow(r._1,r._2)).toDF()\nresult \u003d result.distinct",
+      "dateUpdated": "Sep 3, 2018 4:25:00 PM",
+      "config": {
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "results": {},
+        "enabled": true,
+        "editorSetting": {
+          "language": "scala"
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "inputPath: String \u003d /user/webrank/clicklog/ms/201808/20180830\n/user/webrank/clicklog/ms/201808/20180830\nlograw: org.apache.spark.rdd.RDD[String] \u003d /user/webrank/clicklog/ms/201808/20180830 MapPartitionsRDD[11] at textFile at \u003cconsole\u003e:36\nresult: org.apache.spark.sql.DataFrame \u003d [query: string, URL: string]\nresult: org.apache.spark.sql.DataFrame \u003d [query: string, URL: string]\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1535963100811_-2026219055",
+      "id": "20180903-160023_792882947",
+      "dateCreated": "Sep 3, 2018 4:25:00 PM",
+      "status": "READY",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%spark\nresult.registerTempTable(\"t_log\")\n",
+      "dateUpdated": "Sep 3, 2018 4:25:00 PM",
+      "config": {
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "results": {},
+        "enabled": true,
+        "editorSetting": {
+          "language": "scala"
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "warning: there was one deprecation warning; re-run with -deprecation for details\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1535963100812_-2028142799",
+      "id": "20180903-161141_392400595",
+      "dateCreated": "Sep 3, 2018 4:25:00 PM",
+      "status": "READY",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%spark\nvar sql_result \u003d sqlContext.sql(\"SELECT query,title FROM t_log join t_tuq on t_tuq.URL \u003d t_log.URL\")",
+      "dateUpdated": "Sep 3, 2018 4:25:00 PM",
+      "config": {
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "results": {},
+        "enabled": true,
+        "editorSetting": {
+          "language": "scala"
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "sql_result: org.apache.spark.sql.DataFrame \u003d [query: string, title: string]\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1535963100813_-2028527548",
+      "id": "20180903-161317_265730685",
+      "dateCreated": "Sep 3, 2018 4:25:00 PM",
+      "status": "READY",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%spark\nsql_result \u003d sql_result.distinct\nsql_result.createOrReplaceTempView(\"sql_result\")\nvar sql_result \u003dsqlContext.sql(\"SELECT CONCAT(\u0027@QUERY:\u0027,query,\u0027\\t@TITLE:\u0027,title) as line FROM sql_result\")\nsql_result.select(\"line\").rdd.saveAsTextFile(\"/user/webrank/liuqin/statistic/longqa_query_title.csv\")\n",
+      "dateUpdated": "Sep 3, 2018 4:25:00 PM",
+      "config": {
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "results": {},
+        "enabled": true,
+        "editorSetting": {
+          "language": "scala"
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "jobName": "paragraph_1535963100815_-2027758050",
+      "id": "20180903-161437_1004925719",
+      "dateCreated": "Sep 3, 2018 4:25:00 PM",
+      "status": "READY",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "sc.stop()",
+      "user": "anonymous",
+      "dateUpdated": "Sep 3, 2018 11:58:07 PM",
+      "config": {
+        "tableHide": false,
+        "editorSetting": {
+          "language": "scala"
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": []
+      },
+      "apps": [],
+      "jobName": "paragraph_1535963100816_-2017369830",
+      "id": "20180510-130959_1507507444",
+      "dateCreated": "Sep 3, 2018 4:25:00 PM",
+      "status": "READY",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "dateUpdated": "Sep 3, 2018 4:25:00 PM",
+      "config": {
+        "tableHide": false,
+        "editorSetting": {
+          "language": "scala"
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "jobName": "paragraph_1535963100818_-2016600332",
+      "id": "20180516-183553_456075560",
+      "dateCreated": "Sep 3, 2018 4:25:00 PM",
+      "status": "READY",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    }
+  ],
+  "name": "/Statistics/longQA_map_query_title",
+  "id": "2DRS65A11",
+  "angularObjects": {
+    "2D9M8ATZ9:shared_process": [],
+    "2D859SF5B:shared_process": [],
+    "2D99W32FC:shared_process": [],
+    "2D9NTGN5D::2DRS65A11": [],
+    "2DA8NG9YB:shared_process": [],
+    "2DBCA9BMV:shared_process": [],
+    "2DA29EQ39:shared_process": [],
+    "2D86PKHDE:shared_process": [],
+    "2D8ZMX5FY:shared_process": [],
+    "2D8ZFKME2:shared_process": [],
+    "2DBAZD2WP:shared_process": [],
+    "2D8SP4FH8:shared_process": [],
+    "2DAESRJYD:shared_process": [],
+    "2DA7377EZ:shared_process": [],
+    "2D8DH9K51:shared_process": [],
+    "2D85K8KV7:shared_process": [],
+    "2D958F7RN:shared_process": [],
+    "2DAVR7XRG:shared_process": [],
+    "2DBX9FA55:shared_process": []
+  },
+  "config": {},
+  "info": {}
+}

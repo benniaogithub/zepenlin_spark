@@ -1,0 +1,183 @@
+{
+  "paragraphs": [
+    {
+      "text": "import java.net.{URLDecoder, URLEncoder}\r\nimport java.text.SimpleDateFormat\r\nimport java.util.Date\r\n\r\ncase class Logrow(userid:String,uuid:String, page:String, time : String, search_type : String, query : String,urls:List[Map[String,String]])\r\ncase class DFrow(query: String,clk:Int,clk_flag:Int)\r\n\r\n\r\ndef DateFormat(time:String):String\u003d{\r\n    var sdf:SimpleDateFormat \u003d new SimpleDateFormat(\"yyyyMMdd\")\r\n    var date:String \u003d sdf.format(new Date((time.toLong*1000)))\r\n    return date\r\n}\r\n\r\ndef decode(value:String): String \u003d URLDecoder.decode(value, \"gbk\")\r\n\r\ndef getRow(line : String):Option[Logrow]\u003d {\r\n    //    var userid, uuid, page, time, search_type \u003d \"\"\r\n    val regex\u003d\"\"\"^\\d+$\"\"\".r\r\n    var userid, uuid, page,time,search_type,unknown \u003d \"\"\r\n    var tmp \u003d line.trim().split(\u0027\\t\u0027)\r\n    if (tmp.length \u003c 2) {\r\n      return None\r\n    }\r\n    var tmp0 \u003d tmp(0).trim().split(\u0027#\u0027)\r\n    if (tmp0.length !\u003d 5 \u0026\u0026 tmp0.length !\u003d 6) {\r\n      return None\r\n    }\r\n    if(tmp0.length \u003d\u003d 5){\r\n      userid \u003d tmp0(0)\r\n      uuid \u003d tmp0(1)\r\n      page \u003d tmp0(2)\r\n      time \u003d tmp0(3)\r\n      search_type \u003d tmp0(4)\r\n    }else if(tmp0.length \u003d\u003d 6){\r\n      userid \u003d tmp0(0)\r\n      uuid \u003d tmp0(1)\r\n      page \u003d tmp0(2)\r\n      time \u003d tmp0(3)\r\n      search_type \u003d tmp0(4)\r\n      unknown \u003d tmp0(5)\r\n    }\r\n    var query \u003d decode(tmp(1))\r\n    var urls:List[Map[String,String]] \u003d List()\r\n    var urlblock:Map[String,String]\u003d Map()\r\n    var cnt \u003d 0\r\n    for(i \u003c- 2 to tmp.length-1){\r\n      //      println(tmp(i))\r\n      //      println(tmp(i).trim().split(\"#\",-1).length)\r\n      if (((tmp(i).trim().split(\"#\",-1).length) \u003e\u003d 4) \u0026\u0026 regex.findFirstMatchIn((tmp(i).trim().split(\"#\",-1)(1))) !\u003d None){\r\n        var tmp_i \u003d tmp(i).trim().split(\"#\",-1)\r\n        if(tmp_i.length !\u003d 4){\r\n          tmp_i \u003d Array(\"\",\"\",\"\",\"\")\r\n        }\r\n        var Array(vrid, ph_3_1, ph_3_2, baseurl) \u003d tmp_i\r\n        baseurl \u003d decode(baseurl)\r\n        urlblock +\u003d (\"vrid\" -\u003e vrid)\r\n        urlblock +\u003d (\"3_1\" -\u003e ph_3_1)\r\n        urlblock +\u003d (\"3_2\" -\u003e ph_3_2)\r\n        urlblock +\u003d (\"baseurl\" -\u003e baseurl)\r\n        urls \u003d urls :+ urlblock\r\n        urlblock \u003d Map()\r\n        cnt \u003d 0\r\n      }else{\r\n        if(cnt\u003d\u003d0){\r\n          urlblock +\u003d (\"wapurl\" -\u003e tmp(i))\r\n          cnt \u003d cnt+1\r\n        }else if(cnt\u003d\u003d1){\r\n          urlblock +\u003d (\"clk\" -\u003e tmp(i))\r\n          cnt \u003d cnt+1\r\n        }else if(cnt\u003d\u003d2){\r\n          urlblock +\u003d (\"2\" -\u003e tmp(i))\r\n          cnt \u003d cnt+1\r\n        }\r\n      }\r\n    }\r\n    return Some(new Logrow(userid, uuid, page, time, search_type, query, urls))\r\n  }\r\n\r\ndef trans_dataframe(row:Logrow)\u003d{\r\n  var query \u003d row.query\r\n  var clk \u003d 0\r\n  var clk_flag \u003d 0\r\n  for (i \u003c- 0 to row.urls.length - 1) {\r\n    var urlblock \u003d row.urls(i)\r\n    clk +\u003d urlblock.get(\"clk\").getOrElse(\"0\").toInt\r\n  }\r\n  if(clk\u003e0){\r\n    clk_flag\u003d1\r\n  }\r\n  (query,clk,clk_flag)\r\n}\r\n\r\ndef filterNone(x: Option[Logrow]) \u003d x match {\r\n      case Some(s) \u003d\u003e true\r\n      case None \u003d\u003e false\r\n    }\r\n\r\n   ",
+      "user": "anonymous",
+      "dateUpdated": "Jul 12, 2018 11:39:48 AM",
+      "config": {
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "results": {},
+        "enabled": true,
+        "editorSetting": {
+          "language": "scala"
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "import java.net.{URLDecoder, URLEncoder}\nimport java.text.SimpleDateFormat\nimport java.util.Date\ndefined class Logrow\ndefined class DFrow\nDateFormat: (time: String)String\ndecode: (value: String)String\ngetRow: (line: String)Option[Logrow]\ntrans_dataframe: (row: Logrow)(String, Int, Int)\nfilterNone: (x: Option[Logrow])Boolean\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1524044389375_-1265115782",
+      "id": "20180320-181122_1793468431",
+      "dateCreated": "Apr 18, 2018 5:39:49 PM",
+      "dateStarted": "Jul 12, 2018 11:18:01 AM",
+      "dateFinished": "Jul 12, 2018 11:19:12 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "for(i\u003c- 712 to 712){\n    val inputPath \u003d \"/user/webrank/clicklog/ms/201\"+i.toString+\"/*\"\n    println(inputPath)\n    var lograw \u003d sc.textFile(inputPath)\n    var result \u003d lograw.map(x\u003d\u003egetRow(x)).filter(filterNone).map(x\u003d\u003ex.get).map(trans_dataframe).map(r \u003d\u003e DFrow(r._1,r._2.toInt,r._3.toInt)).toDF()\n    result.registerTempTable(\"result\")\n    var sql_result \u003d sqlContext.sql(\"SELECT query,count(query) as pv,sum(clk_flag) as clkpv FROM result group by query\")\n    // sql_result.write.csv(\"/user/web_research/liuqin/out/query_pv_clkpv_all_201\"+i.toString)                 //这里的clkpv指这个query只要被点击过任何一条url\n    sql_result.write.format(\"parquet\").save(\"/user/web_research/liuqin/out/query_pv_clkpv_all_201\"+i.toString+\".parquet\")\n}",
+      "user": "anonymous",
+      "dateUpdated": "Apr 19, 2018 8:56:59 PM",
+      "config": {
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "results": {},
+        "enabled": true,
+        "editorSetting": {
+          "language": "scala"
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "warning: there was one deprecation warning; re-run with -deprecation for details\n/user/webrank/clicklog/ms/201712/*\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1524044389378_-1574069149",
+      "id": "20180320-214911_160352280",
+      "dateCreated": "Apr 18, 2018 5:39:49 PM",
+      "dateStarted": "Apr 19, 2018 8:56:59 PM",
+      "dateFinished": "Apr 19, 2018 9:25:11 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "for(i\u003c- 801 to 803){\n    val inputPath \u003d \"/user/webrank/clicklog/ms/201\"+i.toString+\"/*\"\n    println(inputPath)\n    var lograw \u003d sc.textFile(inputPath)\n    var result \u003d lograw.map(x\u003d\u003egetRow(x)).filter(filterNone).map(x\u003d\u003ex.get).map(trans_dataframe).map(r \u003d\u003e DFrow(r._1,r._2.toInt,r._3.toInt)).toDF()\n    result.registerTempTable(\"result\")\n    var sql_result \u003d sqlContext.sql(\"SELECT query,count(query) as pv,sum(clk_flag) as clkpv FROM result group by query\")\n    //sql_result.write.csv(\"/user/web_research/liuqin/out/query_pv_clkpv_all_201\"+i.toString)     \n    sql_result.write.format(\"parquet\").save(\"/user/web_research/liuqin/out/query_pv_clkpv_all_201\"+i.toString+\".parquet\")//这里的clkpv指这个query只要被点击过任何一条url\n}",
+      "user": "anonymous",
+      "dateUpdated": "Apr 19, 2018 9:53:35 PM",
+      "config": {
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "results": {},
+        "enabled": true,
+        "editorSetting": {
+          "language": "scala"
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "warning: there was one deprecation warning; re-run with -deprecation for details\n/user/webrank/clicklog/ms/201801/*\n/user/webrank/clicklog/ms/201802/*\n/user/webrank/clicklog/ms/201803/*\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1524044389378_-1574069149",
+      "id": "20180320-214907_2000362348",
+      "dateCreated": "Apr 18, 2018 5:39:49 PM",
+      "dateStarted": "Apr 19, 2018 9:53:35 PM",
+      "dateFinished": "Apr 19, 2018 11:24:20 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "val inputPath \u003d \"/user/webrank/clicklog/ms/201807/*\"\nprintln(inputPath)\nvar lograw \u003d sc.textFile(inputPath)\nvar result \u003d lograw.map(x\u003d\u003egetRow(x)).filter(filterNone).map(x\u003d\u003ex.get).map(trans_dataframe).map(r \u003d\u003e DFrow(r._1,r._2.toInt,r._3.toInt)).toDF()",
+      "user": "anonymous",
+      "dateUpdated": "Jul 12, 2018 11:18:52 AM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "inputPath: String \u003d /user/webrank/clicklog/ms/201807/*\n/user/webrank/clicklog/ms/201807/*\nlograw: org.apache.spark.rdd.RDD[String] \u003d /user/webrank/clicklog/ms/201807/* MapPartitionsRDD[1] at textFile at \u003cconsole\u003e:32\nresult: org.apache.spark.sql.DataFrame \u003d [query: string, clk: int ... 1 more field]\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1524128866116_-427678285",
+      "id": "20180419-170746_1605370457",
+      "dateCreated": "Apr 19, 2018 5:07:46 PM",
+      "dateStarted": "Jul 12, 2018 11:18:52 AM",
+      "dateFinished": "Jul 12, 2018 11:19:15 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "user": "anonymous",
+      "config": {},
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "jobName": "paragraph_1531365604213_-862579225",
+      "id": "20180712-112004_417389477",
+      "dateCreated": "Jul 12, 2018 11:20:04 AM",
+      "status": "READY",
+      "progressUpdateIntervalMs": 500
+    }
+  ],
+  "name": "/viewpoint/all_query_pv_clkpv",
+  "id": "2DBNDKTTT",
+  "angularObjects": {
+    "2D9NTGN5D::2DBNDKTTT": [],
+    "2D9M8ATZ9:shared_process": [],
+    "2D859SF5B:shared_process": [],
+    "2D99W32FC:shared_process": [],
+    "2DA8NG9YB:shared_process": [],
+    "2DBCA9BMV:shared_process": [],
+    "2DA29EQ39:shared_process": [],
+    "2D86PKHDE:shared_process": [],
+    "2D8ZMX5FY:shared_process": [],
+    "2D8ZFKME2:shared_process": [],
+    "2DBAZD2WP:shared_process": [],
+    "2D8SP4FH8:shared_process": [],
+    "2DAESRJYD:shared_process": [],
+    "2DA7377EZ:shared_process": [],
+    "2D8DH9K51:shared_process": [],
+    "2D85K8KV7:shared_process": [],
+    "2D958F7RN:shared_process": [],
+    "2DAVR7XRG:shared_process": [],
+    "2DBX9FA55:shared_process": []
+  },
+  "config": {},
+  "info": {}
+}

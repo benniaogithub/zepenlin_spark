@@ -1,0 +1,2476 @@
+{
+  "paragraphs": [
+    {
+      "text": "val triple_QAU \u003d sqlContext.read.load(\"/user/web_research/liuqin/viewpoint/triple_QAU_xe_sample\")\ntriple_QAU.show()",
+      "user": "anonymous",
+      "dateUpdated": "Apr 26, 2018 12:11:32 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "triple_QAU: org.apache.spark.sql.DataFrame \u003d [query: string, ans: string ... 1 more field]\n+--------------------+--------------------+--------------------+\n|               query|                 ans|                 url|\n+--------------------+--------------------+--------------------+\n|占卜术士能知道别人的命,能不能知道...|        大多数是骗人的东西...|https://zhidao.ba...|\n|宫秘排脂减肥效果真的不错，就是不知...|宫秘排脂是古方秘制的纯中药减肥产品...|http://wenda.tian...|\n|           成考专自考本怎么样|不错的 自考本的含金量很高 而且很...|http://wenwen.sog...|\n|小乌龟在什么样的环境下才能生存， ...|  会，你千万不要把它抱到被窝里睡觉啊！|http://wenwen.sog...|\n|    四川文理学院有没有英语教育的专业|有英语教育专业，外语系在学院还是个...|http://zhidao.bai...|\n|              胖人能怀孕吗|你好你这情况只要排卵正常的话这一般...|http://ask.39.net...|\n|  个性签名中是否最多只能点亮3个图标？|\u003cpre\u003e目前只有3个，以后就不知...|http://wenwen.sog...|\n|  丁巳年甲辰月丙申日甲午时生人命运如何|要珍惜生命，其生命比金钱更珍贵，以...|http://zhidao.bai...|\n|               这是松狮吗|       不像腊肠啊，再大一些看吧。|https://zhidao.ba...|\n|            腮腺炎可以冷敷吗|您好，腮腺炎，这个最好用冷敷的方法...|http://ask.yaolan...|\n|    请问，在备孕期能做心电图检查吗？|         可以的，这个没有影响的|http://www.babytr...|\n|           这个新闻是真的么?|                 假的。|http://zhidao.bai...|\n|ATI的显卡是玩游戏好点还是看电视好点？|\u003cpre\u003e感觉在本本上用不错~台机...|http://wenwen.sog...|\n|            异地驾照能否办理|现在补证手续简单.带上你的身份证,...|http://zhidao.bai...|\n|          女人的话是不是不可信|    要看她平时是不是一个值得信任的人|                null|\n|           奥迪R8车怎么样啊|       \u003cpre\u003e好看\u003c/pre\u003e|http://wenwen.sog...|\n| 圣象、大自然地板是中国地板十佳品牌吗？|圣象、大自然两个品牌为国内地板的一...|http://zhidao.bai...|\n|        宝宝六个月可以吃西瓜吗？|                 不可以|http://www.babytr...|\n|灰指甲治疗方法有哪些？那种药相对而...|          x215eoo6v6|http://zhidao.bai...|\n|         孕妇能用吹风筒吹头发吗|   不能，因为电风吹有辐射，对孕妇不好|http://wenwen.sog...|\n+--------------------+--------------------+--------------------+\nonly showing top 20 rows\n\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1522038632713_658645018",
+      "id": "20180326-123032_1772082507",
+      "dateCreated": "Mar 26, 2018 12:30:32 PM",
+      "dateStarted": "Mar 26, 2018 12:31:59 PM",
+      "dateFinished": "Mar 26, 2018 12:32:16 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "var triple_Q_all_5 \u003d sqlContext.read.load(\"hdfs://master003.diablo.hadoop.nm.ted:8020/user/webkm/liuqin/weight_sample_5_maped_ans\")",
+      "user": "anonymous",
+      "dateUpdated": "Apr 12, 2018 1:14:58 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "triple_Q_all_5: org.apache.spark.sql.DataFrame \u003d [index: string, query: string ... 6 more fields]\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1522039309312_1201674024",
+      "id": "20180326-124149_489368593",
+      "dateCreated": "Mar 26, 2018 12:41:49 PM",
+      "dateStarted": "Apr 12, 2018 1:14:58 PM",
+      "dateFinished": "Apr 12, 2018 1:15:52 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "triple_Q_all_5.count()",
+      "user": "anonymous",
+      "dateUpdated": "Apr 11, 2018 2:51:15 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "res1: Long \u003d 60870339\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1523427997121_189991153",
+      "id": "20180411-142637_1674197438",
+      "dateCreated": "Apr 11, 2018 2:26:37 PM",
+      "dateStarted": "Apr 11, 2018 2:51:15 PM",
+      "dateFinished": "Apr 11, 2018 2:51:36 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "triple_Q_all_5.show(200)",
+      "user": "anonymous",
+      "dateUpdated": "Apr 11, 2018 2:53:33 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "+------+--------------------+-------+-------+-----+--------------------+--------------------+--------------------+\n| index|               query|     pv| QLEVEL|QTYPE|                 ans|                 URI|                  op|\n+------+--------------------+-------+-------+-----+--------------------+--------------------+--------------------+\n|158510|\"\"\"先成家再立业,还是先立业再成...|   24.0|    5.2|    2|                null|                null|                null|\n|310479|             0是非负数对吗|  136.0|    5.2|    3|                null|                null|                null|\n| 81270|             12星座有哪么|   14.0|    5.2|    0|                null|                null|                null|\n|154030|          131是联通还是移动|15081.0|    5.2|    2|联通：130.131.132.15...|http://wenwen.sog...|@ACCEPT:false\n@AN...|\n|154030|          131是联通还是移动|15081.0|    5.2|    2|\u003cp\u003e是联通的。\u003c/p\u003e \u003cp\u003e1...|http://wenwen.sog...|@ACCEPT:false\n@AN...|\n|154030|          131是联通还是移动|15081.0|    5.2|    2|           仅限中国使用 联通|http://wenwen.sog...|@ACCEPT:false\n@AN...|\n|154030|          131是联通还是移动|15081.0|    5.2|    2|\u003cpre\u003e131是 中国联通 所属...|http://wenwen.sog...|@ACCEPT:true\n@ANS...|\n|155794|          131是联通还是移动|15081.0|    5.2|    2|联通：130.131.132.15...|http://wenwen.sog...|@ACCEPT:false\n@AN...|\n|155794|          131是联通还是移动|15081.0|    5.2|    2|\u003cp\u003e是联通的。\u003c/p\u003e \u003cp\u003e1...|http://wenwen.sog...|@ACCEPT:false\n@AN...|\n|155794|          131是联通还是移动|15081.0|    5.2|    2|           仅限中国使用 联通|http://wenwen.sog...|@ACCEPT:false\n@AN...|\n|155794|          131是联通还是移动|15081.0|    5.2|    2|\u003cpre\u003e131是 中国联通 所属...|http://wenwen.sog...|@ACCEPT:true\n@ANS...|\n|157313|          131是联通还是移动|15081.0|    5.2|    2|联通：130.131.132.15...|http://wenwen.sog...|@ACCEPT:false\n@AN...|\n|157313|          131是联通还是移动|15081.0|    5.2|    2|\u003cp\u003e是联通的。\u003c/p\u003e \u003cp\u003e1...|http://wenwen.sog...|@ACCEPT:false\n@AN...|\n|157313|          131是联通还是移动|15081.0|    5.2|    2|           仅限中国使用 联通|http://wenwen.sog...|@ACCEPT:false\n@AN...|\n|157313|          131是联通还是移动|15081.0|    5.2|    2|\u003cpre\u003e131是 中国联通 所属...|http://wenwen.sog...|@ACCEPT:true\n@ANS...|\n|158218|          131是联通还是移动|15081.0|    5.2|    2|联通：130.131.132.15...|http://wenwen.sog...|@ACCEPT:false\n@AN...|\n|158218|          131是联通还是移动|15081.0|    5.2|    2|\u003cp\u003e是联通的。\u003c/p\u003e \u003cp\u003e1...|http://wenwen.sog...|@ACCEPT:false\n@AN...|\n|158218|          131是联通还是移动|15081.0|    5.2|    2|           仅限中国使用 联通|http://wenwen.sog...|@ACCEPT:false\n@AN...|\n|158218|          131是联通还是移动|15081.0|    5.2|    2|\u003cpre\u003e131是 中国联通 所属...|http://wenwen.sog...|@ACCEPT:true\n@ANS...|\n|158666|          131是联通还是移动|15081.0|    5.2|    2|联通：130.131.132.15...|http://wenwen.sog...|@ACCEPT:false\n@AN...|\n|158666|          131是联通还是移动|15081.0|    5.2|    2|\u003cp\u003e是联通的。\u003c/p\u003e \u003cp\u003e1...|http://wenwen.sog...|@ACCEPT:false\n@AN...|\n|158666|          131是联通还是移动|15081.0|    5.2|    2|           仅限中国使用 联通|http://wenwen.sog...|@ACCEPT:false\n@AN...|\n|158666|          131是联通还是移动|15081.0|    5.2|    2|\u003cpre\u003e131是 中国联通 所属...|http://wenwen.sog...|@ACCEPT:true\n@ANS...|\n|159899|          131是联通还是移动|15081.0|    5.2|    2|联通：130.131.132.15...|http://wenwen.sog...|@ACCEPT:false\n@AN...|\n|159899|          131是联通还是移动|15081.0|    5.2|    2|\u003cp\u003e是联通的。\u003c/p\u003e \u003cp\u003e1...|http://wenwen.sog...|@ACCEPT:false\n@AN...|\n|159899|          131是联通还是移动|15081.0|    5.2|    2|           仅限中国使用 联通|http://wenwen.sog...|@ACCEPT:false\n@AN...|\n|159899|          131是联通还是移动|15081.0|    5.2|    2|\u003cpre\u003e131是 中国联通 所属...|http://wenwen.sog...|@ACCEPT:true\n@ANS...|\n|161890|          131是联通还是移动|15081.0|    5.2|    2|联通：130.131.132.15...|http://wenwen.sog...|@ACCEPT:false\n@AN...|\n|161890|          131是联通还是移动|15081.0|    5.2|    2|\u003cp\u003e是联通的。\u003c/p\u003e \u003cp\u003e1...|http://wenwen.sog...|@ACCEPT:false\n@AN...|\n|161890|          131是联通还是移动|15081.0|    5.2|    2|           仅限中国使用 联通|http://wenwen.sog...|@ACCEPT:false\n@AN...|\n|161890|          131是联通还是移动|15081.0|    5.2|    2|\u003cpre\u003e131是 中国联通 所属...|http://wenwen.sog...|@ACCEPT:true\n@ANS...|\n|162166|          131是联通还是移动|15081.0|    5.2|    2|联通：130.131.132.15...|http://wenwen.sog...|@ACCEPT:false\n@AN...|\n|162166|          131是联通还是移动|15081.0|    5.2|    2|\u003cp\u003e是联通的。\u003c/p\u003e \u003cp\u003e1...|http://wenwen.sog...|@ACCEPT:false\n@AN...|\n|162166|          131是联通还是移动|15081.0|    5.2|    2|           仅限中国使用 联通|http://wenwen.sog...|@ACCEPT:false\n@AN...|\n|162166|          131是联通还是移动|15081.0|    5.2|    2|\u003cpre\u003e131是 中国联通 所属...|http://wenwen.sog...|@ACCEPT:true\n@ANS...|\n|166222|          131是联通还是移动|15081.0|    5.2|    2|联通：130.131.132.15...|http://wenwen.sog...|@ACCEPT:false\n@AN...|\n|166222|          131是联通还是移动|15081.0|    5.2|    2|\u003cp\u003e是联通的。\u003c/p\u003e \u003cp\u003e1...|http://wenwen.sog...|@ACCEPT:false\n@AN...|\n|166222|          131是联通还是移动|15081.0|    5.2|    2|           仅限中国使用 联通|http://wenwen.sog...|@ACCEPT:false\n@AN...|\n|166222|          131是联通还是移动|15081.0|    5.2|    2|\u003cpre\u003e131是 中国联通 所属...|http://wenwen.sog...|@ACCEPT:true\n@ANS...|\n|168358|          131是联通还是移动|15081.0|    5.2|    2|联通：130.131.132.15...|http://wenwen.sog...|@ACCEPT:false\n@AN...|\n|168358|          131是联通还是移动|15081.0|    5.2|    2|\u003cp\u003e是联通的。\u003c/p\u003e \u003cp\u003e1...|http://wenwen.sog...|@ACCEPT:false\n@AN...|\n|168358|          131是联通还是移动|15081.0|    5.2|    2|           仅限中国使用 联通|http://wenwen.sog...|@ACCEPT:false\n@AN...|\n|168358|          131是联通还是移动|15081.0|    5.2|    2|\u003cpre\u003e131是 中国联通 所属...|http://wenwen.sog...|@ACCEPT:true\n@ANS...|\n|169117|          131是联通还是移动|15081.0|    5.2|    2|联通：130.131.132.15...|http://wenwen.sog...|@ACCEPT:false\n@AN...|\n|169117|          131是联通还是移动|15081.0|    5.2|    2|\u003cp\u003e是联通的。\u003c/p\u003e \u003cp\u003e1...|http://wenwen.sog...|@ACCEPT:false\n@AN...|\n|169117|          131是联通还是移动|15081.0|    5.2|    2|           仅限中国使用 联通|http://wenwen.sog...|@ACCEPT:false\n@AN...|\n|169117|          131是联通还是移动|15081.0|    5.2|    2|\u003cpre\u003e131是 中国联通 所属...|http://wenwen.sog...|@ACCEPT:true\n@ANS...|\n|170763|          131是联通还是移动|15081.0|    5.2|    2|联通：130.131.132.15...|http://wenwen.sog...|@ACCEPT:false\n@AN...|\n|170763|          131是联通还是移动|15081.0|    5.2|    2|\u003cp\u003e是联通的。\u003c/p\u003e \u003cp\u003e1...|http://wenwen.sog...|@ACCEPT:false\n@AN...|\n|170763|          131是联通还是移动|15081.0|    5.2|    2|           仅限中国使用 联通|http://wenwen.sog...|@ACCEPT:false\n@AN...|\n|170763|          131是联通还是移动|15081.0|    5.2|    2|\u003cpre\u003e131是 中国联通 所属...|http://wenwen.sog...|@ACCEPT:true\n@ANS...|\n|172910|          131是联通还是移动|15081.0|    5.2|    2|联通：130.131.132.15...|http://wenwen.sog...|@ACCEPT:false\n@AN...|\n|172910|          131是联通还是移动|15081.0|    5.2|    2|\u003cp\u003e是联通的。\u003c/p\u003e \u003cp\u003e1...|http://wenwen.sog...|@ACCEPT:false\n@AN...|\n|172910|          131是联通还是移动|15081.0|    5.2|    2|           仅限中国使用 联通|http://wenwen.sog...|@ACCEPT:false\n@AN...|\n|172910|          131是联通还是移动|15081.0|    5.2|    2|\u003cpre\u003e131是 中国联通 所属...|http://wenwen.sog...|@ACCEPT:true\n@ANS...|\n|174714|          131是联通还是移动|15081.0|    5.2|    2|联通：130.131.132.15...|http://wenwen.sog...|@ACCEPT:false\n@AN...|\n|174714|          131是联通还是移动|15081.0|    5.2|    2|\u003cp\u003e是联通的。\u003c/p\u003e \u003cp\u003e1...|http://wenwen.sog...|@ACCEPT:false\n@AN...|\n|174714|          131是联通还是移动|15081.0|    5.2|    2|           仅限中国使用 联通|http://wenwen.sog...|@ACCEPT:false\n@AN...|\n|174714|          131是联通还是移动|15081.0|    5.2|    2|\u003cpre\u003e131是 中国联通 所属...|http://wenwen.sog...|@ACCEPT:true\n@ANS...|\n|176877|          131是联通还是移动|15081.0|    5.2|    2|联通：130.131.132.15...|http://wenwen.sog...|@ACCEPT:false\n@AN...|\n|176877|          131是联通还是移动|15081.0|    5.2|    2|\u003cp\u003e是联通的。\u003c/p\u003e \u003cp\u003e1...|http://wenwen.sog...|@ACCEPT:false\n@AN...|\n|176877|          131是联通还是移动|15081.0|    5.2|    2|           仅限中国使用 联通|http://wenwen.sog...|@ACCEPT:false\n@AN...|\n|176877|          131是联通还是移动|15081.0|    5.2|    2|\u003cpre\u003e131是 中国联通 所属...|http://wenwen.sog...|@ACCEPT:true\n@ANS...|\n|176959|          131是联通还是移动|15081.0|    5.2|    2|联通：130.131.132.15...|http://wenwen.sog...|@ACCEPT:false\n@AN...|\n|176959|          131是联通还是移动|15081.0|    5.2|    2|\u003cp\u003e是联通的。\u003c/p\u003e \u003cp\u003e1...|http://wenwen.sog...|@ACCEPT:false\n@AN...|\n|176959|          131是联通还是移动|15081.0|    5.2|    2|           仅限中国使用 联通|http://wenwen.sog...|@ACCEPT:false\n@AN...|\n|176959|          131是联通还是移动|15081.0|    5.2|    2|\u003cpre\u003e131是 中国联通 所属...|http://wenwen.sog...|@ACCEPT:true\n@ANS...|\n|177700|          131是联通还是移动|15081.0|    5.2|    2|联通：130.131.132.15...|http://wenwen.sog...|@ACCEPT:false\n@AN...|\n|177700|          131是联通还是移动|15081.0|    5.2|    2|\u003cp\u003e是联通的。\u003c/p\u003e \u003cp\u003e1...|http://wenwen.sog...|@ACCEPT:false\n@AN...|\n|177700|          131是联通还是移动|15081.0|    5.2|    2|           仅限中国使用 联通|http://wenwen.sog...|@ACCEPT:false\n@AN...|\n|177700|          131是联通还是移动|15081.0|    5.2|    2|\u003cpre\u003e131是 中国联通 所属...|http://wenwen.sog...|@ACCEPT:true\n@ANS...|\n|177965|          131是联通还是移动|15081.0|    5.2|    2|联通：130.131.132.15...|http://wenwen.sog...|@ACCEPT:false\n@AN...|\n|177965|          131是联通还是移动|15081.0|    5.2|    2|\u003cp\u003e是联通的。\u003c/p\u003e \u003cp\u003e1...|http://wenwen.sog...|@ACCEPT:false\n@AN...|\n|177965|          131是联通还是移动|15081.0|    5.2|    2|           仅限中国使用 联通|http://wenwen.sog...|@ACCEPT:false\n@AN...|\n|177965|          131是联通还是移动|15081.0|    5.2|    2|\u003cpre\u003e131是 中国联通 所属...|http://wenwen.sog...|@ACCEPT:true\n@ANS...|\n|178481|          131是联通还是移动|15081.0|    5.2|    2|联通：130.131.132.15...|http://wenwen.sog...|@ACCEPT:false\n@AN...|\n|178481|          131是联通还是移动|15081.0|    5.2|    2|\u003cp\u003e是联通的。\u003c/p\u003e \u003cp\u003e1...|http://wenwen.sog...|@ACCEPT:false\n@AN...|\n|178481|          131是联通还是移动|15081.0|    5.2|    2|           仅限中国使用 联通|http://wenwen.sog...|@ACCEPT:false\n@AN...|\n|178481|          131是联通还是移动|15081.0|    5.2|    2|\u003cpre\u003e131是 中国联通 所属...|http://wenwen.sog...|@ACCEPT:true\n@ANS...|\n|179376|          131是联通还是移动|15081.0|    5.2|    2|联通：130.131.132.15...|http://wenwen.sog...|@ACCEPT:false\n@AN...|\n|179376|          131是联通还是移动|15081.0|    5.2|    2|\u003cp\u003e是联通的。\u003c/p\u003e \u003cp\u003e1...|http://wenwen.sog...|@ACCEPT:false\n@AN...|\n|179376|          131是联通还是移动|15081.0|    5.2|    2|           仅限中国使用 联通|http://wenwen.sog...|@ACCEPT:false\n@AN...|\n|179376|          131是联通还是移动|15081.0|    5.2|    2|\u003cpre\u003e131是 中国联通 所属...|http://wenwen.sog...|@ACCEPT:true\n@ANS...|\n|183234|          131是联通还是移动|15081.0|    5.2|    2|联通：130.131.132.15...|http://wenwen.sog...|@ACCEPT:false\n@AN...|\n|183234|          131是联通还是移动|15081.0|    5.2|    2|\u003cp\u003e是联通的。\u003c/p\u003e \u003cp\u003e1...|http://wenwen.sog...|@ACCEPT:false\n@AN...|\n|183234|          131是联通还是移动|15081.0|    5.2|    2|           仅限中国使用 联通|http://wenwen.sog...|@ACCEPT:false\n@AN...|\n|183234|          131是联通还是移动|15081.0|    5.2|    2|\u003cpre\u003e131是 中国联通 所属...|http://wenwen.sog...|@ACCEPT:true\n@ANS...|\n|183261|          131是联通还是移动|15081.0|    5.2|    2|联通：130.131.132.15...|http://wenwen.sog...|@ACCEPT:false\n@AN...|\n|183261|          131是联通还是移动|15081.0|    5.2|    2|\u003cp\u003e是联通的。\u003c/p\u003e \u003cp\u003e1...|http://wenwen.sog...|@ACCEPT:false\n@AN...|\n|183261|          131是联通还是移动|15081.0|    5.2|    2|           仅限中国使用 联通|http://wenwen.sog...|@ACCEPT:false\n@AN...|\n|183261|          131是联通还是移动|15081.0|    5.2|    2|\u003cpre\u003e131是 中国联通 所属...|http://wenwen.sog...|@ACCEPT:true\n@ANS...|\n|184251|          131是联通还是移动|15081.0|    5.2|    2|联通：130.131.132.15...|http://wenwen.sog...|@ACCEPT:false\n@AN...|\n|184251|          131是联通还是移动|15081.0|    5.2|    2|\u003cp\u003e是联通的。\u003c/p\u003e \u003cp\u003e1...|http://wenwen.sog...|@ACCEPT:false\n@AN...|\n|184251|          131是联通还是移动|15081.0|    5.2|    2|           仅限中国使用 联通|http://wenwen.sog...|@ACCEPT:false\n@AN...|\n|184251|          131是联通还是移动|15081.0|    5.2|    2|\u003cpre\u003e131是 中国联通 所属...|http://wenwen.sog...|@ACCEPT:true\n@ANS...|\n|184853|          131是联通还是移动|15081.0|    5.2|    2|联通：130.131.132.15...|http://wenwen.sog...|@ACCEPT:false\n@AN...|\n|184853|          131是联通还是移动|15081.0|    5.2|    2|\u003cp\u003e是联通的。\u003c/p\u003e \u003cp\u003e1...|http://wenwen.sog...|@ACCEPT:false\n@AN...|\n|184853|          131是联通还是移动|15081.0|    5.2|    2|           仅限中国使用 联通|http://wenwen.sog...|@ACCEPT:false\n@AN...|\n|184853|          131是联通还是移动|15081.0|    5.2|    2|\u003cpre\u003e131是 中国联通 所属...|http://wenwen.sog...|@ACCEPT:true\n@ANS...|\n|188040|          131是联通还是移动|15081.0|    5.2|    2|联通：130.131.132.15...|http://wenwen.sog...|@ACCEPT:false\n@AN...|\n|188040|          131是联通还是移动|15081.0|    5.2|    2|\u003cp\u003e是联通的。\u003c/p\u003e \u003cp\u003e1...|http://wenwen.sog...|@ACCEPT:false\n@AN...|\n|188040|          131是联通还是移动|15081.0|    5.2|    2|           仅限中国使用 联通|http://wenwen.sog...|@ACCEPT:false\n@AN...|\n|188040|          131是联通还是移动|15081.0|    5.2|    2|\u003cpre\u003e131是 中国联通 所属...|http://wenwen.sog...|@ACCEPT:true\n@ANS...|\n|193283|          131是联通还是移动|15081.0|    5.2|    2|联通：130.131.132.15...|http://wenwen.sog...|@ACCEPT:false\n@AN...|\n|193283|          131是联通还是移动|15081.0|    5.2|    2|\u003cp\u003e是联通的。\u003c/p\u003e \u003cp\u003e1...|http://wenwen.sog...|@ACCEPT:false\n@AN...|\n|193283|          131是联通还是移动|15081.0|    5.2|    2|           仅限中国使用 联通|http://wenwen.sog...|@ACCEPT:false\n@AN...|\n|193283|          131是联通还是移动|15081.0|    5.2|    2|\u003cpre\u003e131是 中国联通 所属...|http://wenwen.sog...|@ACCEPT:true\n@ANS...|\n|196253|          131是联通还是移动|15081.0|    5.2|    2|联通：130.131.132.15...|http://wenwen.sog...|@ACCEPT:false\n@AN...|\n|196253|          131是联通还是移动|15081.0|    5.2|    2|\u003cp\u003e是联通的。\u003c/p\u003e \u003cp\u003e1...|http://wenwen.sog...|@ACCEPT:false\n@AN...|\n|196253|          131是联通还是移动|15081.0|    5.2|    2|           仅限中国使用 联通|http://wenwen.sog...|@ACCEPT:false\n@AN...|\n|196253|          131是联通还是移动|15081.0|    5.2|    2|\u003cpre\u003e131是 中国联通 所属...|http://wenwen.sog...|@ACCEPT:true\n@ANS...|\n|196844|          131是联通还是移动|15081.0|    5.2|    2|联通：130.131.132.15...|http://wenwen.sog...|@ACCEPT:false\n@AN...|\n|196844|          131是联通还是移动|15081.0|    5.2|    2|\u003cp\u003e是联通的。\u003c/p\u003e \u003cp\u003e1...|http://wenwen.sog...|@ACCEPT:false\n@AN...|\n|196844|          131是联通还是移动|15081.0|    5.2|    2|           仅限中国使用 联通|http://wenwen.sog...|@ACCEPT:false\n@AN...|\n|196844|          131是联通还是移动|15081.0|    5.2|    2|\u003cpre\u003e131是 中国联通 所属...|http://wenwen.sog...|@ACCEPT:true\n@ANS...|\n|198116|          131是联通还是移动|15081.0|    5.2|    2|联通：130.131.132.15...|http://wenwen.sog...|@ACCEPT:false\n@AN...|\n|198116|          131是联通还是移动|15081.0|    5.2|    2|\u003cp\u003e是联通的。\u003c/p\u003e \u003cp\u003e1...|http://wenwen.sog...|@ACCEPT:false\n@AN...|\n|198116|          131是联通还是移动|15081.0|    5.2|    2|           仅限中国使用 联通|http://wenwen.sog...|@ACCEPT:false\n@AN...|\n|198116|          131是联通还是移动|15081.0|    5.2|    2|\u003cpre\u003e131是 中国联通 所属...|http://wenwen.sog...|@ACCEPT:true\n@ANS...|\n|198566|          131是联通还是移动|15081.0|    5.2|    2|联通：130.131.132.15...|http://wenwen.sog...|@ACCEPT:false\n@AN...|\n|198566|          131是联通还是移动|15081.0|    5.2|    2|\u003cp\u003e是联通的。\u003c/p\u003e \u003cp\u003e1...|http://wenwen.sog...|@ACCEPT:false\n@AN...|\n|198566|          131是联通还是移动|15081.0|    5.2|    2|           仅限中国使用 联通|http://wenwen.sog...|@ACCEPT:false\n@AN...|\n|198566|          131是联通还是移动|15081.0|    5.2|    2|\u003cpre\u003e131是 中国联通 所属...|http://wenwen.sog...|@ACCEPT:true\n@ANS...|\n|198645|          131是联通还是移动|15081.0|    5.2|    2|联通：130.131.132.15...|http://wenwen.sog...|@ACCEPT:false\n@AN...|\n|198645|          131是联通还是移动|15081.0|    5.2|    2|\u003cp\u003e是联通的。\u003c/p\u003e \u003cp\u003e1...|http://wenwen.sog...|@ACCEPT:false\n@AN...|\n|198645|          131是联通还是移动|15081.0|    5.2|    2|           仅限中国使用 联通|http://wenwen.sog...|@ACCEPT:false\n@AN...|\n|198645|          131是联通还是移动|15081.0|    5.2|    2|\u003cpre\u003e131是 中国联通 所属...|http://wenwen.sog...|@ACCEPT:true\n@ANS...|\n|199334|          131是联通还是移动|15081.0|    5.2|    2|联通：130.131.132.15...|http://wenwen.sog...|@ACCEPT:false\n@AN...|\n|199334|          131是联通还是移动|15081.0|    5.2|    2|\u003cp\u003e是联通的。\u003c/p\u003e \u003cp\u003e1...|http://wenwen.sog...|@ACCEPT:false\n@AN...|\n|199334|          131是联通还是移动|15081.0|    5.2|    2|           仅限中国使用 联通|http://wenwen.sog...|@ACCEPT:false\n@AN...|\n|199334|          131是联通还是移动|15081.0|    5.2|    2|\u003cpre\u003e131是 中国联通 所属...|http://wenwen.sog...|@ACCEPT:true\n@ANS...|\n|199971|          131是联通还是移动|15081.0|    5.2|    2|联通：130.131.132.15...|http://wenwen.sog...|@ACCEPT:false\n@AN...|\n|199971|          131是联通还是移动|15081.0|    5.2|    2|\u003cp\u003e是联通的。\u003c/p\u003e \u003cp\u003e1...|http://wenwen.sog...|@ACCEPT:false\n@AN...|\n|199971|          131是联通还是移动|15081.0|    5.2|    2|           仅限中国使用 联通|http://wenwen.sog...|@ACCEPT:false\n@AN...|\n|199971|          131是联通还是移动|15081.0|    5.2|    2|\u003cpre\u003e131是 中国联通 所属...|http://wenwen.sog...|@ACCEPT:true\n@ANS...|\n|376485|           16岁用洗面奶好吗|  103.0|    5.2|    3|                null|                null|                null|\n|242299|            16能办信用卡吗|  224.0|    5.2|    3|                null|                null|                null|\n|186987|         1996是平年还是闰年| 1346.0|    5.2|    2|\u003cpre\u003e能被4整除的年份就是闰年...|http://wenwen.sog...|@ACCEPT:false\n@AN...|\n|193471|         1996是平年还是闰年| 1346.0|    5.2|    2|\u003cpre\u003e能被4整除的年份就是闰年...|http://wenwen.sog...|@ACCEPT:false\n@AN...|\n|170688|        24节气是按农历还是阳历| 1654.0|    5.2|    2|                null|                null|                null|\n|173691|        24节气是按农历还是阳历| 1654.0|    5.2|    2|                null|                null|                null|\n|187673|        24节气是按农历还是阳历| 1654.0|    5.2|    2|                null|                null|                null|\n|198703|        24节气是按农历还是阳历| 1654.0|    5.2|    2|                null|                null|                null|\n| 33480|         2岁半孩子上幼儿园好嘛|    1.0|2.04142|    0|                null|                null|                null|\n|356883|           5个月的婴儿能坐吗|    7.0|    5.2|    3|                null|                null|                null|\n|313830|         9个月的宝宝能吃酸奶吗|   61.0|    5.2|    3|婴儿能吃酸奶吗 答案：酸奶是用新鲜...|http://iask.sina....|@ACCEPT:true\n@ANS...|\n|359977|         9个月的宝宝能吃酸奶吗|   61.0|    5.2|    3|婴儿能吃酸奶吗 答案：酸奶是用新鲜...|http://iask.sina....|@ACCEPT:true\n@ANS...|\n|382286|         BB霜需要用洗面奶洗吗|    1.0|    5.2|    3|                null|                null|                null|\n| 20642|       OPPO和vivo的那个好|    1.0|    5.2|    0|                null|                null|                null|\n| 38786|      QQ的好友分类能不能自己添加|    1.0|2.78039|    0|                null|                null|                null|\n|182788|         TCL和创维电视哪个好|   21.0|    5.2|    2|                null|                null|                null|\n|364819|       bb霜和隔离霜是一样的吗？|    6.0|4.91335|    3|                null|                null|                null|\n|335451|            bb霜是粉底液吗|  258.0|    5.2|    3|                null|                null|                null|\n|373446|            bb霜是粉底液吗|  258.0|    5.2|    3|                null|                null|                null|\n|192446|        cf手游黑龙和雷神哪个好|  230.0|    5.2|    2|                null|                null|                null|\n| 13646|             c罗梅西谁厉害|  624.0|    5.2|    0|他们各有长处，各有短处，很难分。我...|https://zhidao.ba...|@ACCEPT:false\n@AN...|\n| 13646|             c罗梅西谁厉害|  624.0|    5.2|    0|     梅西因为梅西可以当守门员傻大个|http://zhidao.bai...|@ACCEPT:0\n@ANS.CO...|\n| 13646|             c罗梅西谁厉害|  624.0|    5.2|    0|\u003cpre\u003e虽然这头衔什么的都是虚的...|https://zhidao.ba...|@ACCEPT:true\n@ANS...|\n| 13646|             c罗梅西谁厉害|  624.0|    5.2|    0|他们各有长处，各有短处，很难分。我...|http://zhidao.bai...|@ACCEPT:0\n@ANS.CO...|\n| 13646|             c罗梅西谁厉害|  624.0|    5.2|    0|\u003cpre\u003e\u003cp\u003e谁提出这个问题的应...|http://wenwen.sog...|@ACCEPT:false\n@AN...|\n| 13646|             c罗梅西谁厉害|  624.0|    5.2|    0|         c罗速度快，梅西带球好|http://zhidao.bai...|@ACCEPT:0\n@ANS.CO...|\n| 13646|             c罗梅西谁厉害|  624.0|    5.2|    0|   说实话他们两难分伯仲，个人偏向C罗|https://zhidao.ba...|@ACCEPT:false\n@AN...|\n| 13646|             c罗梅西谁厉害|  624.0|    5.2|    0|两人在不同位置，风格也不同。梅西的...|http://zhidao.bai...|@ACCEPT:0\n@ANS.CO...|\n| 13646|             c罗梅西谁厉害|  624.0|    5.2|    0|\u003cpre\u003ec罗 梅西没哈维 什么 ...|http://wenwen.sog...|@ACCEPT:false\n@AN...|\n| 13646|             c罗梅西谁厉害|  624.0|    5.2|    0|   说实话他们两难分伯仲，个人偏向C罗|http://zhidao.bai...|@ACCEPT:0\n@ANS.CO...|\n| 13646|             c罗梅西谁厉害|  624.0|    5.2|    0|   \u003cpre\u003e各有所长吧。\u003c/pre\u003e|http://wenwen.sog...|@ACCEPT:false\n@AN...|\n| 13646|             c罗梅西谁厉害|  624.0|    5.2|    0|              c罗更厉害吧|http://zhidao.bai...|@ACCEPT:0\n@ANS.CO...|\n| 13646|             c罗梅西谁厉害|  624.0|    5.2|    0|\u003cpre\u003e梅西控球能力好，而且为人...|http://wenwen.sog...|@ACCEPT:false\n@AN...|\n| 13646|             c罗梅西谁厉害|  624.0|    5.2|    0|梅西更厉害，毋庸置疑，09,10,...|http://zhidao.bai...|@ACCEPT:1\n@ANS.CO...|\n| 13646|             c罗梅西谁厉害|  624.0|    5.2|    0|\u003cpre\u003e\u003cp\u003e我认为C罗进攻性强...|http://wenwen.sog...|@ACCEPT:false\n@AN...|\n| 13646|             c罗梅西谁厉害|  624.0|    5.2|    0|   \u003cpre\u003e必须是罗罗啊\u003c/pre\u003e|http://wenwen.sog...|@ACCEPT:false\n@AN...|\n| 13646|             c罗梅西谁厉害|  624.0|    5.2|    0|  \u003cpre\u003e既生瑜何生亮 \u003c/pre\u003e|http://wenwen.sog...|@ACCEPT:false\n@AN...|\n| 13646|             c罗梅西谁厉害|  624.0|    5.2|    0|\u003cpre\u003e个人观点C罗\u003cbr\u003e啊\u003c...|http://wenwen.sog...|@ACCEPT:false\n@AN...|\n| 13646|             c罗梅西谁厉害|  624.0|    5.2|    0|\u003cpre\u003e这个现在不好说，因为他们...|http://wenwen.sog...|@ACCEPT:false\n@AN...|\n| 13646|             c罗梅西谁厉害|  624.0|    5.2|    0|\u003cpre\u003e这个……我支持梅西\u003c/pre\u003e|http://wenwen.sog...|@ACCEPT:false\n@AN...|\n| 13646|             c罗梅西谁厉害|  624.0|    5.2|    0|   \u003cpre\u003e个人觉得C罗\u003c/pre\u003e|http://wenwen.sog...|@ACCEPT:false\n@AN...|\n| 13646|             c罗梅西谁厉害|  624.0|    5.2|    0|\u003cpre\u003e个人觉得，两人各有千秋，...|http://wenwen.sog...|@ACCEPT:false\n@AN...|\n| 13646|             c罗梅西谁厉害|  624.0|    5.2|    0|\u003cpre\u003e梅西厉害，因为他在更厉害...|http://wenwen.sog...|@ACCEPT:false\n@AN...|\n| 13646|             c罗梅西谁厉害|  624.0|    5.2|    0|\u003cpre\u003e臀新最厉害，哈。重新定义...|http://wenwen.sog...|@ACCEPT:false\n@AN...|\n| 13646|             c罗梅西谁厉害|  624.0|    5.2|    0|\u003cpre\u003e各有各的优点，没有可比性...|http://wenwen.sog...|@ACCEPT:false\n@AN...|\n| 13646|             c罗梅西谁厉害|  624.0|    5.2|    0|\u003cpre\u003e必须是C罗啊，非常帅\u003c/...|http://wenwen.sog...|@ACCEPT:false\n@AN...|\n| 13646|             c罗梅西谁厉害|  624.0|    5.2|    0|\u003cpre\u003e这个不能说谁厉害，只能说...|http://wenwen.sog...|@ACCEPT:false\n@AN...|\n| 13646|             c罗梅西谁厉害|  624.0|    5.2|    0|         c罗速度快，梅西带球好|https://zhidao.ba...|@ACCEPT:false\n@AN...|\n| 13646|             c罗梅西谁厉害|  624.0|    5.2|    0|\u003cpre\u003e在任意球方面C罗比梅西略...|http://wenwen.sog...|@ACCEPT:false\n@AN...|\n| 13646|             c罗梅西谁厉害|  624.0|    5.2|    0|  \u003cpre\u003e应该是梅西了。\u003c/pre\u003e|http://wenwen.sog...|@ACCEPT:false\n@AN...|\n| 13646|             c罗梅西谁厉害|  624.0|    5.2|    0|\u003cpre\u003e当然是梅西啦！！！梅西技...|http://wenwen.sog...|@ACCEPT:false\n@AN...|\n| 13646|             c罗梅西谁厉害|  624.0|    5.2|    0|\u003cpre\u003e当然梅西了，看世界杯就知...|http://wenwen.sog...|@ACCEPT:false\n@AN...|\n| 13646|             c罗梅西谁厉害|  624.0|    5.2|    0|常常利用小范围快速变向晃开对手。带...|https://zhidao.ba...|@ACCEPT:false\n@AN...|\n| 20911|             c罗梅西谁厉害|  624.0|    5.2|    0|他们各有长处，各有短处，很难分。我...|https://zhidao.ba...|@ACCEPT:false\n@AN...|\n| 20911|             c罗梅西谁厉害|  624.0|    5.2|    0|     梅西因为梅西可以当守门员傻大个|http://zhidao.bai...|@ACCEPT:0\n@ANS.CO...|\n| 20911|             c罗梅西谁厉害|  624.0|    5.2|    0|\u003cpre\u003e虽然这头衔什么的都是虚的...|https://zhidao.ba...|@ACCEPT:true\n@ANS...|\n| 20911|             c罗梅西谁厉害|  624.0|    5.2|    0|他们各有长处，各有短处，很难分。我...|http://zhidao.bai...|@ACCEPT:0\n@ANS.CO...|\n| 20911|             c罗梅西谁厉害|  624.0|    5.2|    0|\u003cpre\u003e\u003cp\u003e谁提出这个问题的应...|http://wenwen.sog...|@ACCEPT:false\n@AN...|\n| 20911|             c罗梅西谁厉害|  624.0|    5.2|    0|         c罗速度快，梅西带球好|http://zhidao.bai...|@ACCEPT:0\n@ANS.CO...|\n| 20911|             c罗梅西谁厉害|  624.0|    5.2|    0|   说实话他们两难分伯仲，个人偏向C罗|https://zhidao.ba...|@ACCEPT:false\n@AN...|\n| 20911|             c罗梅西谁厉害|  624.0|    5.2|    0|两人在不同位置，风格也不同。梅西的...|http://zhidao.bai...|@ACCEPT:0\n@ANS.CO...|\n| 20911|             c罗梅西谁厉害|  624.0|    5.2|    0|\u003cpre\u003ec罗 梅西没哈维 什么 ...|http://wenwen.sog...|@ACCEPT:false\n@AN...|\n| 20911|             c罗梅西谁厉害|  624.0|    5.2|    0|   说实话他们两难分伯仲，个人偏向C罗|http://zhidao.bai...|@ACCEPT:0\n@ANS.CO...|\n| 20911|             c罗梅西谁厉害|  624.0|    5.2|    0|   \u003cpre\u003e各有所长吧。\u003c/pre\u003e|http://wenwen.sog...|@ACCEPT:false\n@AN...|\n| 20911|             c罗梅西谁厉害|  624.0|    5.2|    0|              c罗更厉害吧|http://zhidao.bai...|@ACCEPT:0\n@ANS.CO...|\n+------+--------------------+-------+-------+-----+--------------------+--------------------+--------------------+\nonly showing top 200 rows\n\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1522122351336_2136096724",
+      "id": "20180327-114551_1149172972",
+      "dateCreated": "Mar 27, 2018 11:45:51 AM",
+      "dateStarted": "Apr 11, 2018 2:53:33 PM",
+      "dateFinished": "Apr 11, 2018 2:53:46 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "var triple_Q_all_5_drop \u003d triple_Q_all_5.dropDuplicates(Seq(\"query\",\"ans\",\"URI\"))",
+      "user": "anonymous",
+      "dateUpdated": "Apr 12, 2018 1:15:05 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "triple_Q_all_5_drop: org.apache.spark.sql.Dataset[org.apache.spark.sql.Row] \u003d [index: string, query: string ... 6 more fields]\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1522123102630_893796721",
+      "id": "20180327-115822_1460922438",
+      "dateCreated": "Mar 27, 2018 11:58:22 AM",
+      "dateStarted": "Apr 12, 2018 1:15:06 PM",
+      "dateFinished": "Apr 12, 2018 1:15:53 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "triple_Q_all_5_drop.count()",
+      "user": "anonymous",
+      "dateUpdated": "Apr 12, 2018 1:15:09 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "res0: Long \u003d 3773331\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1522123214442_-403825046",
+      "id": "20180327-120014_1656416775",
+      "dateCreated": "Mar 27, 2018 12:00:14 PM",
+      "dateStarted": "Apr 12, 2018 1:15:53 PM",
+      "dateFinished": "Apr 12, 2018 1:16:46 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "triple_Q_all_5_drop.registerTempTable(\"t_Q_all_5_drop\")",
+      "user": "anonymous",
+      "dateUpdated": "Apr 12, 2018 1:15:11 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "warning: there was one deprecation warning; re-run with -deprecation for details\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1522123361601_1082306713",
+      "id": "20180327-120241_1596048923",
+      "dateCreated": "Mar 27, 2018 12:02:41 PM",
+      "dateStarted": "Apr 12, 2018 1:15:53 PM",
+      "dateFinished": "Apr 12, 2018 1:16:46 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "triple_Q_all_5.registerTempTable(\"t_Q_all_5\")",
+      "user": "anonymous",
+      "dateUpdated": "Mar 27, 2018 11:41:38 AM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "warning: there was one deprecation warning; re-run with -deprecation for details\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1522122065237_654030281",
+      "id": "20180327-114105_2013334287",
+      "dateCreated": "Mar 27, 2018 11:41:05 AM",
+      "dateStarted": "Mar 27, 2018 11:41:26 AM",
+      "dateFinished": "Mar 27, 2018 11:41:26 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "var sql_result \u003d sqlContext.sql(\"SELECT query,ans,URI FROM t_Q_all_5\")\nsql_result.count()",
+      "user": "anonymous",
+      "dateUpdated": "Mar 27, 2018 11:58:11 AM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "sql_result: org.apache.spark.sql.DataFrame \u003d [query: string, ans: string ... 1 more field]\nres123: Long \u003d 2515084\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1522122109894_-1368781866",
+      "id": "20180327-114149_1955348691",
+      "dateCreated": "Mar 27, 2018 11:41:49 AM",
+      "dateStarted": "Mar 27, 2018 11:56:45 AM",
+      "dateFinished": "Mar 27, 2018 11:57:27 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "sql_result.show()",
+      "user": "anonymous",
+      "dateUpdated": "Mar 27, 2018 11:48:59 AM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "+---------------------+\n|count(DISTINCT query)|\n+---------------------+\n|                79909|\n+---------------------+\n\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1522122533195_-1200604437",
+      "id": "20180327-114853_1325302688",
+      "dateCreated": "Mar 27, 2018 11:48:53 AM",
+      "dateStarted": "Mar 27, 2018 11:48:59 AM",
+      "dateFinished": "Mar 27, 2018 11:49:33 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "var sql_result \u003d sqlContext.sql(\"SELECT a.query,a.ans,a.URI,a.pv,a.QLEVEL,a.QTYPE,a.op,t_query._c1 as qpv,t_query._c2 as qclkpv,t_url._c1 as urlpv,t_url._c2 as urlclkpv FROM t_Q_all_5_drop a left join t_url on a.URI\u003dt_url._c0 left join t_query on  a.query\u003dt_query._c0 \")\nsql_result.show()",
+      "user": "anonymous",
+      "dateUpdated": "Apr 12, 2018 3:06:21 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "sql_result: org.apache.spark.sql.DataFrame \u003d [query: string, ans: string ... 9 more fields]\n+--------------------+--------------------+--------------------+------+-------+-----+--------------------+------+------+-----+--------+\n|               query|                 ans|                 URI|    pv| QLEVEL|QTYPE|                  op|   qpv|qclkpv|urlpv|urlclkpv|\n+--------------------+--------------------+--------------------+------+-------+-----+--------------------+------+------+-----+--------+\n|\"\"\"先成家再立业,还是先立业再成...|                null|                null|  24.0|    5.2|    2|                null|  null|  null| null|    null|\n|     \"\"\"韦博英语,怎么样？\"\"\"|                null|                null|   5.0|    5.2|    1|                null|  null|  null| null|    null|\n|        .四个月做无痛人流可以吗|                null|                null|   4.0|    5.2|    3|                null|   4.0|   1.0| null|    null|\n|                0倒数吗|                null|                null|   6.0|    5.2|    0|                null|   6.0|   0.0| null|    null|\n|            0是基数还是偶数|\u003cpre\u003e它好像是他们之间的数，既...|http://wenwen.sog...| 518.0|    5.2|    2|@ACCEPT:false\n@AN...| 518.0| 111.0| null|    null|\n|            0是基数还是偶数|\u003cpre\u003e呵呵，记得小学老是就已经...|http://wenwen.sog...| 518.0|    5.2|    2|@ACCEPT:true\n@ANS...| 518.0| 111.0| null|    null|\n|             0是非负数对吗|                null|                null| 136.0|    5.2|    3|                null| 136.0|  24.0| null|    null|\n|            1/a是单项式吗|                null|                null| 135.0|5.00061|    0|                null| 135.0|  75.0| null|    null|\n|       10个月宝宝趴着睡觉好不好|趴着睡压迫心脏，对心脏不好的，我家...|http://www.babytr...| 316.0|4.98922|    3|@ACCEPT:true\n@ANS...| 316.0|  59.0| null|    null|\n|          12个人还是13个人|                 12个|http://zhidao.bai...| 352.0|    5.2|    2|@ACCEPT:0\n@ANS.CO...| 352.0| 141.0| null|    null|\n|          12个人还是13个人|                  12|http://zhidao.bai...| 352.0|    5.2|    2|@ACCEPT:0\n@ANS.CO...| 352.0| 141.0| null|    null|\n|          12个人还是13个人|             12个人啊。。|http://zhidao.bai...| 352.0|    5.2|    2|@ACCEPT:0\n@ANS.CO...| 352.0| 141.0| null|    null|\n|         12岁男孩遗精是否正常|是遗精的原因。这个年龄该是正常现象...|http://club.xywy....| 156.0|4.79012|    3|@ACCEPT:false\n@AN...| 156.0|  20.0| null|    null|\n|         12岁男孩遗精是否正常|未婚男子，每月有1-2次遗精，符合...|http://ask.yaolan...| 156.0|4.79012|    3|@ACCEPT:true\n@ANS...| 156.0|  20.0| null|    null|\n|         12岁男孩遗精是否正常|生理性的已经是不会导致孩子发育异常...|http://ask.yaolan...| 156.0|4.79012|    3|@ACCEPT:false\n@AN...| 156.0|  20.0| null|    null|\n|         12岁男孩遗精是否正常|病情分析:当然太频繁当然是不正常的...|http://ask.yaolan...| 156.0|4.79012|    3|@ACCEPT:false\n@AN...| 156.0|  20.0| null|    null|\n|         12岁男孩遗精是否正常|你好，太频繁当然是不正常的，如果青...|http://ask.yaolan...| 156.0|4.79012|    3|@ACCEPT:false\n@AN...| 156.0|  20.0| null|    null|\n|             12星座有哪么|                null|                null|  14.0|    5.2|    0|                null|  14.0|   0.0| null|    null|\n|    130开头的手机号是联通还是移动|                null|                null| 504.0|    5.2|    2|                null| 504.0|  57.0| null|    null|\n|          130是移动还是联通|\u003cpre\u003e130.131.132....|http://wenwen.sog...|1068.0|    5.2|    2|@ACCEPT:false\n@AN...|1068.0|  98.0| null|    null|\n+--------------------+--------------------+--------------------+------+-------+-----+--------------------+------+------+-----+--------+\nonly showing top 20 rows\n\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1522123436362_-723273379",
+      "id": "20180327-120356_426859461",
+      "dateCreated": "Mar 27, 2018 12:03:56 PM",
+      "dateStarted": "Apr 12, 2018 3:06:21 PM",
+      "dateFinished": "Apr 12, 2018 3:07:48 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "sql_result.count()",
+      "user": "anonymous",
+      "dateUpdated": "Apr 11, 2018 7:25:07 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "res81: Long \u003d 2935023\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1523432458180_-1362496971",
+      "id": "20180411-154058_897841834",
+      "dateCreated": "Apr 11, 2018 3:40:58 PM",
+      "dateStarted": "Apr 11, 2018 7:25:07 PM",
+      "dateFinished": "Apr 11, 2018 7:25:46 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "sql_result \u003d  sql_result.filter(\"QTYPE \u003c\u003e \u00270\u0027\") \nsql_result.count()",
+      "user": "anonymous",
+      "dateUpdated": "Apr 12, 2018 3:06:29 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "sql_result: org.apache.spark.sql.DataFrame \u003d [query: string, ans: string ... 9 more fields]\nres23: Long \u003d 2935023\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1523432312658_-1791723502",
+      "id": "20180411-153832_752827931",
+      "dateCreated": "Apr 11, 2018 3:38:32 PM",
+      "dateStarted": "Apr 12, 2018 3:06:29 PM",
+      "dateFinished": "Apr 12, 2018 3:08:55 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "sql_result \u003d  sql_result.filter(\"op is Not Null\") \nsql_result.count()",
+      "user": "anonymous",
+      "dateUpdated": "Apr 12, 2018 1:17:23 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "sql_result: org.apache.spark.sql.DataFrame \u003d [query: string, ans: string ... 9 more fields]\nres10: Long \u003d 2880720\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1523433291977_-1924991641",
+      "id": "20180411-155451_1847504924",
+      "dateCreated": "Apr 11, 2018 3:54:51 PM",
+      "dateStarted": "Apr 12, 2018 1:18:30 PM",
+      "dateFinished": "Apr 12, 2018 1:21:43 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "sql_result.select(\"query\").distinct.count()",
+      "user": "anonymous",
+      "dateUpdated": "Apr 11, 2018 3:52:04 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "res19: Long \u003d 80800\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1523433080500_1176729754",
+      "id": "20180411-155120_651001345",
+      "dateCreated": "Apr 11, 2018 3:51:20 PM",
+      "dateStarted": "Apr 11, 2018 3:52:04 PM",
+      "dateFinished": "Apr 11, 2018 3:53:29 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "sql_result.where(\"urlpv is not null\").count()",
+      "user": "anonymous",
+      "dateUpdated": "Apr 11, 2018 9:05:10 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "res19: Long \u003d 28022\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1523451871200_-478748400",
+      "id": "20180411-210431_389147441",
+      "dateCreated": "Apr 11, 2018 9:04:31 PM",
+      "dateStarted": "Apr 11, 2018 9:05:10 PM",
+      "dateFinished": "Apr 11, 2018 9:07:25 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "sql_result \u003d sql_result.na.fill(\"null\")",
+      "user": "anonymous",
+      "dateUpdated": "Apr 12, 2018 1:23:23 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "sql_result: org.apache.spark.sql.DataFrame \u003d [query: string, ans: string ... 9 more fields]\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1523452581566_-139577182",
+      "id": "20180411-211621_1174594002",
+      "dateCreated": "Apr 11, 2018 9:16:21 PM",
+      "dateStarted": "Apr 12, 2018 1:23:23 PM",
+      "dateFinished": "Apr 12, 2018 1:23:23 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "sql_result.registerTempTable(\"sql_result\")",
+      "user": "anonymous",
+      "dateUpdated": "Apr 12, 2018 1:23:33 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "warning: there was one deprecation warning; re-run with -deprecation for details\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1523431823218_-1459777670",
+      "id": "20180411-153023_2037448767",
+      "dateCreated": "Apr 11, 2018 3:30:23 PM",
+      "dateStarted": "Apr 12, 2018 1:23:33 PM",
+      "dateFinished": "Apr 12, 2018 1:23:33 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "var sql_result2 \u003d sqlContext.sql(\"SELECT CONCAT(op,CONCAT(\u0027\\n@QLEVEL:\u0027,QLEVEL),CONCAT(\u0027\\n@QTYPE:\u0027,QTYPE),CONCAT(\u0027\\n@qpv:\u0027,qpv),CONCAT(\u0027\\n@qclkpv:\u0027,qclkpv),CONCAT(\u0027\\n@urlpv:\u0027,urlpv),CONCAT(\u0027\\n@urlclkpv:\u0027,urlclkpv)) as line FROM sql_result\")\n",
+      "user": "anonymous",
+      "dateUpdated": "Apr 12, 2018 1:23:37 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala",
+        "tableHide": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "sql_result2: org.apache.spark.sql.DataFrame \u003d [line: string]\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1522123977254_1425530615",
+      "id": "20180327-121257_1711453893",
+      "dateCreated": "Mar 27, 2018 12:12:57 PM",
+      "dateStarted": "Apr 12, 2018 1:23:37 PM",
+      "dateFinished": "Apr 12, 2018 1:23:38 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "sql_result2.show()",
+      "user": "anonymous",
+      "dateUpdated": "Apr 11, 2018 9:27:02 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "+--------------------+\n|                line|\n+--------------------+\n|@ACCEPT:true\n@ANS...|\n|@ACCEPT:false\n@AN...|\n|@ACCEPT:true\n@ANS...|\n|@ACCEPT:0\n@ANS.CO...|\n|@ACCEPT:0\n@ANS.CO...|\n|@ACCEPT:0\n@ANS.CO...|\n|@ACCEPT:false\n@AN...|\n|@ACCEPT:false\n@AN...|\n|@ACCEPT:true\n@ANS...|\n|@ACCEPT:false\n@AN...|\n|@ACCEPT:false\n@AN...|\n|@ACCEPT:false\n@AN...|\n|@ACCEPT:false\n@AN...|\n|@ACCEPT:false\n@AN...|\n|@ACCEPT:false\n@AN...|\n|@ACCEPT:false\n@AN...|\n|@ACCEPT:true\n@ANS...|\n|@ACCEPT:false\n@AN...|\n|@ACCEPT:false\n@AN...|\n|@ACCEPT:false\n@AN...|\n+--------------------+\nonly showing top 20 rows\n\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1523451469472_1489443083",
+      "id": "20180411-205749_919625297",
+      "dateCreated": "Apr 11, 2018 8:57:49 PM",
+      "dateStarted": "Apr 11, 2018 9:27:02 PM",
+      "dateFinished": "Apr 11, 2018 9:29:28 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "sql_result2.count()",
+      "user": "anonymous",
+      "dateUpdated": "Apr 11, 2018 8:57:35 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "res12: Long \u003d 2880720\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1523450016552_-2120894979",
+      "id": "20180411-203336_251335598",
+      "dateCreated": "Apr 11, 2018 8:33:36 PM",
+      "dateStarted": "Apr 11, 2018 8:57:35 PM",
+      "dateFinished": "Apr 11, 2018 8:58:32 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "sql_result2.distinct.count()",
+      "user": "anonymous",
+      "dateUpdated": "Apr 11, 2018 9:00:21 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "res16: Long \u003d 28023\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1522125500880_22557168",
+      "id": "20180327-123820_76378015",
+      "dateCreated": "Mar 27, 2018 12:38:20 PM",
+      "dateStarted": "Apr 11, 2018 9:00:21 PM",
+      "dateFinished": "Apr 11, 2018 9:01:20 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "\nsql_result2.where(\"op is null\" ).count()",
+      "user": "anonymous",
+      "dateUpdated": "Mar 27, 2018 1:14:29 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "res142: Long \u003d 36798\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1522125992703_154233761",
+      "id": "20180327-124632_1150332489",
+      "dateCreated": "Mar 27, 2018 12:46:32 PM",
+      "dateStarted": "Mar 27, 2018 1:14:29 PM",
+      "dateFinished": "Mar 27, 2018 1:15:39 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "s",
+      "user": "anonymous",
+      "dateUpdated": "Apr 23, 2018 4:16:37 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "ERROR",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "saveOptions: scala.collection.immutable.Map[String,String] \u003d Map(Header -\u003e true, path -\u003e /user/web_research/liuqin/viewpoint/5_sample_allpcv.csv, delimiter -\u003e @@)\norg.apache.spark.sql.AnalysisException: path viewfs://nsX/user/web_research/liuqin/viewpoint/5_sample_allpcv.csv already exists.;\n  at org.apache.spark.sql.execution.datasources.InsertIntoHadoopFsRelationCommand.run(InsertIntoHadoopFsRelationCommand.scala:106)\n  at org.apache.spark.sql.execution.command.ExecutedCommandExec.sideEffectResult$lzycompute(commands.scala:58)\n  at org.apache.spark.sql.execution.command.ExecutedCommandExec.sideEffectResult(commands.scala:56)\n  at org.apache.spark.sql.execution.command.ExecutedCommandExec.doExecute(commands.scala:74)\n  at org.apache.spark.sql.execution.SparkPlan$$anonfun$execute$1.apply(SparkPlan.scala:117)\n  at org.apache.spark.sql.execution.SparkPlan$$anonfun$execute$1.apply(SparkPlan.scala:117)\n  at org.apache.spark.sql.execution.SparkPlan$$anonfun$executeQuery$1.apply(SparkPlan.scala:138)\n  at org.apache.spark.rdd.RDDOperationScope$.withScope(RDDOperationScope.scala:151)\n  at org.apache.spark.sql.execution.SparkPlan.executeQuery(SparkPlan.scala:135)\n  at org.apache.spark.sql.execution.SparkPlan.execute(SparkPlan.scala:116)\n  at org.apache.spark.sql.execution.QueryExecution.toRdd$lzycompute(QueryExecution.scala:92)\n  at org.apache.spark.sql.execution.QueryExecution.toRdd(QueryExecution.scala:92)\n  at org.apache.spark.sql.execution.datasources.DataSource.writeInFileFormat(DataSource.scala:438)\n  at org.apache.spark.sql.execution.datasources.DataSource.write(DataSource.scala:474)\n  at org.apache.spark.sql.execution.datasources.SaveIntoDataSourceCommand.run(SaveIntoDataSourceCommand.scala:48)\n  at org.apache.spark.sql.execution.command.ExecutedCommandExec.sideEffectResult$lzycompute(commands.scala:58)\n  at org.apache.spark.sql.execution.command.ExecutedCommandExec.sideEffectResult(commands.scala:56)\n  at org.apache.spark.sql.execution.command.ExecutedCommandExec.doExecute(commands.scala:74)\n  at org.apache.spark.sql.execution.SparkPlan$$anonfun$execute$1.apply(SparkPlan.scala:117)\n  at org.apache.spark.sql.execution.SparkPlan$$anonfun$execute$1.apply(SparkPlan.scala:117)\n  at org.apache.spark.sql.execution.SparkPlan$$anonfun$executeQuery$1.apply(SparkPlan.scala:138)\n  at org.apache.spark.rdd.RDDOperationScope$.withScope(RDDOperationScope.scala:151)\n  at org.apache.spark.sql.execution.SparkPlan.executeQuery(SparkPlan.scala:135)\n  at org.apache.spark.sql.execution.SparkPlan.execute(SparkPlan.scala:116)\n  at org.apache.spark.sql.execution.QueryExecution.toRdd$lzycompute(QueryExecution.scala:92)\n  at org.apache.spark.sql.execution.QueryExecution.toRdd(QueryExecution.scala:92)\n  at org.apache.spark.sql.DataFrameWriter.runCommand(DataFrameWriter.scala:610)\n  at org.apache.spark.sql.DataFrameWriter.save(DataFrameWriter.scala:233)\n  ... 46 elided\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1522124449013_-1771625476",
+      "id": "20180327-122049_1179762766",
+      "dateCreated": "Mar 27, 2018 12:20:49 PM",
+      "dateStarted": "Apr 11, 2018 5:31:04 PM",
+      "dateFinished": "Apr 11, 2018 5:31:04 PM",
+      "status": "ERROR",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "var sql_result2 \u003d sqlContext.sql(\"SELECT pv,query,QLEVEL,QTYPE,qpv,qclkpv,urlpv,urlclkpv,(case when op is null then \u0027null\u0027 else op end) as op FROM sql_result\")\nsql_result2.show()",
+      "user": "anonymous",
+      "dateUpdated": "Mar 27, 2018 1:22:36 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "sql_result2: org.apache.spark.sql.DataFrame \u003d [pv: string, query: string ... 7 more fields]\n+-----+--------------------+-------+-----+-----+------+-----+--------+--------------------+\n|   pv|               query| QLEVEL|QTYPE|  qpv|qclkpv|urlpv|urlclkpv|                  op|\n+-----+--------------------+-------+-----+-----+------+-----+--------+--------------------+\n|  2.0|  \"\"\"\\\"\"你可以做到吗\\\"\"\"\"\"|    5.2|    0| null|  null| null|    null|                null|\n|  4.0|   \"\"\"\\\"\"要不要上学\\\"\"\"\"\"|2.04786|    0| null|  null| null|    null|                null|\n|  2.0|\"\"\"中国人寿,平安人寿,和新华保...|    5.2|    2| null|  null| null|    null|                null|\n|924.0| \"\"\"武汉友好医院怎么样,正规吗\"\"\"|2.30019|    1| null|  null| null|    null|                null|\n|518.0|            0是基数还是偶数|    5.2|    2|518.0| 111.0| null|    null|@ACCEPT:false\n@AN...|\n|518.0|            0是基数还是偶数|    5.2|    2|518.0| 111.0| null|    null|@ACCEPT:true\n@ANS...|\n|511.0|           0是最小的一位数吗|4.24735|    3|511.0| 139.0| null|    null|@ACCEPT:1\n@ANS.CO...|\n|511.0|           0是最小的一位数吗|4.24735|    3|511.0| 139.0| null|    null|@ACCEPT:0\n@ANS.CO...|\n|511.0|           0是最小的一位数吗|4.24735|    3|511.0| 139.0|  182|      25|@ACCEPT:0\n@ANS.CO...|\n|511.0|           0是最小的一位数吗|4.24735|    3|511.0| 139.0|  182|      25|@ACCEPT:0\n@ANS.CO...|\n|511.0|           0是最小的一位数吗|4.24735|    3|511.0| 139.0|  182|      25|@ACCEPT:1\n@ANS.CO...|\n|511.0|           0是最小的一位数吗|4.24735|    3|511.0| 139.0|  182|      25|@ACCEPT:0\n@ANS.CO...|\n|511.0|           0是最小的一位数吗|4.24735|    3|511.0| 139.0| null|    null|@ACCEPT:false\n@AN...|\n|511.0|           0是最小的一位数吗|4.24735|    3|511.0| 139.0| null|    null|@ACCEPT:true\n@ANS...|\n|511.0|           0是最小的一位数吗|4.24735|    3|511.0| 139.0| null|    null|@ACCEPT:false\n@AN...|\n|511.0|           0是最小的一位数吗|4.24735|    3|511.0| 139.0| null|    null|@ACCEPT:false\n@AN...|\n|511.0|           0是最小的一位数吗|4.24735|    3|511.0| 139.0| null|    null|@ACCEPT:false\n@AN...|\n|511.0|           0是最小的一位数吗|4.24735|    3|511.0| 139.0| null|    null|@ACCEPT:false\n@AN...|\n|511.0|           0是最小的一位数吗|4.24735|    3|511.0| 139.0| null|    null|@ACCEPT:false\n@AN...|\n|511.0|           0是最小的一位数吗|4.24735|    3|511.0| 139.0| null|    null|@ACCEPT:false\n@AN...|\n+-----+--------------------+-------+-----+-----+------+-----+--------+--------------------+\nonly showing top 20 rows\n\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1522124964778_1261113139",
+      "id": "20180327-122924_763327106",
+      "dateCreated": "Mar 27, 2018 12:29:24 PM",
+      "dateStarted": "Mar 27, 2018 1:22:36 PM",
+      "dateFinished": "Mar 27, 2018 1:23:43 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "val saveOptions\u003dMap(\"path\"-\u003e\"/user/web_research/liuqin/viewpoint/40_sample_allpcv.csv\",\"quote\"-\u003e\"\\t\")\r\n.write.format(\"com.databricks.spark.csv\").options(saveOptions).save()",
+      "user": "anonymous",
+      "dateUpdated": "Apr 11, 2018 7:38:13 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "saveOptions: scala.collection.immutable.Map[String,String] \u003d Map(path -\u003e /user/web_research/liuqin/viewpoint/40_sample_allpcv.csv, quote -\u003e \"\t\")\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1523434713812_-739218553",
+      "id": "20180411-161833_2125478411",
+      "dateCreated": "Apr 11, 2018 4:18:33 PM",
+      "dateStarted": "Apr 11, 2018 7:33:29 PM",
+      "dateFinished": "Apr 11, 2018 7:35:19 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "sql_result2.map(t \u003d\u003et.getAs[String](\"line\")).rdd.take(10)",
+      "user": "anonymous",
+      "dateUpdated": "Apr 11, 2018 10:05:45 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "res30: Array[String] \u003d\nArray(\"@ACCEPT:false\n@ANS.CONTENT:\u003cpre\u003e它好像是他们之间的数，既不是奇数，也不是偶数。\u003c/pre\u003e\n@ANS.DATE:2008-07-25 21:42:29\n@ANS.ID:5c8e500525b46e374ee6caf86a8a56de\n@ANS.QACOV:NO\n@ANS.QACOV_LEVEL:0.5004\n@ASK.DATE:2008-07-25 21:42:29\n@ASK.HTYPE:ALT\n@ASK.ID:fd2097709c850be3420f3796325efcf4\n@ASK.TITLE:0是基数还是偶数\n@ASK.VIEWS:基|偶\n@AWR.NAME:馥╰☆╮郁\n@GROUP.EXT:0是基数还是偶数？\n@GROUP.ID:fd2097709c850be3420f3796325efcf4\n@ID:03871945d960c9d38c9edd3dfe7373e4\n@OP_NUM:0\n@QER.NAME:人见人爱\n@SOURCE:sogou_wenwen\n@SP_NUM:0\n@URI:http://wenwen.sogou.com/z/q78304533.htm\n@QLEVEL:5.2\n@QTYPE:2\n@qpv:518.0\n@qclkpv:111.0\n@urlpv:\u0027null\u0027\n@urlclkpv:\u0027null\u0027\n@\n\", \"@ACCEPT:true\n@ANS.CONTENT:\u003cpre\u003e呵呵，记得小学老是就已经说过了，既不是奇数也不是偶数。 \u003cbr/\u003e这是数学上的定义问题。0是不是自然数？如果把0规定为自然数，就要对关于自然数的众多理论进行修改，这显然是不妥的，而且从历史上看，0的出现也要比自然数晚得多，它们并不是同一类数，故笔者认为，0以不归入自然数为宜。 \u003cbr/..."
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1523448241193_-1684132169",
+      "id": "20180411-200401_1250508508",
+      "dateCreated": "Apr 11, 2018 8:04:01 PM",
+      "dateStarted": "Apr 11, 2018 10:06:22 PM",
+      "dateFinished": "Apr 11, 2018 10:07:48 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "saveAsTextFile(des)",
+      "user": "anonymous",
+      "dateUpdated": "Apr 11, 2018 9:23:05 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "jobName": "paragraph_1523452973687_1293026863",
+      "id": "20180411-212253_18994011",
+      "dateCreated": "Apr 11, 2018 9:22:53 PM",
+      "status": "READY",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "// sc.hadoopConfiguration.set(\"textinputformat.record.delimiter\",\"\\n\")\nvar lograw \u003d sc.textFile(\"/user/web_research/liuqin/viewpoint/40_sample_allpcv_atline.csv\")\nlograw.count()",
+      "user": "anonymous",
+      "dateUpdated": "Apr 11, 2018 10:12:59 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "lograw: org.apache.spark.rdd.RDD[String] \u003d /user/web_research/liuqin/viewpoint/40_sample_allpcv_atline.csv MapPartitionsRDD[577] at textFile at \u003cconsole\u003e:28\nres33: Long \u003d 2880720\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1523438039561_-139399952",
+      "id": "20180411-171359_1985211278",
+      "dateCreated": "Apr 11, 2018 5:13:59 PM",
+      "dateStarted": "Apr 11, 2018 10:12:59 PM",
+      "dateFinished": "Apr 11, 2018 10:13:16 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "lograw.take(1)",
+      "user": "anonymous",
+      "dateUpdated": "Apr 11, 2018 7:40:42 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "res95: Array[String] \u003d Array(\"\t@ACCEPT:true\")\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1523446837430_-1420800289",
+      "id": "20180411-194037_1743813974",
+      "dateCreated": "Apr 11, 2018 7:40:37 PM",
+      "dateStarted": "Apr 11, 2018 7:40:42 PM",
+      "dateFinished": "Apr 11, 2018 7:40:53 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "\r\nvar lograw2 \u003d sql_result2.map(t \u003d\u003et.getAs[String](\"line\")).rdd.map(e \u003d\u003e {\r\n      var m \u003d e.toString.split(\"\\n\")\r\n       .map(_.split(\":\", 2))\r\n         .filter(_.size \u003d\u003d 2)\r\n         .map(e \u003d\u003e (e(0), e(1).trim))\r\n           .toMap\r\n         m\r\n       }).map(m \u003d\u003e{\r\n      var o \u003d \"\"\r\n      for((k,v)\u003c- m ) o \u003d o+k+\":\"+v+\"\\t\"\r\n      o.trim()\r\n    }).map(t \u003d\u003et replaceAll (\"[\\\\n]+\", \"\"))",
+      "user": "anonymous",
+      "dateUpdated": "Apr 12, 2018 1:32:08 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "lograw2: org.apache.spark.rdd.RDD[String] \u003d MapPartitionsRDD[226] at map at \u003cconsole\u003e:41\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1523445251514_646203263",
+      "id": "20180411-191411_1249169950",
+      "dateCreated": "Apr 11, 2018 7:14:11 PM",
+      "dateStarted": "Apr 12, 2018 1:32:08 PM",
+      "dateFinished": "Apr 12, 2018 1:33:26 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "lograw2.saveAsTextFile(\"/user/web_research/liuqin/viewpoint/40_sample_allpcv_atline.csv\")",
+      "user": "anonymous",
+      "dateUpdated": "Apr 12, 2018 1:33:51 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": []
+      },
+      "apps": [],
+      "jobName": "paragraph_1523445434439_930592352",
+      "id": "20180411-191714_50641256",
+      "dateCreated": "Apr 11, 2018 7:17:14 PM",
+      "dateStarted": "Apr 12, 2018 1:33:52 PM",
+      "dateFinished": "Apr 12, 2018 1:34:20 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "lograw2.take(1)",
+      "user": "anonymous",
+      "dateUpdated": "Apr 12, 2018 1:32:13 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "res19: Array[String] \u003d Array(@ANS.DATE:2008-07-25 21:42:29\t@QLEVEL:5.2\t@qpv:518.0\t@urlclkpv:null\t@GROUP.EXT:0是基数还是偶数？\t@ASK.TITLE:0是基数还是偶数\t@ASK.HTYPE:ALT\t@SOURCE:sogou_wenwen\t@ANS.ID:5c8e500525b46e374ee6caf86a8a56de\t@QER.NAME:人见人爱\t@ANS.CONTENT:\u003cpre\u003e它好像是他们之间的数，既不是奇数，也不是偶数。\u003c/pre\u003e\t@ACCEPT:false\t@urlpv:null\t@ID:03871945d960c9d38c9edd3dfe7373e4\t@ANS.QACOV_LEVEL:0.5004\t@AWR.NAME:馥╰☆╮郁\t@GROUP.ID:fd2097709c850be3420f3796325efcf4\t@QTYPE:2\t@ASK.ID:fd2097709c850be3420f3796325efcf4\t@URI:http://wenwen.sogou.com/z/q78304533.htm\t@SP_NUM:0\t@ANS.QACOV:NO\t@ASK.DATE:2008-07-25 21:42:29\t@OP_NUM:0\t@ASK.VIEWS:基|偶\t@qclkpv:111.0)\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1523445283013_91257431",
+      "id": "20180411-191443_814575826",
+      "dateCreated": "Apr 11, 2018 7:14:43 PM",
+      "dateStarted": "Apr 12, 2018 1:32:13 PM",
+      "dateFinished": "Apr 12, 2018 1:33:29 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "lograw2.count()",
+      "user": "anonymous",
+      "dateUpdated": "Apr 12, 2018 1:34:09 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "res21: Long \u003d 2880720\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1523511244378_472473483",
+      "id": "20180412-133404_1256628683",
+      "dateCreated": "Apr 12, 2018 1:34:04 PM",
+      "dateStarted": "Apr 12, 2018 1:34:09 PM",
+      "dateFinished": "Apr 12, 2018 1:34:46 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "\nvar  allpcv_anscls \u003d sc.textFile(\"hdfs://master003.diablo.hadoop.nm.ted:8020/user/webkm/liuqin/40_sample_allpcv_anscls\")",
+      "user": "anonymous",
+      "dateUpdated": "Apr 12, 2018 3:27:24 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "allpcv_anscls: org.apache.spark.rdd.RDD[String] \u003d hdfs://master003.diablo.hadoop.nm.ted:8020/user/webkm/liuqin/40_sample_allpcv_anscls MapPartitionsRDD[293] at textFile at \u003cconsole\u003e:28\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1523517835619_324368630",
+      "id": "20180412-152355_497170870",
+      "dateCreated": "Apr 12, 2018 3:23:55 PM",
+      "dateStarted": "Apr 12, 2018 3:27:24 PM",
+      "dateFinished": "Apr 12, 2018 3:27:24 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "allpcv_anscls.count()",
+      "user": "anonymous",
+      "dateUpdated": "Apr 17, 2018 5:33:25 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "res56: Long \u003d 1647858\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1523517901326_-493314728",
+      "id": "20180412-152501_1971938356",
+      "dateCreated": "Apr 12, 2018 3:25:01 PM",
+      "dateStarted": "Apr 17, 2018 5:33:25 PM",
+      "dateFinished": "Apr 17, 2018 5:34:34 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "allpcv_anscls.take(1)",
+      "user": "anonymous",
+      "dateUpdated": "Apr 12, 2018 4:04:33 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "res44: Array[String] \u003d Array(@ID:33f65ef0c10bcf6e6fd2f651826d0a7f\t@ASK.HTYPE:UN\t@GROUP.EXT:鼻炎传染吗？\t@ANS.QACOV:OP\t@ACCEPT:false\t@SP_NUM:0\t@QER.URI:http://iask.sina.com.cn/user/see/53cf21d711e0ee083713afa4-IA-1.html\t@ANS.CONTENT:鼻炎不会传染，但是会遗传。\t@qpv:415.0\t@AWR.NAME:xinxin\t@GROUP.ID:9a4baad758100ac19c25fa7b9798413d\t@OP_NUM:0\t@SOURCE:sina_iask\t@urlclkpv:null\t@qclkpv:49.0\t@ANS.ID:a717a62546d910c510e52f97eb479f92\t@QTYPE:3\t@QER.NAME:yilan300\t@ANS.QACOV_LEVEL:0.9821\t@URI:http://iask.sina.com.cn/b/1650560.html\t@ASK.DATE:2005-06-24 23:33:37\t@ANS.DATE:2005-06-25 23:33:37\t@AWR.URI:http://iask.sina.com.cn/user/pcsee/53cf23c711e0ee083717bbab-IA-1.html\t@urlpv:null\t@ASK.EXT:我是过敏性鼻炎，听别人说鼻炎也传染是真的吗？我女儿四岁了，真的怕传上她。\t@ASK.TITLE:鼻炎传染吗？\t@QLEVEL:5.2\t@ASK.ID:84a3c12331d88b1fc735ec7d0fd21d0a)\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1523520267550_-1152031157",
+      "id": "20180412-160427_1005480677",
+      "dateCreated": "Apr 12, 2018 4:04:27 PM",
+      "dateStarted": "Apr 12, 2018 4:04:33 PM",
+      "dateFinished": "Apr 12, 2018 4:04:44 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "def lineToM(line : String)\u003d {\r\n    val regex \u003d \"@[A-Za-z._]{1,30}:\".r\r\n    val tags \u003d regex findAllIn line toArray\r\n    val contents \u003d line.split(\"@[A-Za-z._]{1,30}:\",-1)\r\n    \r\n    var M:Map[String,String] \u003d Map()\r\n    \r\n    for(i\u003c-0 until tags.length){\r\n      var tag \u003d tags(i)\r\n      var content \u003d contents(i+1)\r\n      M +\u003d (tag -\u003e content.trim())\r\n    }\r\n    M\r\n  }",
+      "user": "anonymous",
+      "dateUpdated": "Apr 17, 2018 5:33:37 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "warning: there was one feature warning; re-run with -feature for details\nlineToM: (line: String)Map[String,String]\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1523518569962_1896666053",
+      "id": "20180412-153609_410916480",
+      "dateCreated": "Apr 12, 2018 3:36:09 PM",
+      "dateStarted": "Apr 17, 2018 5:33:37 PM",
+      "dateFinished": "Apr 17, 2018 5:34:34 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "var lograw2 \u003d allpcv_anscls.filter(m \u003d\u003e(lineToM(m).get(\"@ANS.QACOV_LEVEL:\").get.toDouble\u003c0.85)).filter(m \u003d\u003e(lineToM(m).get(\"@ANS.QACOV_LEVEL:\").get.toDouble\u003e0.6))",
+      "user": "anonymous",
+      "dateUpdated": "Apr 17, 2018 5:39:25 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "lograw2: org.apache.spark.rdd.RDD[String] \u003d MapPartitionsRDD[326] at filter at \u003cconsole\u003e:31\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1523518701189_528699823",
+      "id": "20180412-153821_1373212239",
+      "dateCreated": "Apr 12, 2018 3:38:21 PM",
+      "dateStarted": "Apr 17, 2018 5:39:25 PM",
+      "dateFinished": "Apr 17, 2018 5:39:25 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "lograw2.take(1)",
+      "user": "anonymous",
+      "dateUpdated": "Apr 12, 2018 4:21:56 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "res54: Array[String] \u003d Array(@ID:1231df09e4bc1a258a592a71d7a4f25d\t@ASK.HTYPE:YON\t@GROUP.EXT:大专学历可以考公务员吗\t@ANS.QACOV:NO\t@ACCEPT:false\t@SP_NUM:0\t@QER.URI:http://iask.finance.sina.com.cn/user/see/53cf503211e0ee1b3af8ff2c-IA-1.html\t@ANS.CONTENT:好象只能考市里的公务员\t@qpv:4827.0\t@AWR.NAME:1161730430\t@GROUP.ID:15544614650fb38a0607580a2e64944e\t@OP_NUM:0\t@SOURCE:sina_iask\t@urlclkpv:null\t@qclkpv:957.0\t@ASK.VIEWS:可以|不可以\t@ANS.ID:2ae49583d4170022e63d9931ed8bb193\t@QTYPE:3\t@QER.NAME:枫桦雪叶\t@ANS.VIEW:不可以\t@ANS.QACOV_LEVEL:0.6574\t@URI:http://iask.finance.sina.com.cn/b/2091480.html\t@ASK.DATE:2005-08-12 17:28:23\t@ANS.DATE:2005-08-12 17:28:23\t@AWR.URI:http://iask.finance.sina.com.cn/user/pcsee/53d0ddd211e0ee5afd009062-IA-1.html\t@urlpv:null\t@ASK.EXT:家是泰安的,大专学历, 可以参加公务员考试吗???什么时候报名啊什么时间考试啊????\t@ASK.TITLE:大专学历可以考公务员吗\t@QLE..."
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1523519229266_-106357502",
+      "id": "20180412-154709_111023074",
+      "dateCreated": "Apr 12, 2018 3:47:09 PM",
+      "dateStarted": "Apr 12, 2018 4:21:56 PM",
+      "dateFinished": "Apr 12, 2018 4:21:58 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "lograw2.count()",
+      "user": "anonymous",
+      "dateUpdated": "Apr 17, 2018 5:39:30 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "res57: Long \u003d 692869\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1523520368321_-915071807",
+      "id": "20180412-160608_1380696898",
+      "dateCreated": "Apr 12, 2018 4:06:08 PM",
+      "dateStarted": "Apr 17, 2018 5:39:30 PM",
+      "dateFinished": "Apr 17, 2018 5:42:28 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "var tpye \u003d lograw2.map(m \u003d\u003e(lineToM(m).get(\"@QTYPE:\").get,1)).reduceByKey(_ + _).collect()",
+      "user": "anonymous",
+      "dateUpdated": "Apr 17, 2018 5:39:54 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "tpye: Array[(String, Int)] \u003d Array((1,100423), (2,22428), (3,570018))\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1523523706604_1923287353",
+      "id": "20180412-170146_727746262",
+      "dateCreated": "Apr 12, 2018 5:01:46 PM",
+      "dateStarted": "Apr 17, 2018 5:39:54 PM",
+      "dateFinished": "Apr 17, 2018 5:45:30 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "lograw2.saveAsTextFile(\"/user/web_research/liuqin/viewpoint/40_sample_allpcv_anscls_under_0.9\")",
+      "user": "anonymous",
+      "dateUpdated": "Apr 12, 2018 4:23:12 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": []
+      },
+      "apps": [],
+      "jobName": "paragraph_1523520048255_1309314302",
+      "id": "20180412-160048_573192560",
+      "dateCreated": "Apr 12, 2018 4:00:48 PM",
+      "dateStarted": "Apr 12, 2018 4:23:12 PM",
+      "dateFinished": "Apr 12, 2018 4:25:43 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "lograw2.saveAsTextFile(\"/user/web_research/liuqin/viewpoint/40_sample_allpcv_anscls_under_0.85_up_0.65\")",
+      "user": "anonymous",
+      "dateUpdated": "Apr 17, 2018 5:42:29 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": []
+      },
+      "apps": [],
+      "jobName": "paragraph_1523958011530_-1506830871",
+      "id": "20180417-174011_344909754",
+      "dateCreated": "Apr 17, 2018 5:40:11 PM",
+      "dateStarted": "Apr 17, 2018 5:42:29 PM",
+      "dateFinished": "Apr 17, 2018 5:48:42 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "var  allpcv_anscls \u003d sc.textFile(\"/user/web_research/liuqin/viewpoint/40_sample_allpcv_anscls_under_0.9\")",
+      "user": "anonymous",
+      "dateUpdated": "Apr 17, 2018 5:33:16 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "allpcv_anscls: org.apache.spark.rdd.RDD[String] \u003d /user/web_research/liuqin/viewpoint/40_sample_allpcv_anscls_under_0.9 MapPartitionsRDD[324] at textFile at \u003cconsole\u003e:27\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1523957562616_-109450225",
+      "id": "20180417-173242_1742718672",
+      "dateCreated": "Apr 17, 2018 5:32:42 PM",
+      "dateStarted": "Apr 17, 2018 5:33:16 PM",
+      "dateFinished": "Apr 17, 2018 5:33:17 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "var lograw2 \u003d allpcv_anscls.map(e \u003d\u003e {\r\n      var m \u003d e.toString.split(\"\\n\")\r\n       .map(_.split(\":\", 2))\r\n         .filter(_.size \u003d\u003d 2)\r\n         .map(e \u003d\u003e (e(0), e(1).trim))\r\n           .toMap\r\n         m\r\n       }).map(m \u003d\u003e{\r\n      var o \u003d \"\"\r\n      for((k,v)\u003c- m ) o \u003d o+k+\":\"+v+\"\\t\"\r\n      o.trim()\r\n    }).map(t \u003d\u003et replaceAll (\"[\\\\n]+\", \"\"))",
+      "user": "anonymous",
+      "dateUpdated": "Apr 12, 2018 3:27:47 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "jobName": "paragraph_1523517967178_-972803803",
+      "id": "20180412-152607_1482353842",
+      "dateCreated": "Apr 12, 2018 3:26:07 PM",
+      "status": "READY",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "var url_data \u003d sqlContext.read.csv(\"/user/web_research/liuqin/out/url_pv_clk_50022601_0701_0802\")  \nurl_data.show()",
+      "user": "anonymous",
+      "dateUpdated": "Apr 12, 2018 1:16:33 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "url_data: org.apache.spark.sql.DataFrame \u003d [_c0: string, _c1: string ... 1 more field]\n+--------------------+-----+-----+\n|                 _c0|  _c1|  _c2|\n+--------------------+-----+-----+\n|http://wenwen.m.s...| 7394| 1112|\n|http://wapiknow.b...| 5025|  912|\n|http://wenwen.m.s...|  958|   16|\n|http://m.babytree...|18172| 1334|\n|http://zhidao.bai...|  104|   14|\n|http://wapiknow.b...|46741|15897|\n|http://3g.yaolan....| 5144|   40|\n|http://3g.yaolan....|32114| 8530|\n|http://wapiknow.b...| 9994| 2102|\n|http://m.babytree...| 4882| 1163|\n|http://wenwen.m.s...|12009|  214|\n|http://wenwen.m.s...|  959|   10|\n|http://wenwen.m.s...| 4699|  698|\n|http://wenwen.m.s...| 2245|  145|\n|http://wenwen.m.s...| 1470|   21|\n|http://wap.120ask...|  323|   53|\n|http://wenwen.m.s...|26867| 4566|\n|http://m.iask.sin...| 3063|  218|\n|http://wapiknow.b...| 5151| 1364|\n|http://3g.yaolan....|17297| 3380|\n+--------------------+-----+-----+\nonly showing top 20 rows\n\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1522038682646_1628874475",
+      "id": "20180326-123122_1478688022",
+      "dateCreated": "Mar 26, 2018 12:31:22 PM",
+      "dateStarted": "Apr 12, 2018 1:16:46 PM",
+      "dateFinished": "Apr 12, 2018 1:16:49 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "var query_data \u003d sqlContext.read.csv(\"/user/web_research/liuqin/out/query_pv_clk_50022601_0701_0802\")  \nquery_data.show()",
+      "user": "anonymous",
+      "dateUpdated": "Apr 12, 2018 1:16:35 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "query_data: org.apache.spark.sql.DataFrame \u003d [_c0: string, _c1: string ... 1 more field]\n+--------------+-------+-------+\n|           _c0|    _c1|    _c2|\n+--------------+-------+-------+\n|    温碧泉的护肤品怎么样|66432.0|10250.0|\n|        早上能洗头吗| 2423.0|  446.0|\n|    刨腹产之后还能顺产吗|   68.0|   15.0|\n|    刚怀孕能吃新鲜莲子吗|   11.0|    0.0|\n|       别克君威怎么样| 5439.0|  711.0|\n|    坐飞机可以带化妆品吗|61258.0|18973.0|\n|        红糖会发胖吗| 1916.0|  509.0|\n|     热食物可以放冰箱吗| 1073.0|  201.0|\n| 湖北三峡职业技术学院怎么样|  590.0|   17.0|\n|    矫正牙齿会改变脸型吗|44270.0| 8766.0|\n|       狗吃鸡肝好不好| 1110.0|  276.0|\n|     狮子跟老虎哪个厉害| 2332.0|  735.0|\n|     哺乳期可以吃桃子吗|17368.0|  198.0|\n|   经期到底能不能吃巧克力|   15.0|    2.0|\n|夏季小孩是不是可以不用穿袜子|    1.0|    0.0|\n|     移动空调效果怎么样|34718.0|  517.0|\n|     小宝宝可以吃玉米吗|   47.0|   10.0|\n|    孕妇可以吃调的凉菜吗|  133.0|   30.0|\n|      准备怀孕能养狗吗|  158.0|   24.0|\n|      用蓝牙要流量吗？|    2.0|    0.0|\n+--------------+-------+-------+\nonly showing top 20 rows\n\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1522038933226_937063659",
+      "id": "20180326-123533_416075657",
+      "dateCreated": "Mar 26, 2018 12:35:33 PM",
+      "dateStarted": "Apr 12, 2018 1:16:47 PM",
+      "dateFinished": "Apr 12, 2018 1:16:58 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "",
+      "user": "anonymous",
+      "dateUpdated": "Apr 11, 2018 3:17:42 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "jobName": "paragraph_1523431052989_1617372346",
+      "id": "20180411-151732_1931885117",
+      "dateCreated": "Apr 11, 2018 3:17:32 PM",
+      "status": "READY",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "url_data.registerTempTable(\"t_url\")\nquery_data.registerTempTable(\"t_query\")\n// triple_QAU.registerTempTable(\"t_QAU\")",
+      "user": "anonymous",
+      "dateUpdated": "Apr 12, 2018 1:16:38 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "warning: there was one deprecation warning; re-run with -deprecation for details\nwarning: there was one deprecation warning; re-run with -deprecation for details\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1522039086845_330096816",
+      "id": "20180326-123806_2143262783",
+      "dateCreated": "Mar 26, 2018 12:38:06 PM",
+      "dateStarted": "Apr 12, 2018 1:16:49 PM",
+      "dateFinished": "Apr 12, 2018 1:16:59 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "var sql_result \u003d sqlContext.sql(\"SELECT t_QAU.query,t_QAU.ans,t_QAU.url,t_query._c1 as qpv,t_query._c2 as qclkpv,t_url._c1 as urlpv,t_url._c2 as urlclkpv FROM t_QAU left join t_url on t_QAU.url\u003dt_url._c0 left join t_query on  t_QAU.query\u003dt_query._c0 \")\nsql_result.show()",
+      "user": "anonymous",
+      "dateUpdated": "Mar 26, 2018 12:51:36 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "sql_result: org.apache.spark.sql.DataFrame \u003d [query: string, ans: string ... 5 more fields]\n+--------------------+--------------------+--------------------+----+------+-----+--------+\n|               query|                 ans|                 url| qpv|qclkpv|urlpv|urlclkpv|\n+--------------------+--------------------+--------------------+----+------+-----+--------+\n|\"The problem is n...|         没有,这么说完全可以.|http://wenwen.sog...|null|  null| null|    null|\n|\"处理的意思是解决问题\"能不能翻译...|   handle加引号才可以算对...|https://zhidao.ba...|null|  null| null|    null|\n|         \"火烈鸟\"的化妆品好吗|\u003cpre\u003e睫毛膏还可以 ··其他的...|http://wenwen.sog...|null|  null| null|    null|\n|  \"闻机杼声,惟闻女叹息\"是不是对偶句|         应该不是，字数都不对呀|https://zhidao.ba...|null|  null| null|    null|\n| #2012奥运问答#本届奥运会有姚明吗|\u003cpre\u003e没有、但会作为男篮赛事的...|                null|null|  null| null|    null|\n|#2012奥运问答#第一届奥运会是...|           是的 希腊是发源地|http://wenwen.sog...|null|  null| null|    null|\n|  #儿时疑惑#世界上到底有没有守护甜心|           没有，动画片里有。|http://zhidao.bai...|null|  null| null|    null|\n|#儿时疑惑#红旗真的是烈士的鲜血染...|不是啊只是老师要我们记住我们这个国...|http://zhidao.bai...|null|  null| null|    null|\n|\u0026quot;偷面积\u0026quot;叫停...|赠送面积不是天上掉馅饼，购房者不要...|                null|null|  null| null|    null|\n|(1/2)CPU是Intel(R)...|不支持酷睿双核搭配的也是早期的赛扬...|https://zhidao.ba...|null|  null| null|    null|\n|(4-11/5)*(1.5+1/6...|(4-11/5)*(1.5+1/6...|http://zhidao.bai...|null|  null| null|    null|\n|(伊利和蒙牛)一起喝到肚子里会不会打架！|不会，都成了口中食，肚中餐，打架也...|http://wenwen.sog...|null|  null| null|    null|\n|*****有没有Delphi 5 ...|123-456-789069x4-...|http://wenwen.sog...|null|  null| null|    null|\n|        **上有两个红点是性病吗|说不定是皮炎或者过敏，建议你去医院...|                null|null|  null| null|    null|\n|**网 上 正 规 淘 宝 兼 职...|我现在做的就很好，白天上班，晚上可...|http://wenwen.sog...|null|  null| null|    null|\n|          -6%算不算套得深？|不算。不过还是建议根据各人情况设定...|http://iask.gd.si...|null|  null| null|    null|\n|    ..是不是爱一个人 就要自己受伤|\u003cpre\u003e不是说爱一个人就会受伤害...|http://wenwen.sog...|null|  null| null|    null|\n|   .net和.org哪个收录更好一点|net域名范围更广一些，但是org...|http://wenwen.sog...|null|  null| null|    null|\n|.三联疗法克拉霉素，阿莫西林，兰索...|治疗幽门螺杆菌需要医师确诊完之后，...|https://zhidao.ba...|null|  null| null|    null|\n|0.020020002……是不是循环小数|肯定不是啦！如果是0.020202...|http://zhidao.bai...|null|  null| null|    null|\n+--------------------+--------------------+--------------------+----+------+-----+--------+\nonly showing top 20 rows\n\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1522039008186_-1314243362",
+      "id": "20180326-123648_1452276898",
+      "dateCreated": "Mar 26, 2018 12:36:48 PM",
+      "dateStarted": "Mar 26, 2018 12:51:36 PM",
+      "dateFinished": "Mar 26, 2018 12:52:42 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "print(sql_result.count())",
+      "user": "anonymous",
+      "dateUpdated": "Mar 26, 2018 12:55:22 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "129254"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1522039759045_1607078940",
+      "id": "20180326-124919_961818030",
+      "dateCreated": "Mar 26, 2018 12:49:19 PM",
+      "dateStarted": "Mar 26, 2018 12:55:22 PM",
+      "dateFinished": "Mar 26, 2018 12:56:14 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "sql_result.registerTempTable(\"sql_result\")",
+      "user": "anonymous",
+      "dateUpdated": "Mar 29, 2018 6:56:28 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "warning: there was one deprecation warning; re-run with -deprecation for details\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1522040294519_-1061203944",
+      "id": "20180326-125814_656205691",
+      "dateCreated": "Mar 26, 2018 12:58:14 PM",
+      "dateStarted": "Mar 29, 2018 6:56:28 PM",
+      "dateFinished": "Mar 29, 2018 6:56:29 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "var sql_result2 \u003d sqlContext.sql(\"SELECT * FROM sql_result where qpv is not null \")\nsql_result2.show()",
+      "user": "anonymous",
+      "dateUpdated": "Mar 29, 2018 6:56:41 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "sql_result2: org.apache.spark.sql.DataFrame \u003d [query: string, ans: string ... 6 more fields]\n+------------+--------------------+--------------------+--------------------+------+------+-----+--------+\n|       query|                 ans|                 url|                  op|   qpv|qclkpv|urlpv|urlclkpv|\n+------------+--------------------+--------------------+--------------------+------+------+-----+--------+\n|分手以后还可以做朋友吗？|可以啊，怎么不可以？凡事皆有可能，...|http://zhidao.bai...|@ASK:分手以后还可以做朋友吗？...|   3.0|   0.0| null|    null|\n|  哺乳期间可以做面膜吗|可以用的，最好是选择植物成分的，彩...|http://ask.ci123....|@URL:http://ask.c...|   1.0|   1.0| null|    null|\n|    双子座的性格如何|虽说我们是一个团队，，但，，我先说...|http://wenwen.sog...|@ASK:双子座的性格如何\n@AN...|  58.0|  14.0| null|    null|\n|红薯发芽了亥能吃吗请告知|指导意见： 你好，可以吃的，不过要...|http://www.120ask...|@ASK:红薯发芽了亥能吃吗请告知...|   5.0|   1.0| null|    null|\n|  哺乳期间可以拔牙吗？|   不过可以的这个时候没办法消炎吃药。|http://zhidao.bai...|@URL:http://zhida...| 422.0|  56.0| null|    null|\n| 月经来时可以吃芒果吗？|您好、可以的、月经期间可以适当的吃...|http://ask.yaolan...|@ASK:月经来时可以吃芒果吗？\n...|   4.0|   0.0| null|    null|\n| 子宫肌瘤会影响生育吗？|你好！子宫肌瘤会影响生育。子宫肌瘤...|http://www.120ask...|@ASK:子宫肌瘤会影响生育吗？\n...|   1.0|   0.0| null|    null|\n| 孕妇可以服用阿莫西林吗|您好，建议您消炎药不要乱吃，要吃也...|http://ask.yaolan...|@ASK:孕妇可以服用阿莫西林吗\n...| 358.0|  62.0| null|    null|\n|    当兵需要花钱吗？|要不找关系，要不就花钱。身体还是一...|https://zhidao.ba...|@URL:http://zhida...|  93.0|  28.0| null|    null|\n|      不吃米饭行吗|                  不行|http://zhidao.bai...|@ASK:不吃米饭行吗\n@ANS:...|   8.0|   2.0|  6.0|     0.0|\n|   打了耳洞能不能当兵|病情分析： 你好，应该可以去当兵的...|http://www.120ask...|@ASK:打了耳洞能不能当兵\n@A...|   1.0|   0.0| null|    null|\n|时间可不可让我忘记一个人|\u003cpre\u003e可以！让时间来磨灭一切吧...|http://wenwen.sog...|@ASK:时间可不可让我忘记一个人...|   1.0|   0.0| null|    null|\n|吸是(xi）还是(ji)|                  xi|http://zhidao.bai...|@ASK:吸是(xi）还是(ji)...|   4.0|   0.0| null|    null|\n| 理科生能不能报中文系？|     能的。我有个同学就去读的汉语。|http://zhidao.bai...|@ASK:理科生能不能报中文系？\n...|1068.0| 289.0| null|    null|\n|第一次性接触会不会怀孕啊|你好！如果你是在排卵期，那么是有怀...|http://ask.yaolan...|@ASK:第一次性接触会不会怀孕啊...| 159.0|  14.0| null|    null|\n|  没钱可以找女朋友吗？|当然可以，不要把所有女孩都看成拜金...|http://wenwen.sog...|@ASK:没钱可以找女朋友吗？\n@...|   8.0|   2.0| null|    null|\n|  如今的社会有真爱吗?|\u003cpre\u003e额，怎么没有？只是少而已...|http://wenwen.sog...|@ASK:如今的社会有真爱吗?\n@...|   1.0|   1.0| null|    null|\n|   变性女人能生孩子吗|不能生孩子。不具备条件，某些生殖器...|http://zhidao.bai...|@ASK:变性女人能生孩子吗\n@C...|   4.0|   1.0| null|    null|\n|小孩轻微感冒能打预防针吗|宝宝出现恶心,发烧,炎症，是坚决不...|http://ask.yaolan...|@ASK:小孩轻微感冒能打预防针吗...| 120.0|  32.0| null|    null|\n|  月经期能吃凉东西吗？|不可以，冰冷刺激性比较强的食物，容...|http://wenwen.sog...|@ASK:月经期能吃凉东西吗？\n@...|  47.0|   7.0| null|    null|\n+------------+--------------------+--------------------+--------------------+------+------+-----+--------+\nonly showing top 20 rows\n\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1522039197417_-351492700",
+      "id": "20180326-123957_1240528326",
+      "dateCreated": "Mar 26, 2018 12:39:57 PM",
+      "dateStarted": "Mar 29, 2018 6:56:42 PM",
+      "dateFinished": "Mar 29, 2018 6:57:39 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "sql_result2.count()",
+      "user": "anonymous",
+      "dateUpdated": "Mar 29, 2018 6:57:11 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "res179: Long \u003d 12112\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1522321018839_57605228",
+      "id": "20180329-185658_645787772",
+      "dateCreated": "Mar 29, 2018 6:56:58 PM",
+      "dateStarted": "Mar 29, 2018 6:57:11 PM",
+      "dateFinished": "Mar 29, 2018 6:58:21 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "sql_result2.count()",
+      "user": "anonymous",
+      "dateUpdated": "Mar 27, 2018 12:15:02 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "res130: Long \u003d 2515012\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1522040092615_203341453",
+      "id": "20180326-125452_474234248",
+      "dateCreated": "Mar 26, 2018 12:54:52 PM",
+      "dateStarted": "Mar 27, 2018 12:15:02 PM",
+      "dateFinished": "Mar 27, 2018 12:17:25 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "sql_result.write.format(\"parquet\").save(\"/user/web_research/liuqin/viewpoint/xe_sample_qaupcv\")",
+      "user": "anonymous",
+      "dateUpdated": "Mar 26, 2018 1:07:30 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": []
+      },
+      "apps": [],
+      "jobName": "paragraph_1522040446060_715564832",
+      "id": "20180326-130046_19825911",
+      "dateCreated": "Mar 26, 2018 1:00:46 PM",
+      "dateStarted": "Mar 26, 2018 1:07:31 PM",
+      "dateFinished": "Mar 26, 2018 1:08:45 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "var sql_result3 \u003d sqlContext.sql(\"SELECT _c0,sum(_c1) FROM t_query group by _c0\")\n// sql_result3.write.csv(\"/user/web_research/liuqin/viewpoint/xe_sample_qaupcv\")",
+      "user": "anonymous",
+      "dateUpdated": "Mar 26, 2018 3:55:47 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "sql_result3: org.apache.spark.sql.DataFrame \u003d [_c0: string, sum(CAST(_c1 AS DOUBLE)): double]\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1522040850977_-1965788003",
+      "id": "20180326-130730_1074338757",
+      "dateCreated": "Mar 26, 2018 1:07:30 PM",
+      "dateStarted": "Mar 26, 2018 3:55:47 PM",
+      "dateFinished": "Mar 26, 2018 3:55:48 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "query_data.count()",
+      "user": "anonymous",
+      "dateUpdated": "Mar 26, 2018 3:53:18 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "res74: Long \u003d 14000605\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1522043928837_-594509583",
+      "id": "20180326-135848_1498432963",
+      "dateCreated": "Mar 26, 2018 1:58:48 PM",
+      "dateStarted": "Mar 26, 2018 3:53:18 PM",
+      "dateFinished": "Mar 26, 2018 3:53:44 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "url_data.count()",
+      "user": "anonymous",
+      "dateUpdated": "Mar 27, 2018 1:03:36 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "res140: Long \u003d 521522\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1522127011033_1302176171",
+      "id": "20180327-130331_1883436358",
+      "dateCreated": "Mar 27, 2018 1:03:31 PM",
+      "dateStarted": "Mar 27, 2018 1:03:36 PM",
+      "dateFinished": "Mar 27, 2018 1:03:48 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "sql_result3.count()",
+      "user": "anonymous",
+      "dateUpdated": "Mar 26, 2018 3:55:51 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "res77: Long \u003d 14000592\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1522050604661_1106853040",
+      "id": "20180326-155004_1717123230",
+      "dateCreated": "Mar 26, 2018 3:50:04 PM",
+      "dateStarted": "Mar 26, 2018 3:55:52 PM",
+      "dateFinished": "Mar 26, 2018 3:56:25 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "val removePunc \u003d (str: String) \u003d\u003e{\r\n    try {\r\n      str replaceAll (\"[\\\\s+\\\\.\\\\!\\\\/_,，。？\\\\$%\\\\^\\\\*\\\\\\\"\\\u0027+｀｀`\\\\｀·——《》｀()?【】:：;～；;“”！，。？、~@#￥%……\u0026*（）]+\", \"\")\r\n    }\r\n    catch {\r\n      case ex: Exception \u003d\u003e \"\"\r\n    }\r\n      }\r\n      \r\n\r\nsqlContext.udf.register(\"removePunc\", removePunc)\r\n",
+      "user": "anonymous",
+      "dateUpdated": "Mar 26, 2018 6:02:04 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "removePunc: String \u003d\u003e String \u003d \u003cfunction1\u003e\nres106: org.apache.spark.sql.expressions.UserDefinedFunction \u003d UserDefinedFunction(\u003cfunction1\u003e,StringType,Some(List(StringType)))\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1522050951964_856687989",
+      "id": "20180326-155551_968630839",
+      "dateCreated": "Mar 26, 2018 3:55:51 PM",
+      "dateStarted": "Mar 26, 2018 6:02:04 PM",
+      "dateFinished": "Mar 26, 2018 6:02:05 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "sql_result2.show()",
+      "user": "anonymous",
+      "dateUpdated": "Mar 26, 2018 6:02:51 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "+----------------+--------------------+--------------------+-----+------+-----+--------+\n|           query|                 ans|                 url|  qpv|qclkpv|urlpv|urlclkpv|\n+----------------+--------------------+--------------------+-----+------+-----+--------+\n|      0是最小的自然数吗?|是的希望能帮你忙，不懂请追问，懂了...|https://zhidao.ba...|  8.0|   0.0| null|    null|\n|     18岁可以到银行贷款么|年龄是没有问题的,但是如果你想办理...|http://wenwen.sog...|  1.0|   0.0| null|    null|\n|     18岁可以领结婚证吗？|       不可以，只能先上船，后卖票|http://wenwen.sog...| 65.0|  21.0| null|    null|\n|     23岁女孩还能长高吗？|     高度已经确定，可以多穿高跟鞋。|http://wenwen.sog...|  1.0|   0.0| null|    null|\n|     38周可以剖腹产了吗？|可以，没有影响。不过如果可以顺产的...|https://zhidao.ba...|  3.0|   1.0| null|    null|\n|       4个月的宝宝能坐吗|你好，这么小的宝宝最好是不要让他坐...|http://ask.yaolan...|317.0|  67.0| null|    null|\n|     6个月的宝宝能吹空调吗|可以吹的，空调温度调到28度，然后...|http://www.babytr...| 46.0|   1.0| null|    null|\n|       A和C哪个比较高？|\u003cp\u003eC高\u003c/p\u003e \u003cp\u003e \u003c/p...|http://wenwen.sog...|  7.0|   1.0| null|    null|\n|       DNF阿修罗怎么样|很有意思，高伤高防，是一个近身中远...|http://wenwen.sog...| 28.0|  10.0| null|    null|\n|       QQ会员能不能隐藏|                  不能|http://wenwen.sog...|  8.0|   3.0| null|    null|\n|      QQ号丢了能找回来吗|\u003cpre\u003e电话到腾讯申诉,要很久,...|http://wenwen.sog...|  1.0|   0.0| null|    null|\n|      QQ宠物可以离婚吗？|\u003cpre\u003e去教堂找老山羊就可以离婚...|https://zhidao.ba...|  1.0|   0.0| null|    null|\n|  QQ游戏的欢乐豆可以送人吗？|              当然不可以啦|http://zhidao.bai...| null|  null|    1|       0|\n|         QQ管家好不好|QQ管家这个渣杀毒差的不可理喻，说...|http://zhidao.bai...|  1.0|   0.0| null|    null|\n|QQ魔域和魔域是一起更新的吗 ?|     \u003cpre\u003e不是的 \u003c/pre\u003e|http://wenwen.sog...| null|  null|    2|       1|\n|       Q币可以换Q点吗？|绝对可以的我试过N次了不信我远程亲自教你|http://wenwen.sog...|  1.0|   0.0| null|    null|\n|        Q币可以送人吗?| \u003cpre\u003eQB是可以送人的\u003c/pre\u003e|http://wenwen.sog...|  1.0|   0.0| null|    null|\n|       cf开挂会被封吗？| \u003cp\u003e会 的\u003c/p\u003e \u003cp\u003e \u003c/p\u003e|http://wenwen.sog...| null|  null|   22|       8|\n| cf打生化黑龙和黑骑士哪个好好|      换个机枪试试，打出自己的风格|http://wenwen.sog...| null|  null|    1|       0|\n|       cf有没有永久的枪|       有啊，GP枪都是永久的啊啊|http://wenwen.sog...|  1.0|   0.0| null|    null|\n+----------------+--------------------+--------------------+-----+------+-----+--------+\nonly showing top 20 rows\n\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1522058278503_268653155",
+      "id": "20180326-175758_1593663502",
+      "dateCreated": "Mar 26, 2018 5:57:58 PM",
+      "dateStarted": "Mar 26, 2018 6:02:51 PM",
+      "dateFinished": "Mar 26, 2018 6:03:22 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "sql_result2.registerTempTable(\"sql_result2\")",
+      "user": "anonymous",
+      "dateUpdated": "Mar 26, 2018 6:03:38 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "warning: there was one deprecation warning; re-run with -deprecation for details\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1522058571421_-1651811972",
+      "id": "20180326-180251_1024701539",
+      "dateCreated": "Mar 26, 2018 6:02:51 PM",
+      "dateStarted": "Mar 26, 2018 6:03:38 PM",
+      "dateFinished": "Mar 26, 2018 6:03:39 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "sqlContext.sql(\"SELECT query,removePunc(query) FROM sql_result2\").show()",
+      "user": "anonymous",
+      "dateUpdated": "Mar 26, 2018 6:04:55 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "+----------------+---------------------+\n|           query|UDF:removePunc(query)|\n+----------------+---------------------+\n|      0是最小的自然数吗?|            0是最小的自然数吗|\n|     18岁可以到银行贷款么|          18岁可以到银行贷款么|\n|     18岁可以领结婚证吗？|           18岁可以领结婚证吗|\n|     23岁女孩还能长高吗？|           23岁女孩还能长高吗|\n|     38周可以剖腹产了吗？|           38周可以剖腹产了吗|\n|       4个月的宝宝能坐吗|            4个月的宝宝能坐吗|\n|     6个月的宝宝能吹空调吗|          6个月的宝宝能吹空调吗|\n|       A和C哪个比较高？|             A和C哪个比较高|\n|       DNF阿修罗怎么样|            DNF阿修罗怎么样|\n|       QQ会员能不能隐藏|            QQ会员能不能隐藏|\n|         QQ可以交易吗|              QQ可以交易吗|\n|      QQ号丢了能找回来吗|           QQ号丢了能找回来吗|\n|      QQ宠物可以离婚吗？|            QQ宠物可以离婚吗|\n|  QQ游戏的欢乐豆可以送人吗？|        QQ游戏的欢乐豆可以送人吗|\n|         QQ管家好不好|              QQ管家好不好|\n|QQ魔域和魔域是一起更新的吗 ?|       QQ魔域和魔域是一起更新的吗|\n|       Q币可以换Q点吗？|             Q币可以换Q点吗|\n|        Q币可以送人吗?|              Q币可以送人吗|\n|        X\u003d0是方程吗？|              X\u003d0是方程吗|\n|       cf开挂会被封吗？|             cf开挂会被封吗|\n+----------------+---------------------+\nonly showing top 20 rows\n\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1522058618775_-883575688",
+      "id": "20180326-180338_160646918",
+      "dateCreated": "Mar 26, 2018 6:03:38 PM",
+      "dateStarted": "Mar 26, 2018 6:04:43 PM",
+      "dateFinished": "Mar 26, 2018 6:05:16 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "var sql_result4 \u003d sqlContext.sql(\"SELECT t_QAU.query,t_QAU.ans,t_QAU.url,t_query._c1 as qpv,t_query._c2 as qclkpv,t_url._c1 as urlpv,t_url._c2 as urlclkpv FROM t_QAU left join t_url on t_QAU.url\u003dt_url._c0 left join t_query on  t_QAU.query\u003dt_query._c0\")\n",
+      "user": "anonymous",
+      "dateUpdated": "Mar 26, 2018 6:38:56 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "sql_result4: org.apache.spark.sql.DataFrame \u003d [query: string, ans: string ... 5 more fields]\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1522058683474_-1267696296",
+      "id": "20180326-180443_1557964112",
+      "dateCreated": "Mar 26, 2018 6:04:43 PM",
+      "dateStarted": "Mar 26, 2018 6:38:56 PM",
+      "dateFinished": "Mar 26, 2018 6:38:57 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "sql_result4.show()",
+      "user": "anonymous",
+      "dateUpdated": "Mar 26, 2018 6:08:02 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "+--------------------+--------------------+--------------------+----+------+-----+--------+\n|               query|                 ans|                 url| qpv|qclkpv|urlpv|urlclkpv|\n+--------------------+--------------------+--------------------+----+------+-----+--------+\n|-如果美国像对伊朗那样对中国实行经...|这个钱是不能不还的。但是具体还多少...|http://zhidao.bai...|null|  null| null|    null|\n|-开通1年红钻，会比一般开通一、两...|红钻没有年费的网银和财付通成长值是...|http://wenwen.sog...|null|  null| null|    null|\n|        002019是否可以补仓|你就是大笨猫还骗人啊 不怕有报应吗...|http://iask.finan...|null|  null| null|    null|\n|        002239短期怎么样?|         建议中线持股、短线离场|http://wenwen.sog...|null|  null| null|    null|\n|025期四胆R9实买单(有图)，大...|     非常有希望，有胆识，有望中大奖|http://iask.gd.si...|null|  null| null|    null|\n|    06年的阿森纳太唯美了这是真的吗|巅峰时期的莱曼阿什利·科尔坎贝尔皮...|https://zhidao.ba...|null|  null| null|    null|\n|08-09赛季季后赛火箭对湖人是否有水分|有一定的水分到底13亿人口在这里放...|http://zhidao.bai...|null|  null| null|    null|\n|0865适合哪个职业用，0865属性好吗|\u003cpre\u003e反正不适合力士，游侠，还...|http://wenwen.sog...|null|  null| null|    null|\n|  08版射雕中西毒和北丐谁的武功更厉害|他们都差不多，应该是各有所长不过，...|http://zhidao.bai...|null|  null| null|    null|\n|09孙悦在湖人能当上先发吗！？麦蒂...|\u003cpre\u003e孙悦能当替补就不错了 麦...|http://wenwen.sog...|null|  null| null|    null|\n|   09年会计上岗证考试用书有卖了吗？|有的,最好到书店的网站去购买,我的...|http://zhidao.bai...|null|  null| null|    null|\n|       09版qq有没有界面隐藏？|这个没有,改成了QQ透明度.缩小之...|http://wenwen.sog...|null|  null| null|    null|\n|      10000月收入可以买车吗？|你要买房的话，车还得再考虑下。如果...|http://zhidao.bai...|null|  null| null|    null|\n|     1000多钻买疾风是不是永久的|     只要是钻石买的车就都是永久的。|http://wenwen.sog...|null|  null| null|    null|\n|   100分求男女之间有没有真正的友情|我认为是有的，不过有时感情的东西往...|http://iask.sina....|null|  null| null|    null|\n|100张十块的和10张一百的都是一...|               我都喜欢,|http://wenwen.sog...|null|  null| null|    null|\n|  100%桑蚕丝水洗后没缩水是不是假货|一回事。真丝的意思就是真正的桑蚕丝...|                null|null|  null| null|    null|\n|100％的信基督教，会不会成了宗教疯子？|这不是没有可能的，因为过度的执著以...|http://wenwen.sog...|null|  null| null|    null|\n|  10.1活动后得到的强化卷会消失吗？|    \u003cpre\u003e应该不会吧\u003c/pre\u003e|http://wenwen.sog...|null|  null| null|    null|\n|        10个月宝宝能喝果真吗？|        可以给他兑水喝一点。。。|http://zhidao.bai...|null|  null| null|    null|\n+--------------------+--------------------+--------------------+----+------+-----+--------+\nonly showing top 20 rows\n\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1522058806432_829001319",
+      "id": "20180326-180646_1878300219",
+      "dateCreated": "Mar 26, 2018 6:06:46 PM",
+      "dateStarted": "Mar 26, 2018 6:08:02 PM",
+      "dateFinished": "Mar 26, 2018 6:12:46 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "sql_result.registerTempTable(\"t_sql_result\")",
+      "user": "anonymous",
+      "dateUpdated": "Mar 29, 2018 6:45:15 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "warning: there was one deprecation warning; re-run with -deprecation for details\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1522059234050_-887198247",
+      "id": "20180326-181354_1963010808",
+      "dateCreated": "Mar 26, 2018 6:13:54 PM",
+      "dateStarted": "Mar 29, 2018 6:45:15 PM",
+      "dateFinished": "Mar 29, 2018 6:45:16 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "sql_result4.count()",
+      "user": "anonymous",
+      "dateUpdated": "Mar 26, 2018 6:39:00 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "res114: Long \u003d 129254\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1522058882464_-1991300064",
+      "id": "20180326-180802_1756732405",
+      "dateCreated": "Mar 26, 2018 6:08:02 PM",
+      "dateStarted": "Mar 26, 2018 6:39:00 PM",
+      "dateFinished": "Mar 26, 2018 6:39:36 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "var sql_result \u003d sqlContext.sql(\"SELECT a.query,a.querye,a.ans,a.url,a.op,t_query._c1 as qpv,t_query._c2 as qclkpv,t_url._c1 as urlpv,t_url._c2 as urlclkpv FROM query_extend_op a left join t_url on a.url\u003dt_url._c0 left join t_query on  a.querye\u003dt_query._c0 \")\nsql_result.show()",
+      "user": "anonymous",
+      "dateUpdated": "Mar 29, 2018 6:41:24 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "sql_result: org.apache.spark.sql.DataFrame \u003d [query: string, querye: string ... 7 more fields]\n+--------------------+--------------------+--------------------+--------------------+--------------------+----+------+-----+--------+\n|               query|              querye|                 ans|                 url|                  op| qpv|qclkpv|urlpv|urlclkpv|\n+--------------------+--------------------+--------------------+--------------------+--------------------+----+------+-----+--------+\n|高一数学概念命题的推出关系中不是小...|   \"任何集合的子集是空集\"为真命题吗|空集是指不含任何元素的集合，没有任...|http://zhidao.bai...|@ASK:高一数学概念命题的推出关...|null|  null| null|    null|\n|会计，会计电算化，会计与审计它们的...|\"会计\",\"会计与审计\"和\"会计电...|当然是学会计。我不得不说，有些东西...|http://wenwen.sog...|@ASK:会计，会计电算化，会计与...|null|  null| null|    null|\n|会计，会计电算化，会计与审计它们的...|\"会计\",\"会计与审计\"和\"会计电...|当然是学会计。我不得不说，有些东西...|http://wenwen.sog...|@ASK:会计，会计电算化，会计与...|null|  null| null|    null|\n|\\\u0027处理的意思是解决问题\\\u0027能不能...|\"处理的意思是解决问题\"能不能翻译...|   handle加引号才可以算对...|                null|@ASK:\\\u0027处理的意思是解决问题...|null|  null| null|    null|\n|为了你，我选择忘记！可忘记：是“忘...|\"忘记”到底选择是“忘”还是选择“记”？|\u003cpre\u003e当然是记。。\u003cbr\u003e\u003cb...|http://wenwen.sog...|@ASK:为了你，我选择忘记！可忘...|null|  null| null|    null|\n|          金钱与感情能衡量吗？|   \"感情\u003d金钱\"感情能于金钱衡量吗？|    \u003cpre\u003e没办法衡量\u003c/pre\u003e|http://wenwen.sog...|@ASK:金钱与感情能衡量吗？\n@...|null|  null| null|    null|\n|请问：“我说的这句话是谎话。”这句...|\"我说的这句话是谎话.\"那么这句话是真话|半真半假博弈论是假的的话那就是说明...|http://zhidao.bai...|@ASK:请问：“我说的这句话是谎...|null|  null| null|    null|\n|            不曉得是不是病毒|       \"曉\"是不是鳴人的爸爸阿?|McAfee55802009.04...|                null|@ASK:不曉得是不是病毒\n@AN...|null|  null| null|    null|\n|           有一种爱叫放手吗？|     \"有一种爱叫放手\"我该放手吗？|有，当他不爱你的时候，他会因为你的...|http://wenwen.sog...|@ASK:有一种爱叫放手吗？\n@A...|null|  null| null|    null|\n|       如果累了，是不是就该退出？|     \"爱\"累了,是不是就该退出.?|一个人不可能永远对一件事充满兴趣，...|                null|@ASK:如果累了，是不是就该退出...|null|  null| null|    null|\n|《你这该死的温柔》的主歌部分与好听...|      \"该死的温柔\"这歌好听吗??|     你很聪明,原唱确实是韩文歌曲.|http://zhidao.bai...|@ASK:《你这该死的温柔》的主歌...|null|  null| null|    null|\n|谁帮我 找个字数少的 简体字 的 ...|         \"鑏\"这个字有简体字吗|\u003cpre\u003e【小忧、虽然土了点、 然...|http://wenwen.sog...|@ASK:谁帮我 找个字数少的 简...|null|  null| null|    null|\n|         雪和雨哪个景色更美呢?|       \"雨\"与\"雪\"那个更美丽?|   \u003cpre\u003e我比较喜欢雨\u003c/pre\u003e|http://wenwen.sog...|@ASK:雪和雨哪个景色更美呢?\n...|null|  null| null|    null|\n|               鱼会流泪吗|            \"鱼\"会流泪吗?|     会吧，大海就是她的眼泪汇成的！|http://wenwen.sog...|@ASK:鱼会流泪吗\n@ANS:会...|null|  null| null|    null|\n|#2012奥运问答#请问黄存光可以...|#2012奥运问答#刘翔会参加伦敦...|\u003cpre\u003e已经获得奥运会参赛资格了...|http://wenwen.sog...|@ASK:#2012奥运问答#请问...|null|  null| null|    null|\n| #2012奥运问答#本届奥运会有姚明吗| #2012奥运问答#姚明还参加奥运会吗|\u003cpre\u003e没有、但会作为男篮赛事的...|                null|@ASK:#2012奥运问答#本届...|null|  null| null|    null|\n| #2012奥运问答#本届奥运会有姚明吗| #2012奥运问答#本届奥运会有姚明吗|\u003cpre\u003e没有、但会作为男篮赛事的...|                null|@ASK:#2012奥运问答#本届...|null|  null| null|    null|\n| #2012奥运问答#本届奥运会有姚明吗|#2012奥运问答#本届奥运会有没...|\u003cpre\u003e没有、但会作为男篮赛事的...|                null|@ASK:#2012奥运问答#本届...|null|  null| null|    null|\n|   男子10米气步枪有没有人射中11环|#2012奥运问答#男子10米气步...|没有。最大的环数才10.9环.所以...|http://wenwen.sog...|@ASK:男子10米气步枪有没有人...|null|  null| null|    null|\n|  #儿时疑惑#世界上到底有没有守护甜心|  #儿时疑惑#世界上到底有没有守护甜心|           没有，动画片里有。|http://zhidao.bai...|@ASK:#儿时疑惑#世界上到底有...|null|  null| null|    null|\n+--------------------+--------------------+--------------------+--------------------+--------------------+----+------+-----+--------+\nonly showing top 20 rows\n\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1522058890513_-879360418",
+      "id": "20180326-180810_1414563946",
+      "dateCreated": "Mar 26, 2018 6:08:10 PM",
+      "dateStarted": "Mar 29, 2018 6:41:24 PM",
+      "dateFinished": "Mar 29, 2018 6:42:15 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "var sql_result \u003d sqlContext.sql(\"SELECT query,ans,url,op,sum(qpv) as qpv,sum(qclkpv) as qclkpv,sum(urlpv) as urlpv,sum(urlclkpv) as urlclkpv FROM t_sql_result group by query,ans,url,op \")\nsql_result.show()",
+      "user": "anonymous",
+      "dateUpdated": "Mar 29, 2018 6:53:40 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "sql_result: org.apache.spark.sql.DataFrame \u003d [query: string, ans: string ... 6 more fields]\n+--------------------+--------------------+--------------------+--------------------+----+------+-----+--------+\n|               query|                 ans|                 url|                  op| qpv|qclkpv|urlpv|urlclkpv|\n+--------------------+--------------------+--------------------+--------------------+----+------+-----+--------+\n|  07式新军服将军的肩章是金子做的吗？|不是的，就连礼服的肩章上的金星也是...|http://wenwen.sog...|@ASK:07式新军服将军的肩章是...|null|  null| null|    null|\n|       2012年是不是世界末日？|      是哦，我们也可以好好的玩2年|http://wenwen.sog...|@ASK:2012年是不是世界末日...|null|  null| null|    null|\n| 40天没有来月经没有呕吐的现象会怀孕吗|月经可能因各种原因没准时。可以用测...|                null|@ASK:40天没有来月经没有呕吐...|null|  null| null|    null|\n|           qm带8706好吗|\u003cpre\u003e这个宝宝不错可以练个攻击...|http://wenwen.sog...|@ASK:qm带8706好吗\n@A...|null|  null| null|    null|\n| ATIX300的显卡可以玩鹰击长空吗？|悬。。。。。CPU主频有点低。。。...|http://zhidao.bai...|@ASK:ATIX300的显卡可以...|null|  null| null|    null|\n|DNF女机械和鬼泣还有女大枪玩哪个好啊，|如果没强大的人民币，鬼单刷是不如大...|http://zhidao.bai...|@ASK:DNF女机械和鬼泣还有女...|null|  null| null|    null|\n|       E66会不会比5700好？| \u003cp\u003e当然好了，我用着是很不错\u003c/p\u003e|http://wenwen.sog...|@ASK:E66会不会比5700好...|null|  null| null|    null|\n|    H2O2和H2O是同素异形体吗？|     不是   同素异形体  指单质|http://wenwen.sog...|@ASK:H2O2和H2O是同素异...|null|  null| null|    null|\n|       HTC的充电器三星能不能用|\u003cpre\u003e楼主您好，是可以用的，电...|http://wenwen.sog...|@ASK:HTC的充电器三星能不能...|null|  null| null|    null|\n|【50分】求！高手液晶比较：LG3...|这两款电视都是采用的台湾屏楼主这个...|http://wenwen.sog...|@ASK:【50分】求！高手液晶比...|null|  null| null|    null|\n|PS2上有没有像《红色警戒》那样的...|玩过PS上的红色警戒。。。。。。 ...|http://wenwen.sog...|@ASK:PS2上有没有像《红色警...|null|  null| null|    null|\n|QQ炫舞安装一半 重起后可以继续么...|               要重新开始|http://wenwen.sog...|@ASK:QQ炫舞安装一半 重起后...|null|  null| null|    null|\n|       QQ空间的挂件可以改小吗？|javascript:window...|http://zhidao.bai...|@ASK:QQ空间的挂件可以改小吗...|null|  null| null|    null|\n|    QQ飞车玄阴之珠能开到永久翅膀吗|\u003cpre\u003e我开到过30天白银羽翼。...|http://zhidao.bai...|@ASK:QQ飞车玄阴之珠能开到永...|null|  null| null|    null|\n|我的手机是联想S720，想要roo...|您好，root操作具有一定风险，而...|http://zhidao.bai...|@ASK:我的手机是联想S720，...|null|  null| null|    null|\n|Apple的笔记本装上XP后，图形...|没有影响的，你安装XP前把驱动都准...|http://zhidao.bai...|@ASK:Apple的笔记本装上X...|null|  null| null|    null|\n|            csol弹弓好吗|有钱就抽和你买烟一样我就是一搞活动...|http://zhidao.bai...|@ASK:csol弹弓好吗\n@AN...|null|  null| null|    null|\n|dnf鬼泣应该带什么远古装备好呢，...|\u003cp\u003e 远古一 挺厉害的~ 敏者\u003c/p\u003e|http://wenwen.sog...|@ASK:dnf鬼泣应该带什么远古...|null|  null| null|    null|\n|iphone爆屏，屏幕成这样子，是...|                  不是|http://zhidao.bai...|@ASK:iphone爆屏，屏幕成...|null|  null| null|    null|\n|      两个人在一起久了就真的会烦吗|都会从开始的热火朝天到最后的不温不...|http://zhidao.bai...|@ASK:两个人在一起久了就真的会...|null|  null| null|    null|\n+--------------------+--------------------+--------------------+--------------------+----+------+-----+--------+\nonly showing top 20 rows\n\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1522317068096_-2005071899",
+      "id": "20180329-175108_1829537907",
+      "dateCreated": "Mar 29, 2018 5:51:08 PM",
+      "dateStarted": "Mar 29, 2018 6:53:40 PM",
+      "dateFinished": "Mar 29, 2018 6:55:20 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "user": "anonymous",
+      "config": {},
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "jobName": "paragraph_1522320415554_-478427134",
+      "id": "20180329-184655_1103373663",
+      "dateCreated": "Mar 29, 2018 6:46:55 PM",
+      "status": "READY",
+      "progressUpdateIntervalMs": 500
+    }
+  ],
+  "name": "/viewpoint/map_qpv_urlpv",
+  "id": "2D9FNRKY5",
+  "angularObjects": {
+    "2D9M8ATZ9:shared_process": [],
+    "2D859SF5B:shared_process": [],
+    "2D99W32FC:shared_process": [],
+    "2DA8NG9YB:shared_process": [],
+    "2DBCA9BMV:shared_process": [],
+    "2DA29EQ39:shared_process": [],
+    "2D86PKHDE:shared_process": [],
+    "2D8ZMX5FY:shared_process": [],
+    "2D8ZFKME2:shared_process": [],
+    "2DBAZD2WP:shared_process": [],
+    "2D8SP4FH8:shared_process": [],
+    "2DAESRJYD:shared_process": [],
+    "2DA7377EZ:shared_process": [],
+    "2D8DH9K51:shared_process": [],
+    "2D85K8KV7:shared_process": [],
+    "2D9NTGN5D::2D9FNRKY5": [],
+    "2D958F7RN:shared_process": [],
+    "2DAVR7XRG:shared_process": [],
+    "2DBX9FA55:shared_process": []
+  },
+  "config": {},
+  "info": {}
+}

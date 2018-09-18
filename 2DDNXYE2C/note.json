@@ -1,0 +1,1126 @@
+{
+  "paragraphs": [
+    {
+      "text": "%md 点击日志query 过滤观点站点,统计topN url.然后拼接lizhidata",
+      "user": "anonymous",
+      "dateUpdated": "Apr 26, 2018 1:06:42 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "markdown",
+          "editOnDblClick": true
+        },
+        "editorMode": "ace/mode/markdown",
+        "editorHide": false,
+        "tableHide": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "HTML",
+            "data": "\u003cdiv class\u003d\"markdown-body\"\u003e\n\u003cp\u003e点击日志query 过滤观点站点,统计topN url.然后拼接lizhidata\u003c/p\u003e\n\u003c/div\u003e"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1524719120466_-178421009",
+      "id": "20180426-130520_1060407789",
+      "dateCreated": "Apr 26, 2018 1:05:20 PM",
+      "dateStarted": "Apr 26, 2018 1:06:38 PM",
+      "dateFinished": "Apr 26, 2018 1:06:38 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "import java.net.{URLDecoder, URLEncoder}\r\nimport java.text.SimpleDateFormat\r\nimport java.util.Date\r\n\r\ncase class Logrow(userid:String,uuid:String, page:String, time : String, search_type : String, query : String,urls:List[Map[String,String]])\r\ncase class DFrow(query:String,url:String)\r\n\r\n\r\ndef DateFormat(time:String):String\u003d{\r\n    var sdf:SimpleDateFormat \u003d new SimpleDateFormat(\"yyyyMMdd\")\r\n    var date:String \u003d sdf.format(new Date((time.toLong*1000)))\r\n    return date\r\n}\r\n\r\ndef decode(value:String): String \u003d URLDecoder.decode(value, \"gbk\")\r\n  \r\ndef getRow(line : String):Option[Logrow]\u003d {\r\n//    var userid, uuid, page, time, search_type \u003d \"\"\r\nval regex\u003d\"\"\"^\\d+$\"\"\".r\r\nvar userid, uuid, page,time,search_type,unknown \u003d \"\"\r\nvar tmp \u003d line.trim().split(\u0027\\t\u0027)\r\nif (tmp.length \u003c 2) {\r\n  return None\r\n}\r\nvar tmp0 \u003d tmp(0).trim().split(\u0027#\u0027)\r\nif (tmp0.length !\u003d 5 \u0026\u0026 tmp0.length !\u003d 6) {\r\n  return None\r\n}\r\nif(tmp0.length \u003d\u003d 5){\r\n  userid \u003d tmp0(0)\r\n  uuid \u003d tmp0(1)\r\n  page \u003d tmp0(2)\r\n  time \u003d tmp0(3)\r\n  search_type \u003d tmp0(4)\r\n}else if(tmp0.length \u003d\u003d 6){\r\n  userid \u003d tmp0(0)\r\n  uuid \u003d tmp0(1)\r\n  page \u003d tmp0(2)\r\n  time \u003d tmp0(3)\r\n  search_type \u003d tmp0(4)\r\n  unknown \u003d tmp0(5)\r\n}\r\nvar query \u003d decode(tmp(1))\r\nvar urls:List[Map[String,String]] \u003d List()\r\nvar urlblock:Map[String,String]\u003d Map()\r\nvar cnt \u003d 0\r\nfor(i \u003c- 2 to tmp.length-1){\r\n  //      println(tmp(i))\r\n  //      println(tmp(i).trim().split(\"#\",-1).length)\r\n  if (((tmp(i).trim().split(\"#\",-1).length) \u003e\u003d 4) \u0026\u0026 regex.findFirstMatchIn((tmp(i).trim().split(\"#\",-1)(1))) !\u003d None){\r\n    var tmp_i \u003d tmp(i).trim().split(\"#\",-1)\r\n    if(tmp_i.length !\u003d 4){\r\n      tmp_i \u003d Array(\"\",\"\",\"\",\"\")\r\n    }\r\n    var Array(vrid, ph_3_1, ph_3_2, baseurl) \u003d tmp_i\r\n    baseurl \u003d decode(baseurl)\r\n    urlblock +\u003d (\"vrid\" -\u003e vrid)\r\n    urlblock +\u003d (\"3_1\" -\u003e ph_3_1)\r\n    urlblock +\u003d (\"3_2\" -\u003e ph_3_2)\r\n    urlblock +\u003d (\"baseurl\" -\u003e baseurl)\r\n    urls \u003d urls :+ urlblock\r\n    urlblock \u003d Map()\r\n    cnt \u003d 0\r\n  }else{\r\n    if(cnt\u003d\u003d0){\r\n      urlblock +\u003d (\"wapurl\" -\u003e tmp(i))\r\n      cnt \u003d cnt+1\r\n    }else if(cnt\u003d\u003d1){\r\n      urlblock +\u003d (\"clk\" -\u003e tmp(i))\r\n      cnt \u003d cnt+1\r\n    }else if(cnt\u003d\u003d2){\r\n      urlblock +\u003d (\"2\" -\u003e tmp(i))\r\n      cnt \u003d cnt+1\r\n    }\r\n  }\r\n}\r\nreturn Some(new Logrow(userid, uuid, page, time, search_type, query, urls))\r\n}\r\n\r\n\r\ndef trans_dataframe(row:Logrow)\u003d{\r\n    \r\n    var query \u003d row.query\r\n    var urls \u003d row.urls.map(urlblock \u003d\u003e {\r\n       var url \u003d \"\"\r\n       if (urlblock.get(\"baseurl\").getOrElse(\"\") \u003d\u003d \"\") {\r\n        url \u003d urlblock.get(\"wapurl\").getOrElse(\"\").toString\r\n       } else {\r\n        url \u003d urlblock.get(\"baseurl\").getOrElse(\"\").toString\r\n       }\r\n       (query,url)\r\n      })\r\n     urls\r\n }\r\n     \r\ndef filterNone(x: Option[Logrow]) \u003d x match {\r\n      case Some(s) \u003d\u003e true\r\n      case None \u003d\u003e false\r\n    }\r\n   ",
+      "user": "anonymous",
+      "dateUpdated": "Apr 26, 2018 10:03:34 PM",
+      "config": {
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "results": {},
+        "enabled": true,
+        "editorSetting": {
+          "language": "scala"
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "import java.net.{URLDecoder, URLEncoder}\nimport java.text.SimpleDateFormat\nimport java.util.Date\ndefined class Logrow\ndefined class DFrow\nDateFormat: (time: String)String\ndecode: (value: String)String\ngetRow: (line: String)Option[Logrow]\ntrans_dataframe: (row: Logrow)List[(String, String)]\nfilterNone: (x: Option[Logrow])Boolean\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1524719105781_1273606016",
+      "id": "20180320-181122_1793468431",
+      "dateCreated": "Apr 26, 2018 1:05:05 PM",
+      "dateStarted": "Apr 26, 2018 10:03:34 PM",
+      "dateFinished": "Apr 26, 2018 10:03:37 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "def getHost(line : String) : String \u003d {\r\n    if (line \u003d\u003d null || line.trim().equals(\"\")) {\r\n      return \"\";\r\n    }\r\n    try {\r\n      val caseInsensitivePattern \u003d \"\"\"(?\u003c\u003d//|)((\\w)+\\.)+\\w+(:\\d*)?\"\"\".r\r\n      return  caseInsensitivePattern.findFirstIn(line).get\r\n      //      line replaceAll (caseInsensitivePattern, )\r\n    }\r\n    catch {\r\n      case ex: Exception \u003d\u003e \"\"\r\n    }\r\n  }",
+      "user": "anonymous",
+      "dateUpdated": "Apr 26, 2018 10:03:39 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "getHost: (line: String)String\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1524721107329_-768223580",
+      "id": "20180426-133827_44961009",
+      "dateCreated": "Apr 26, 2018 1:38:27 PM",
+      "dateStarted": "Apr 26, 2018 10:03:39 PM",
+      "dateFinished": "Apr 26, 2018 10:03:40 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": " val filterURI \u003d List(\"wenwen.sogou.com\",\"zhidao.baidu.com\",\"ask.yaolan.com\",\"www.120ask.com\",\"www.babytree.com\",\"club.xywy.com\",\"ask.39.net\",\"wenda.tianya.cn\",\r\n \"www.haodf.com\",\"iask.sina.com.cn\",\"tieba.baidu.com\",\"iask.finance.sina.com.cn\",\"ask.ci123.com\",\"iask.auto.sina.com.cn\",\"iask.sports.sina.com.cn\",\"iask.gd.sina.com.cn\",\r\n \"www.zhihu.com\",\"iask.life.sina.com.cn\",\"ask.familydoctor.com.cn\",\"iask.tech.sina.com.cn\",\"iask.jiaju.sina.com.cn\",\"bbs.tianya.cn\",\"iask.yuan.sina.com.cn\",\"iask.eat.sina.com.cn\",\r\n \"iask.f1.sina.com.cn\",\"iask.jczs.sina.com.cn\",\"iask.news.sina.com.cn\",\"iask.search.sina.com.cn\")\r\n    ",
+      "user": "anonymous",
+      "dateUpdated": "Apr 26, 2018 10:03:42 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "filterURI: List[String] \u003d List(wenwen.sogou.com, zhidao.baidu.com, ask.yaolan.com, www.120ask.com, www.babytree.com, club.xywy.com, ask.39.net, wenda.tianya.cn, www.haodf.com, iask.sina.com.cn, tieba.baidu.com, iask.finance.sina.com.cn, ask.ci123.com, iask.auto.sina.com.cn, iask.sports.sina.com.cn, iask.gd.sina.com.cn, www.zhihu.com, iask.life.sina.com.cn, ask.familydoctor.com.cn, iask.tech.sina.com.cn, iask.jiaju.sina.com.cn, bbs.tianya.cn, iask.yuan.sina.com.cn, iask.eat.sina.com.cn, iask.f1.sina.com.cn, iask.jczs.sina.com.cn, iask.news.sina.com.cn, iask.search.sina.com.cn)\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1524720697933_189454182",
+      "id": "20180426-133137_1018124676",
+      "dateCreated": "Apr 26, 2018 1:31:37 PM",
+      "dateStarted": "Apr 26, 2018 10:03:42 PM",
+      "dateFinished": "Apr 26, 2018 10:03:42 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "for(i\u003c- 707 to 712){\n    val inputPath \u003d \"/user/webrank/clicklog/ms/201\"+i.toString+\"/*\"\n    println(inputPath)\n    var lograw \u003d sc.textFile(inputPath)\n    var result \u003d lograw.map(x\u003d\u003egetRow(x)).filter(filterNone).map(x\u003d\u003ex.get).filter(_.urls!\u003dNone).filter(_.urls.length \u003e 1).map(trans_dataframe).flatMap(list \u003d\u003e list).filter(x\u003d\u003efilterURI.contains(getHost(x._2))).map(r \u003d\u003e DFrow(r._1,r._2)).toDF()\n    result.registerTempTable(\"result\")\n    var sql_result \u003d sqlContext.sql(\"SELECT query,url,count(url) as pv FROM result group by query,url\")\n    sql_result.write.format(\"parquet\").save(\"/user/webrank/liuqin/out/query_map_url_list_all_201\"+i.toString+\".parquet\")                 //这里的clkpv指这个query只要被点击过任何一条url\n}",
+      "user": "anonymous",
+      "dateUpdated": "Sep 10, 2018 10:50:57 PM",
+      "config": {
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "results": {},
+        "enabled": true,
+        "editorSetting": {
+          "language": "scala"
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "warning: there was one deprecation warning; re-run with -deprecation for details\n/user/webrank/clicklog/ms/201801/*\n/user/webrank/clicklog/ms/201802/*\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1524751427810_1658442157",
+      "id": "20180426-220347_2050630044",
+      "dateCreated": "Apr 26, 2018 10:03:47 PM",
+      "dateStarted": "Apr 26, 2018 10:05:21 PM",
+      "dateFinished": "Apr 26, 2018 11:35:39 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "\nval inputPath \u003d \"/user/webrank/clicklog/ms/201803/*\"\nprintln(inputPath)\nvar lograw \u003d sc.textFile(inputPath)\nvar result \u003d lograw.map(x\u003d\u003egetRow(x)).filter(filterNone).map(x\u003d\u003ex.get).filter(_.urls!\u003dNone).filter(_.urls.length \u003e 1).map(trans_dataframe).flatMap(list \u003d\u003e list).filter(x\u003d\u003efilterURI.contains(getHost(x._2))).map(r \u003d\u003e DFrow(r._1,r._2)).toDF()\n",
+      "user": "anonymous",
+      "dateUpdated": "Apr 26, 2018 1:39:15 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "inputPath: String \u003d /user/webrank/clicklog/ms/201803/*\n/user/webrank/clicklog/ms/201803/*\nlograw: org.apache.spark.rdd.RDD[String] \u003d /user/webrank/clicklog/ms/201803/* MapPartitionsRDD[15] at textFile at \u003cconsole\u003e:32\nresult: org.apache.spark.sql.DataFrame \u003d [query: string, url: string]\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1524719226838_-1511070250",
+      "id": "20180426-130706_1106195351",
+      "dateCreated": "Apr 26, 2018 1:07:06 PM",
+      "dateStarted": "Apr 26, 2018 1:39:15 PM",
+      "dateFinished": "Apr 26, 2018 1:39:16 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "result.registerTempTable(\"result\")\nvar sql_result \u003d sqlContext.sql(\"SELECT query,url,count(url) as pv FROM result group by query,url\")\nsql_result.count()",
+      "user": "anonymous",
+      "dateUpdated": "Apr 26, 2018 1:39:42 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "warning: there was one deprecation warning; re-run with -deprecation for details\nsql_result: org.apache.spark.sql.DataFrame \u003d [query: string, url: string ... 1 more field]\nres20: Long \u003d 3470785835\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1524719862203_1032243097",
+      "id": "20180426-131742_1274581385",
+      "dateCreated": "Apr 26, 2018 1:17:42 PM",
+      "dateStarted": "Apr 26, 2018 1:39:42 PM",
+      "dateFinished": "Apr 26, 2018 2:48:36 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "sql_result.registerTempTable(\"t_qupv\")",
+      "user": "anonymous",
+      "dateUpdated": "Apr 26, 2018 4:57:46 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "warning: there was one deprecation warning; re-run with -deprecation for details\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1524725459804_-2036366943",
+      "id": "20180426-145059_1822476176",
+      "dateCreated": "Apr 26, 2018 2:50:59 PM",
+      "dateStarted": "Apr 26, 2018 4:57:46 PM",
+      "dateFinished": "Apr 26, 2018 4:58:35 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "sql_result.write.format(\"parquet\").save(\"/user/webrank/liuqin/out/query_map_url_list_all_201803.parquet\")",
+      "user": "anonymous",
+      "dateUpdated": "Apr 26, 2018 2:49:36 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": []
+      },
+      "apps": [],
+      "jobName": "paragraph_1524725134380_947919026",
+      "id": "20180426-144534_839703928",
+      "dateCreated": "Apr 26, 2018 2:45:34 PM",
+      "dateStarted": "Apr 26, 2018 2:49:36 PM",
+      "dateFinished": "Apr 26, 2018 3:44:53 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "var sql_result \u003dsqlContext.read.load(\"/user/webrank/liuqin/out/query_map_url_list_all_201803.parquet\")",
+      "user": "anonymous",
+      "dateUpdated": "Apr 26, 2018 4:57:37 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "sql_result: org.apache.spark.sql.DataFrame \u003d [query: string, url: string ... 1 more field]\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1524732956322_1806740088",
+      "id": "20180426-165556_894534977",
+      "dateCreated": "Apr 26, 2018 4:55:56 PM",
+      "dateStarted": "Apr 26, 2018 4:57:37 PM",
+      "dateFinished": "Apr 26, 2018 4:58:34 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "var num_dis \u003d sqlContext.sql(\"select num,count(*) as uv from (select query,count(url) as num from t_qupv group by query)b group by num\")\r\nnum_dis.show(50)\r\n",
+      "user": "anonymous",
+      "dateUpdated": "Apr 26, 2018 2:58:02 PM",
+      "config": {
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "results": {},
+        "enabled": true,
+        "editorSetting": {
+          "language": "scala"
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "num_dis: org.apache.spark.sql.DataFrame \u003d [num: bigint, uv: bigint]\n+---+--------+\n|num|      uv|\n+---+--------+\n| 29|  307868|\n| 26|  451104|\n| 65|    7821|\n|293|      16|\n|222|      26|\n| 19| 1225058|\n| 54|   19155|\n|112|     532|\n|155|     110|\n|113|     516|\n| 22|  771588|\n|130|     260|\n|  7|39614661|\n| 77|    3465|\n| 34|  164327|\n|126|     298|\n|228|      22|\n| 50|   38698|\n| 94|    1273|\n|149|     133|\n|110|     557|\n|275|      18|\n| 57|   14911|\n|144|     159|\n| 43|   57696|\n| 32|  210821|\n| 84|    2291|\n|212|      31|\n| 31|  239533|\n|119|     380|\n| 39|   91137|\n| 98|    1052|\n|116|     465|\n|145|     153|\n| 25|  513654|\n| 95|    1247|\n|268|      16|\n| 71|    5132|\n|161|      89|\n|193|      44|\n|  6|50275601|\n| 68|    6143|\n| 87|    2025|\n| 72|    4800|\n| 58|   13430|\n|107|     711|\n|  9|24524712|\n| 27|  397304|\n| 63|    9109|\n|158|     113|\n+---+--------+\nonly showing top 50 rows\n\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1524719105787_1272836518",
+      "id": "20180320-215115_2112533456",
+      "dateCreated": "Apr 26, 2018 1:05:05 PM",
+      "dateStarted": "Apr 26, 2018 3:44:53 PM",
+      "dateFinished": "Apr 26, 2018 4:44:18 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "def lineToM(l : String)\u003d {\r\n    var line \u003d l\r\n    if(line.startsWith(\"\\\"\")\u0026\u0026line.endsWith(\"\\\"\")){\r\n      line \u003d line.substring(1,line.length-1)\r\n    }\r\n    val regex \u003d \"@[A-Za-z._]{1,30}:\".r\r\n    val tags \u003d regex findAllIn line toArray\r\n    val contents \u003d line.split(\"@[A-Za-z._]{1,30}:\",-1)\r\n    \r\n    var M:Map[String,String] \u003d Map()\r\n    \r\n    for(i\u003c-0 until tags.length){\r\n      var tag \u003d tags(i)\r\n      var content \u003d contents(i+1)\r\n      M +\u003d (tag -\u003e content.trim())\r\n    }\r\n    M\r\n  }\r\n  def lineToQuery(l : String)\u003d {\r\n    var line \u003d l\r\n    if(line.startsWith(\"\\\"\")\u0026\u0026line.endsWith(\"\\\"\")){\r\n      line \u003d line.substring(1,line.length-1)\r\n    }\r\n    val regex \u003d \"@[A-Za-z._]{1,30}:\".r\r\n    val tags \u003d regex findAllIn line toArray\r\n    val contents \u003d line.split(\"@[A-Za-z._]{1,30}:\",-1)\r\n\r\n    var query_id \u003d \"\"\r\n    var QLEVEL \u003d \"\"\r\n    var QTYPE \u003d \"\"\r\n    var pv \u003d \"\"\r\n    var query \u003d \"\"\r\n\r\n    try{\r\n      for(i\u003c-0 until tags.length){\r\n        var tag \u003d tags(i)\r\n        var content \u003d contents(i+1)\r\n        //     print(tag)\r\n        //     println(content)\r\n        if(tag\u003d\u003d\"@query:\"){\r\n          query \u003d content.trim()\r\n\r\n        }\r\n      }\r\n      \r\n      }catch{\r\n        case e: Exception \u003d\u003e {\r\n          pv \u003d \"\"\r\n        }\r\n      }\r\n      (query)\r\n  }\r\n  \r\n  \r\n  case class Row_q(query:String)",
+      "user": "anonymous",
+      "dateUpdated": "May 2, 2018 11:40:24 AM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "warning: there was one feature warning; re-run with -feature for details\nlineToM: (l: String)Map[String,String]\nwarning: there was one feature warning; re-run with -feature for details\nlineToQuery: (l: String)String\ndefined class Row_q\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1524731063281_1325306488",
+      "id": "20180426-162423_881567751",
+      "dateCreated": "Apr 26, 2018 4:24:23 PM",
+      "dateStarted": "May 2, 2018 11:40:24 AM",
+      "dateFinished": "May 2, 2018 11:41:00 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "case class Row_qaua(query_url: String,pv: Int)\ncase class Row_qupv(query: String,url: String,pv: Int)",
+      "user": "anonymous",
+      "dateUpdated": "Jul 11, 2018 3:36:45 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "defined class Row_qaua\ndefined class Row_qupv\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1524915264929_1794462765",
+      "id": "20180428-193424_868782339",
+      "dateCreated": "Apr 28, 2018 7:34:24 PM",
+      "dateStarted": "May 2, 2018 11:40:22 AM",
+      "dateFinished": "May 2, 2018 11:40:59 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "var datardd \u003d sqlContext.read.load(\"/user/webrank/liuqin/out/query_map_url_list_all_0707_0803.parquet\")",
+      "user": "anonymous",
+      "dateUpdated": "May 2, 2018 11:41:21 AM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "datardd: org.apache.spark.sql.DataFrame \u003d [query_url: string, pv: int]\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1524909373956_1736107182",
+      "id": "20180428-175613_1045689816",
+      "dateCreated": "Apr 28, 2018 5:56:13 PM",
+      "dateStarted": "May 2, 2018 11:41:21 AM",
+      "dateFinished": "May 2, 2018 11:44:37 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "var datarddr \u003d datardd.map(m \u003d\u003e(lineToM(m(0).toString).get(\"@query:\").get.toString,lineToM(m(0).toString).get(\"@url:\").get.toString,m(1).toString.toInt))\nvar datarddr2 \u003d datarddr.map(r \u003d\u003e Row_qupv(r._1,r._2,r._3)).toDF()\ndatarddr2.show()",
+      "user": "anonymous",
+      "dateUpdated": "May 2, 2018 11:42:02 AM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "datarddr: org.apache.spark.sql.Dataset[(String, String, Int)] \u003d [_1: string, _2: string ... 1 more field]\ndatarddr2: org.apache.spark.sql.DataFrame \u003d [query: string, url: string ... 1 more field]\n+----------------+--------------------+---+\n|           query|                 url| pv|\n+----------------+--------------------+---+\n|   中国银行这几个字是什么字体|https://zhidao.ba...|  1|\n|     魔兽精灵族怎么缠绕金矿|http://wenwen.sog...|  1|\n|        头胞替安粉的疗效|http://club.xywy....|  1|\n|       LZ GOHOME|https://tieba.bai...|  1|\n| 狗不以善吠为良，人不以善言为贤|http://wenwen.sog...|  1|\n|      七年级语文下冊古诗词|http://wenwen.sog...|  1|\n|    coclx9支持两张卡么|http://wenwen.sog...|  1|\n|      合作社买农机有补助吗|http://tieba.baid...|  1|\n|        旗袍是旗袍裙吗？|http://zhidao.bai...|  1|\n|      陈旧性软组织损伤偏方|http://www.haodf....|  9|\n|        什么声什么杂成语|http://wenda.tian...|  1|\n|     湖北工程学院新技术学校|http://wenwen.sog...|  1|\n|      月经来了腹胀肚子难受|http://wenwen.sog...|  1|\n|        情侣网名霸道王爷|http://wenwen.sog...|  1|\n|       第四个字是猪的成语|https://zhidao.ba...|  2|\n| 2018DNF最适合瞎子的宝珠|http://tieba.baid...|  1|\n|k2288锦州几号站台上车到昆明|http://wenwen.sog...|  1|\n|    来大姨妈会不会分泌物增多|http://ask.39.net...|  1|\n|    呼市西站到人民医院怎么走|http://zhidao.bai...|  1|\n|       吃海草拉绿色的便便|http://www.babytr...|  1|\n+----------------+--------------------+---+\nonly showing top 20 rows\n\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1524915325943_-158614597",
+      "id": "20180428-193525_191890903",
+      "dateCreated": "Apr 28, 2018 7:35:25 PM",
+      "dateStarted": "May 2, 2018 11:42:02 AM",
+      "dateFinished": "May 2, 2018 11:44:43 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "val inputPath \u003d \"/user/webrank/liuqin/viewpoint/weight_choice_tpye1_m3\"\nprintln(inputPath)\n\nvar tq \u003d sc.textFile(inputPath).map(x \u003d\u003e(lineToQuery(x))).map(m\u003d\u003eRow_q(m)).toDF()\ntq \u003d tq.distinct\ntq.show(5)\nprintln(tq.count())\ntq.createOrReplaceTempView(\"t_tq\")",
+      "user": "anonymous",
+      "dateUpdated": "May 2, 2018 11:42:43 AM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "ERROR",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "inputPath: String \u003d /user/webrank/liuqin/viewpoint/weight_choice_tpye1_m3\n/user/webrank/liuqin/viewpoint/weight_choice_tpye1_m3\njava.lang.IllegalStateException: Cannot call methods on a stopped SparkContext.\nThis stopped SparkContext was created at:\n\norg.apache.spark.sql.SparkSession$Builder.getOrCreate(SparkSession.scala:901)\nsun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)\nsun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)\nsun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)\njava.lang.reflect.Method.invoke(Method.java:498)\norg.apache.zeppelin.spark.Utils.invokeMethod(Utils.java:38)\norg.apache.zeppelin.spark.Utils.invokeMethod(Utils.java:33)\norg.apache.zeppelin.spark.SparkInterpreter.createSparkSession(SparkInterpreter.java:368)\norg.apache.zeppelin.spark.SparkInterpreter.getSparkSession(SparkInterpreter.java:233)\norg.apache.zeppelin.spark.SparkInterpreter.open(SparkInterpreter.java:841)\norg.apache.zeppelin.interpreter.LazyOpenInterpreter.open(LazyOpenInterpreter.java:70)\norg.apache.zeppelin.interpreter.remote.RemoteInterpreterServer$InterpretJob.jobRun(RemoteInterpreterServer.java:491)\norg.apache.zeppelin.scheduler.Job.run(Job.java:175)\norg.apache.zeppelin.scheduler.FIFOScheduler$1.run(FIFOScheduler.java:139)\njava.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511)\njava.util.concurrent.FutureTask.run(FutureTask.java:266)\njava.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.access$201(ScheduledThreadPoolExecutor.java:180)\njava.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:293)\njava.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)\njava.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)\n\nThe currently active SparkContext was created at:\n\n(No active SparkContext.)\n\n  at org.apache.spark.SparkContext.assertNotStopped(SparkContext.scala:100)\n  at org.apache.spark.SparkContext.defaultParallelism(SparkContext.scala:2320)\n  at org.apache.spark.SparkContext.defaultMinPartitions(SparkContext.scala:2329)\n  at org.apache.spark.SparkContext.textFile$default$2(SparkContext.scala:830)\n  ... 46 elided\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1524719105787_1272836518",
+      "id": "20180418-212717_824859502",
+      "dateCreated": "Apr 26, 2018 1:05:05 PM",
+      "dateStarted": "Apr 28, 2018 8:13:52 PM",
+      "dateFinished": "Apr 28, 2018 8:13:53 PM",
+      "status": "ABORT",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "datarddr2.registerTempTable(\"t_qupv\")",
+      "user": "anonymous",
+      "dateUpdated": "May 2, 2018 11:42:40 AM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "warning: there was one deprecation warning; re-run with -deprecation for details\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1524915782268_-975581531",
+      "id": "20180428-194302_1507053543",
+      "dateCreated": "Apr 28, 2018 7:43:02 PM",
+      "dateStarted": "May 2, 2018 11:44:38 AM",
+      "dateFinished": "May 2, 2018 11:44:44 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "var sql_result \u003d sqlContext.sql(\"select t_tq.query as query,url,pv from t_tq join t_qupv on t_qupv.query\u003dt_tq.query\")\r\nsql_result.count()",
+      "user": "anonymous",
+      "dateUpdated": "Apr 28, 2018 8:09:44 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "ERROR",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "org.apache.spark.sql.AnalysisException: cannot resolve \u0027`t_tq.query`\u0027 given input columns: [value, query, url, pv]; line 1 pos 72;\n\u0027Project [\u0027t_tq.query AS query#328, \u0027url, \u0027pv]\n+- \u0027Join Inner, (query#229 \u003d \u0027t_tq.query)\n   :- SubqueryAlias t_tq\n   :  +- Deduplicate [value#189], false\n   :     +- SerializeFromObject [staticinvoke(class org.apache.spark.unsafe.types.UTF8String, StringType, fromString, input[0, java.lang.String, true], true) AS value#189]\n   :        +- ExternalRDD [obj#188]\n   +- SubqueryAlias t_qupv\n      +- SerializeFromObject [staticinvoke(class org.apache.spark.unsafe.types.UTF8String, StringType, fromString, assertnotnull(assertnotnull(input[0, Row_qupv, true])).query, true) AS query#229, staticinvoke(class org.apache.spark.unsafe.types.UTF8String, StringType, fromString, assertnotnull(assertnotnull(input[0, Row_qupv, true])).url, true) AS url#230, assertnotnull(assertnotnull(input[0, Row_qupv, true])).pv AS pv#231]\n         +- MapElements \u003cfunction1\u003e, class scala.Tuple3, [StructField(_1,StringType,true), StructField(_2,StringType,true), StructField(_3,IntegerType,false)], obj#228: Row_qupv\n            +- DeserializeToObject newInstance(class scala.Tuple3), obj#227: scala.Tuple3\n               +- SerializeFromObject [staticinvoke(class org.apache.spark.unsafe.types.UTF8String, StringType, fromString, assertnotnull(assertnotnull(input[0, scala.Tuple3, true]))._1, true) AS _1#220, staticinvoke(class org.apache.spark.unsafe.types.UTF8String, StringType, fromString, assertnotnull(assertnotnull(input[0, scala.Tuple3, true]))._2, true) AS _2#221, assertnotnull(assertnotnull(input[0, scala.Tuple3, true]))._3 AS _3#222]\n                  +- MapElements \u003cfunction1\u003e, interface org.apache.spark.sql.Row, [StructField(query_url,StringType,true), StructField(pv,IntegerType,true)], obj#219: scala.Tuple3\n                     +- DeserializeToObject createexternalrow(query_url#210.toString, pv#211, StructField(query_url,StringType,true), StructField(pv,IntegerType,true)), obj#218: org.apache.spark.sql.Row\n                        +- Relation[query_url#210,pv#211] parquet\n\n  at org.apache.spark.sql.catalyst.analysis.package$AnalysisErrorAt.failAnalysis(package.scala:42)\n  at org.apache.spark.sql.catalyst.analysis.CheckAnalysis$$anonfun$checkAnalysis$1$$anonfun$apply$2.applyOrElse(CheckAnalysis.scala:88)\n  at org.apache.spark.sql.catalyst.analysis.CheckAnalysis$$anonfun$checkAnalysis$1$$anonfun$apply$2.applyOrElse(CheckAnalysis.scala:85)\n  at org.apache.spark.sql.catalyst.trees.TreeNode$$anonfun$transformUp$1.apply(TreeNode.scala:289)\n  at org.apache.spark.sql.catalyst.trees.TreeNode$$anonfun$transformUp$1.apply(TreeNode.scala:289)\n  at org.apache.spark.sql.catalyst.trees.CurrentOrigin$.withOrigin(TreeNode.scala:70)\n  at org.apache.spark.sql.catalyst.trees.TreeNode.transformUp(TreeNode.scala:288)\n  at org.apache.spark.sql.catalyst.trees.TreeNode$$anonfun$3.apply(TreeNode.scala:286)\n  at org.apache.spark.sql.catalyst.trees.TreeNode$$anonfun$3.apply(TreeNode.scala:286)\n  at org.apache.spark.sql.catalyst.trees.TreeNode$$anonfun$4.apply(TreeNode.scala:306)\n  at org.apache.spark.sql.catalyst.trees.TreeNode.mapProductIterator(TreeNode.scala:187)\n  at org.apache.spark.sql.catalyst.trees.TreeNode.mapChildren(TreeNode.scala:304)\n  at org.apache.spark.sql.catalyst.trees.TreeNode.transformUp(TreeNode.scala:286)\n  at org.apache.spark.sql.catalyst.plans.QueryPlan$$anonfun$transformExpressionsUp$1.apply(QueryPlan.scala:268)\n  at org.apache.spark.sql.catalyst.plans.QueryPlan$$anonfun$transformExpressionsUp$1.apply(QueryPlan.scala:268)\n  at org.apache.spark.sql.catalyst.plans.QueryPlan.transformExpression$1(QueryPlan.scala:279)\n  at org.apache.spark.sql.catalyst.plans.QueryPlan.org$apache$spark$sql$catalyst$plans$QueryPlan$$recursiveTransform$1(QueryPlan.scala:289)\n  at org.apache.spark.sql.catalyst.plans.QueryPlan.org$apache$spark$sql$catalyst$plans$QueryPlan$$recursiveTransform$1(QueryPlan.scala:290)\n  at org.apache.spark.sql.catalyst.plans.QueryPlan$$anonfun$6.apply(QueryPlan.scala:298)\n  at org.apache.spark.sql.catalyst.trees.TreeNode.mapProductIterator(TreeNode.scala:187)\n  at org.apache.spark.sql.catalyst.plans.QueryPlan.mapExpressions(QueryPlan.scala:298)\n  at org.apache.spark.sql.catalyst.plans.QueryPlan.transformExpressionsUp(QueryPlan.scala:268)\n  at org.apache.spark.sql.catalyst.analysis.CheckAnalysis$$anonfun$checkAnalysis$1.apply(CheckAnalysis.scala:85)\n  at org.apache.spark.sql.catalyst.analysis.CheckAnalysis$$anonfun$checkAnalysis$1.apply(CheckAnalysis.scala:78)\n  at org.apache.spark.sql.catalyst.trees.TreeNode.foreachUp(TreeNode.scala:127)\n  at org.apache.spark.sql.catalyst.trees.TreeNode$$anonfun$foreachUp$1.apply(TreeNode.scala:126)\n  at org.apache.spark.sql.catalyst.trees.TreeNode$$anonfun$foreachUp$1.apply(TreeNode.scala:126)\n  at scala.collection.immutable.List.foreach(List.scala:381)\n  at org.apache.spark.sql.catalyst.trees.TreeNode.foreachUp(TreeNode.scala:126)\n  at org.apache.spark.sql.catalyst.analysis.CheckAnalysis$class.checkAnalysis(CheckAnalysis.scala:78)\n  at org.apache.spark.sql.catalyst.analysis.Analyzer.checkAnalysis(Analyzer.scala:91)\n  at org.apache.spark.sql.execution.QueryExecution.assertAnalyzed(QueryExecution.scala:52)\n  at org.apache.spark.sql.Dataset$.ofRows(Dataset.scala:66)\n  at org.apache.spark.sql.SparkSession.sql(SparkSession.scala:623)\n  at org.apache.spark.sql.SQLContext.sql(SQLContext.scala:691)\n  ... 46 elided\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1524731504955_-668637980",
+      "id": "20180426-163144_104501694",
+      "dateCreated": "Apr 26, 2018 4:31:44 PM",
+      "dateStarted": "Apr 28, 2018 8:10:27 PM",
+      "dateFinished": "Apr 28, 2018 8:10:28 PM",
+      "status": "ERROR",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "sql_result.createOrReplaceTempView(\"t_tqupv\")",
+      "user": "anonymous",
+      "dateUpdated": "Apr 26, 2018 5:04:38 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": []
+      },
+      "apps": [],
+      "jobName": "paragraph_1524731785357_284768150",
+      "id": "20180426-163625_1657529672",
+      "dateCreated": "Apr 26, 2018 4:36:25 PM",
+      "dateStarted": "Apr 26, 2018 5:04:38 PM",
+      "dateFinished": "Apr 26, 2018 5:06:28 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "var sql_result \u003d sqlContext.sql(\"select * from (select query,url,pv,row_number() over(partition by query order by pv desc) as rowNumber from t_tqupv) where rowNumber\u003c\u003d3\")\r\nsql_result.show(50)",
+      "user": "anonymous",
+      "dateUpdated": "Apr 26, 2018 5:16:29 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "sql_result: org.apache.spark.sql.DataFrame \u003d [query: string, url: string ... 2 more fields]\n+--------------------+--------------------+---+---------+\n|               query|                 url| pv|rowNumber|\n+--------------------+--------------------+---+---------+\n|\u0026#229;\u0026#133;\u0026#131...|http://tieba.baid...|  6|        1|\n|\u0026#229;\u0026#141;\u0026#129...|http://tieba.baid...|  6|        1|\n|\u0026#230;\u0026#129;\u0026#139...|http://tieba.baid...|  1|        1|\n|\u0026#230;\u0026#136;\u0026#145...|http://bbs.tianya...|  1|        1|\n|\u0026#230;\u0026#174;\u0026#135...|http://wenwen.sog...|  7|        1|\n|\u0026#230;\u0026#174;\u0026#135...|http://wenwen.sog...|  7|        2|\n|\u0026#231;\u0026#129;\u0026#171...|http://wenwen.sog...|  8|        1|\n|,双色球开奖结果查询1001,双色...|http://wenwen.sog...| 10|        1|\n|,双色球开奖结果查询1001,双色...|http://wenwen.sog...|  7|        2|\n|,双色球开奖结果查询1001,双色...|http://wenwen.sog...|  7|        3|\n|     ,有新政策,首付20%吗?购房|http://bbs.tianya...| 27|        1|\n|     ,有新政策,首付20%吗?购房|https://zhidao.ba...| 18|        2|\n|     ,有新政策,首付20%吗?购房|http://wenwen.sog...| 16|        3|\n|. Who do you thin...|https://zhidao.ba...|  3|        1|\n|. Who do you thin...|https://zhidao.ba...|  2|        2|\n|. Who do you thin...|http://wenwen.sog...|  2|        3|\n|.com/share/link?s...|http://tieba.baid...| 21|        1|\n|.com/share/link?s...|http://tieba.baid...| 21|        2|\n|.com/share/link?s...|http://wenwen.sog...| 18|        3|\n|.com/share/link?s...|http://tieba.baid...|  5|        1|\n|.com/share/link?s...|http://wenwen.sog...|  5|        2|\n|.com/share/link?s...|http://tieba.baid...|  2|        3|\n|.儿子:爸爸，这个世界上真的有鬼吗...|https://tieba.bai...|  2|        1|\n|.儿子:爸爸，这个世界上真的有鬼吗...|https://tieba.bai...|  1|        2|\n|.儿子:爸爸，这个世界上真的有鬼吗...|https://zhidao.ba...|  1|        3|\n|      .哈尔滨治疗疤痕.快青年放心|http://www.120ask...|194|        1|\n|      .哈尔滨治疗疤痕.快青年放心|http://www.haodf....|194|        2|\n|      .哈尔滨治疗疤痕.快青年放心|https://zhidao.ba...|194|        3|\n|      .天津祛痘医院.快津 门放心|http://www.120ask...|293|        1|\n|      .天津祛痘医院.快津 门放心|http://www.120ask...|292|        2|\n|      .天津祛痘医院.快津 门放心|http://ask.39.net...| 36|        3|\n|      .广州治疗疤痕.为肤 康放心|http://www.120ask...|  2|        1|\n|      .广州治疗痤疮.为肤 康放心|https://www.zhihu...|222|        1|\n|      .广州治疗痤疮.为肤 康放心|http://ask.39.net...|219|        2|\n|      .广州治疗痤疮.为肤 康放心|http://ask.39.net...|215|        3|\n|       .广州祛疤痕.快肤 康放心|http://www.haodf....|  5|        1|\n|        .广州祛痘.需肤 康放心|http://ask.39.net...|188|        1|\n|        .广州祛痘.需肤 康放心|http://ask.39.net...|176|        2|\n|        .广州祛痘.需肤 康放心|http://ask.39.net...| 14|        3|\n|  .海口治疗不 孕不 育.中肤 康放心|http://ask.39.net...|236|        1|\n|  .海口治疗不 孕不 育.中肤 康放心|http://www.haodf....|236|        2|\n|  .海口治疗不 孕不 育.中肤 康放心|http://www.120ask...|235|        3|\n|     .海口治疗前列腺.可肤+康放心|http://ask.39.net...|342|        1|\n|     .海口治疗前列腺.可肤+康放心|http://bbs.tianya...|324|        2|\n|     .海口治疗前列腺.可肤+康放心|http://ask.39.net...|219|        3|\n|  .海口治疗急性前列腺炎.须肤 康放心|http://club.xywy....| 92|        1|\n|  .海口治疗急性前列腺炎.须肤 康放心|http://club.xywy....| 92|        2|\n|  .海口治疗急性前列腺炎.须肤 康放心|http://ask.39.net...| 82|        3|\n| .海口治疗生 殖器疱 疹.为肤 康放心|http://ask.39.net...|140|        1|\n| .海口治疗生 殖器疱 疹.为肤 康放心|http://ask.39.net...| 63|        2|\n+--------------------+--------------------+---+---------+\nonly showing top 50 rows\n\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1524731400886_-25074019",
+      "id": "20180426-163000_954456377",
+      "dateCreated": "Apr 26, 2018 4:30:00 PM",
+      "dateStarted": "Apr 26, 2018 5:16:30 PM",
+      "dateFinished": "Apr 26, 2018 5:25:27 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "sql_result.createOrReplaceTempView(\"sql_result\")\nsql_result \u003dsqlContext.sql(\"SELECT CONCAT(\u0027@query:\u0027,query,\u0027\\t@url:\u0027,url) as line FROM sql_result\")\n// .rdd.saveAsTextFile(\"/user/webrank/liuqin/viewpoint/choice_tpye3_query_maped_url_atline.csv\")",
+      "user": "anonymous",
+      "dateUpdated": "Apr 26, 2018 5:34:03 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "sql_result: org.apache.spark.sql.DataFrame \u003d [line: string]\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1524732298727_-2041685332",
+      "id": "20180426-164458_2105051255",
+      "dateCreated": "Apr 26, 2018 4:44:58 PM",
+      "dateStarted": "Apr 26, 2018 5:34:03 PM",
+      "dateFinished": "Apr 26, 2018 5:34:04 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "sql_result.count()",
+      "user": "anonymous",
+      "dateUpdated": "Apr 26, 2018 5:34:17 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "res26: Long \u003d 327639\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1524732521073_567067097",
+      "id": "20180426-164841_929056204",
+      "dateCreated": "Apr 26, 2018 4:48:41 PM",
+      "dateStarted": "Apr 26, 2018 5:34:17 PM",
+      "dateFinished": "Apr 26, 2018 5:38:27 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "sql_result.select(\"line\").rdd.saveAsTextFile(\"/user/webrank/liuqin/viewpoint/query_map_url_list_tpye3_choice_201803_atline.csv\")",
+      "user": "anonymous",
+      "dateUpdated": "Apr 26, 2018 7:06:04 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": []
+      },
+      "apps": [],
+      "jobName": "paragraph_1524735257152_-1957011047",
+      "id": "20180426-173417_2128981801",
+      "dateCreated": "Apr 26, 2018 5:34:17 PM",
+      "dateStarted": "Apr 26, 2018 5:58:42 PM",
+      "dateFinished": "Apr 26, 2018 6:03:40 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "var datau \u003dsqlContext.read.load(\"/user/webrank/liuqin/viewpoint/query_map_url_list_tpye3_choice_201803_maped_ans.parquet\") \ndatau.count()",
+      "user": "anonymous",
+      "dateUpdated": "Apr 26, 2018 8:05:45 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "datau: org.apache.spark.sql.DataFrame \u003d [query: string, url: string ... 2 more fields]\nres41: Long \u003d 634856\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1524735439379_-1226516260",
+      "id": "20180426-173719_1463270850",
+      "dateCreated": "Apr 26, 2018 5:37:19 PM",
+      "dateStarted": "Apr 26, 2018 8:05:45 PM",
+      "dateFinished": "Apr 26, 2018 8:06:02 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "datau.select(\"query\").distinct.count()",
+      "user": "anonymous",
+      "dateUpdated": "Apr 26, 2018 8:05:52 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "res42: Long \u003d 114358\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1524740870732_-2050859727",
+      "id": "20180426-190750_1953651175",
+      "dateCreated": "Apr 26, 2018 7:07:50 PM",
+      "dateStarted": "Apr 26, 2018 8:05:52 PM",
+      "dateFinished": "Apr 26, 2018 8:06:15 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "datau.show()",
+      "user": "anonymous",
+      "dateUpdated": "Apr 26, 2018 7:13:17 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "+------------+--------------------+--------------------+\n|       query|                 ans|                 URI|\n+------------+--------------------+--------------------+\n|  验血能查出脱发原因吗|朋友你好，你这情况建议去医院皮肤科...|http://ask.39.net...|\n| 减肥的时候可以吃花生吗|最好少吃。花生属于坚果类食物。热量都高。|http://ask.39.net...|\n| 减肥的时候可以吃花生吗|花生对减肥的主要贡献在于可以控制食...|http://ask.39.net...|\n|怀孕2个多月了还能人流吗|怀孕2个月是可以做人流的，一般怀孕...|http://ask.39.net...|\n|  氯化钠可以清洗外阴吗|霉菌性阴道炎每天用2％～4％小苏打...|http://ask.39.net...|\n|     胶皮糖还有没有|不一定是有异常的，可以查一下妇检和...|http://ask.39.net...|\n|     尿毒症能否治愈|经常会有些患者，已经进入尿毒症期了...|http://ask.39.net...|\n|     尿毒症能否治愈|尿毒症又叫慢性肾功能衰竭，是肾脏已...|http://ask.39.net...|\n|     尿毒症能否治愈|要控制住诱因，比如说感冒啊，平时的...|http://ask.39.net...|\n|     尿毒症能否治愈|应用人体自身的腹膜作为透析膜进行血...|http://ask.39.net...|\n|     尿毒症能否治愈|慢性肾衰竭是指各种肾脏病导致肾脏功...|http://ask.39.net...|\n|     尿毒症能否治愈|尿毒症是否可以治好，要看是什么情况...|http://ask.39.net...|\n|     尿毒症能否治愈|我以我看到过的来说话，因为每2个月...|http://ask.39.net...|\n|     尿毒症能否治愈|对于我们平时生活当中的饮食要注意，...|http://ask.39.net...|\n|     尿毒症能否治愈|慢性尿毒症，即通常讲的尿毒症，属于...|http://ask.39.net...|\n|      远视能治好吗|您好，远视600度如果佩戴眼镜比较...|http://ask.39.net...|\n|      枸杞是发物吗|                null|                null|\n|  查是否怀孕挂哪个科室|病情分析：怀孕意见建议：诊断早期妊...|http://ask.39.net...|\n|  查是否怀孕挂哪个科室|您好，您可以去妇产科或者妇科，之后...|http://ask.39.net...|\n|  查是否怀孕挂哪个科室|你好，建议去医院妇科检查，可在月经...|http://ask.39.net...|\n+------------+--------------------+--------------------+\nonly showing top 20 rows\n\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1524741190960_-1460443665",
+      "id": "20180426-191310_173418359",
+      "dateCreated": "Apr 26, 2018 7:13:10 PM",
+      "dateStarted": "Apr 26, 2018 7:13:17 PM",
+      "dateFinished": "Apr 26, 2018 7:13:31 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "datau.where(\"URI is Null or URI \u003d\u003d \u0027\u0027\").select(\"query\").distinct.count()",
+      "user": "anonymous",
+      "dateUpdated": "Apr 26, 2018 7:14:39 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "res34: Long \u003d 91767\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1524740984712_-2015711304",
+      "id": "20180426-190944_677511703",
+      "dateCreated": "Apr 26, 2018 7:09:44 PM",
+      "dateStarted": "Apr 26, 2018 7:14:39 PM",
+      "dateFinished": "Apr 26, 2018 7:14:55 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "datau.where(\"URI is not Null and URI !\u003d \u0027\u0027\").select(\"query\").distinct.count()",
+      "user": "anonymous",
+      "dateUpdated": "Apr 26, 2018 8:12:04 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "res46: Long \u003d 83633\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1524744709381_1484678349",
+      "id": "20180426-201149_1673291818",
+      "dateCreated": "Apr 26, 2018 8:11:49 PM",
+      "dateStarted": "Apr 26, 2018 8:12:04 PM",
+      "dateFinished": "Apr 26, 2018 8:12:25 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "datau.where(\"URI is Null or URI \u003d\u003d \u0027\u0027\").select(\"query\",\"url\").take(10).foreach(println)",
+      "user": "anonymous",
+      "dateUpdated": "Apr 26, 2018 8:08:15 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "[枸杞是发物吗,http://ask.39.net/question/19431270.html]\n[深圳市有没有湿疹医院,http://ask.39.net/question/30048986.html]\n[孕妇能吃开心果吗,http://ask.39.net/question/38167757.html]\n[厦门仁德医院正规吗,http://ask.39.net/question/39381864.html\u00030\u0003http://wenwen.sogou.com/z/q228504664.htm\u00030\u0003http://ask.39.net/question/16505516.html\u00030]\n[北京有第三人民医院吗,http://ask.39.net/question/41548569.html]\n[南京华美美容医院正规吗,http://ask.39.net/question/46483981.html]\n[精油按摩后要洗掉吗,http://ask.39.net/question/47825609.html]\n[上海强直医院是三甲吗,http://ask.39.net/question/49824114.html]\n[重庆有没有妇科好点的医院,http://ask.39.net/question/53258258.html\u00030\u0003http://ask.39.net/question/23132705.html\u00030]\n[怀孕35周胎动减少正常吗,http://ask.ci123.com/questions/show/1474179/]\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1524743023232_557784312",
+      "id": "20180426-194343_399721153",
+      "dateCreated": "Apr 26, 2018 7:43:43 PM",
+      "dateStarted": "Apr 26, 2018 8:08:15 PM",
+      "dateFinished": "Apr 26, 2018 8:08:16 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "def httpNom(line : String) : String \u003d {\r\n    try {\r\n      val caseInsensitivePattern \u003d \"\"\"^(?i)(http|ftp|https)://\"\"\".r\r\n      return  caseInsensitivePattern.replaceFirstIn(line.trim(),\"http://\")\r\n      //      line replaceAll (caseInsensitivePattern, )\r\n    }\r\n    catch {\r\n      case ex: Exception \u003d\u003e \"\"\r\n    }\r\n  }\r\n  \r\ndef lineToQU(l : String)\u003d {\r\n    var line \u003d l\r\n    if(line.startsWith(\"\\\"\")\u0026\u0026line.endsWith(\"\\\"\")){\r\n      line \u003d line.substring(1,line.length-1)\r\n    }\r\n    if(line.startsWith(\"[\")\u0026\u0026line.endsWith(\"]\")){\r\n      line \u003d line.substring(1,line.length-1)\r\n    }\r\n    val regex \u003d \"@[A-Za-z._]{1,30}:\".r\r\n    val tags \u003d regex findAllIn line toArray\r\n    val contents \u003d line.split(\"@[A-Za-z._]{1,30}:\",-1)\r\n\r\n    var url \u003d \"\"\r\n    var query \u003d \"\"\r\n\r\n    try{\r\n      for(i\u003c-0 until tags.length){\r\n        var tag \u003d tags(i)\r\n        var content \u003d contents(i+1)\r\n        //     print(tag)\r\n        //     println(content)\r\n        if(tag\u003d\u003d\"@url:\"){\r\n          url \u003d httpNom(content.trim())\r\n        } else if(tag\u003d\u003d\"@query:\") {\r\n          query \u003d content.trim()\r\n        }\r\n      }\r\n    }catch{\r\n      case e: Exception \u003d\u003e {\r\n        url \u003d \"\"\r\n        query \u003d \"\"\r\n      }\r\n    }\r\n    (query,url)\r\n  }\r\n  \r\n  \r\n  case class Row_tpu(query:String,url: String)",
+      "user": "anonymous",
+      "dateUpdated": "Apr 26, 2018 7:18:39 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "httpNom: (line: String)String\nwarning: there was one feature warning; re-run with -feature for details\nlineToQU: (l: String)(String, String)\ndefined class Row_tpu\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1524741446118_815698535",
+      "id": "20180426-191726_346075760",
+      "dateCreated": "Apr 26, 2018 7:17:26 PM",
+      "dateStarted": "Apr 26, 2018 7:18:39 PM",
+      "dateFinished": "Apr 26, 2018 7:18:40 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "var src \u003d \"/user/webrank/liuqin/viewpoint/query_map_url_list_tpye3_choice_201803_atline.csv\"\nvar tqpv \u003d sc.textFile(src).map(x \u003d\u003elineToQU(x)).map(r \u003d\u003e Row_tpu(r._1,r._2)).toDF()\ntqpv.select(\"query\").distinct.count()",
+      "user": "anonymous",
+      "dateUpdated": "Apr 26, 2018 7:19:11 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "src: String \u003d /user/webrank/liuqin/viewpoint/query_map_url_list_tpye3_choice_201803_atline.csv\ntqpv: org.apache.spark.sql.DataFrame \u003d [query: string, url: string]\nres38: Long \u003d 114358\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1524741279682_460561621",
+      "id": "20180426-191439_922098075",
+      "dateCreated": "Apr 26, 2018 7:14:39 PM",
+      "dateStarted": "Apr 26, 2018 7:19:11 PM",
+      "dateFinished": "Apr 26, 2018 7:19:27 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "var datau \u003dsqlContext.read.load(\"/user/webrank/liuqin/out/query_map_url_list_all_201803.parquet\")\nvar pos \u003d 803\nfor(k\u003c- 1 to 2){\n    var i \u003d pos-k\n    println(\"/user/webrank/liuqin/out/query_map_url_list_all_201\"+i.toString+\".parquet\")\n    var datau2 \u003dsqlContext.read.load(\"/user/webrank/liuqin/out/query_map_url_list_all_201\"+i.toString+\".parquet\")\n    datau \u003d datau.unionAll(datau2)\n    datau.registerTempTable(\"resultu\")\n    datau \u003d sqlContext.sql(\"SELECT query,url,sum(pv) as pv FROM resultu group by query,url\")\n    datau.write.format(\"parquet\").save(\"/user/webrank/liuqin/out/query_map_url_list_all_0\"+i.toString+\"_0803.parquet\")\n}",
+      "user": "anonymous",
+      "dateUpdated": "May 2, 2018 11:39:56 AM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "jobName": "paragraph_1524741373649_522444897",
+      "id": "20180426-191613_91306638",
+      "dateCreated": "Apr 26, 2018 7:16:13 PM",
+      "status": "READY",
+      "progressUpdateIntervalMs": 500
+    }
+  ],
+  "name": "/viewpoint/query_map_url_list",
+  "id": "2DDNXYE2C",
+  "angularObjects": {
+    "2D9M8ATZ9:shared_process": [],
+    "2D859SF5B:shared_process": [],
+    "2D99W32FC:shared_process": [],
+    "2DA8NG9YB:shared_process": [],
+    "2DBCA9BMV:shared_process": [],
+    "2D9NTGN5D::2DDNXYE2C": [],
+    "2DA29EQ39:shared_process": [],
+    "2D86PKHDE:shared_process": [],
+    "2D8ZMX5FY:shared_process": [],
+    "2D8ZFKME2:shared_process": [],
+    "2DBAZD2WP:shared_process": [],
+    "2D8SP4FH8:shared_process": [],
+    "2DAESRJYD:shared_process": [],
+    "2DA7377EZ:shared_process": [],
+    "2D8DH9K51:shared_process": [],
+    "2D85K8KV7:shared_process": [],
+    "2D958F7RN:shared_process": [],
+    "2DAVR7XRG:shared_process": [],
+    "2DBX9FA55:shared_process": []
+  },
+  "config": {},
+  "info": {}
+}

@@ -1,0 +1,312 @@
+{
+  "paragraphs": [
+    {
+      "text": "val inputPath \u003d \"/user/webrank/clicklog/ms/2018*/*\"\r\nvar lograw \u003d sc.textFile(inputPath)",
+      "user": "anonymous",
+      "dateUpdated": "Mar 19, 2018 8:52:07 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "inputPath: String \u003d /user/webrank/clicklog/ms/2018*/*\nlograw: org.apache.spark.rdd.RDD[String] \u003d /user/webrank/clicklog/ms/2018*/* MapPartitionsRDD[1] at textFile at \u003cconsole\u003e:29\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1521456720839_-92740295",
+      "id": "20180319-185200_875537498",
+      "dateCreated": "Mar 19, 2018 6:52:00 PM",
+      "dateStarted": "Mar 19, 2018 8:52:07 PM",
+      "dateFinished": "Mar 19, 2018 8:52:48 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "import java.net.{URLDecoder, URLEncoder}\r\nimport java.text.SimpleDateFormat\r\nimport java.util.Date\r\n\r\ncase class Logrow(userid:String,uuid:String, page:String, time : String, search_type : String, query : String,urls:List[Map[String,String]])\r\ncase class DFrow(time : String,query:String,clk:Int)\r\n\r\n\r\ndef DateFormat(time:String):String\u003d{\r\n    var sdf:SimpleDateFormat \u003d new SimpleDateFormat(\"yyyyMMdd\")\r\n    var date:String \u003d sdf.format(new Date((time.toLong*1000)))\r\n    return date\r\n  }\r\n  def decode(value:String): String \u003d URLDecoder.decode(value, \"gbk\")\r\n  def getRow(line : String):Option[Logrow]\u003d {\r\n//    var userid, uuid, page, time, search_type \u003d \"\"\r\n    val regex\u003d\"\"\"^\\d+$\"\"\".r\r\n    var userid, uuid, page,time,search_type,unknown \u003d \"\"\r\n    var tmp \u003d line.trim().split(\u0027\\t\u0027)\r\n    if (tmp.length \u003c 2) {\r\n      return None\r\n    }\r\n    var tmp0 \u003d tmp(0).trim().split(\u0027#\u0027)\r\n    if (tmp0.length !\u003d 5 \u0026\u0026 tmp0.length !\u003d 6) {\r\n      return None\r\n    }\r\n    if(tmp0.length \u003d\u003d 5){\r\n      userid \u003d tmp0(0)\r\n      uuid \u003d tmp0(1)\r\n      page \u003d tmp0(2)\r\n      time \u003d tmp0(3)\r\n      search_type \u003d tmp0(4)\r\n    }else if(tmp0.length \u003d\u003d 6){\r\n      userid \u003d tmp0(0)\r\n      uuid \u003d tmp0(1)\r\n      page \u003d tmp0(2)\r\n      time \u003d tmp0(3)\r\n      search_type \u003d tmp0(4)\r\n      unknown \u003d tmp0(5)\r\n    }\r\n    var query \u003d decode(tmp(1))\r\n    var urls:List[Map[String,String]] \u003d List()\r\n    var urlblock:Map[String,String]\u003d Map()\r\n    var cnt \u003d 0\r\n    for(i \u003c- 2 to tmp.length-1){\r\n//      println(tmp(i))\r\n//      println(tmp(i).trim().split(\"#\",-1).length)\r\n      if (((tmp(i).trim().split(\"#\",-1).length) \u003e\u003d 4) \u0026\u0026 regex.findFirstMatchIn((tmp(i).trim().split(\"#\",-1)(1))) !\u003d None){\r\n        var tmp_i \u003d tmp(i).trim().split(\"#\",-1)\r\n        if(tmp_i.length !\u003d 4){\r\n          tmp_i \u003d Array(\"\",\"\",\"\",\"\")\r\n        }\r\n        var Array(vrid, ph_3_1, ph_3_2, baseurl) \u003d tmp_i\r\n        baseurl \u003d decode(baseurl)\r\n        urlblock +\u003d (\"vrid\" -\u003e vrid)\r\n        urlblock +\u003d (\"3_1\" -\u003e ph_3_1)\r\n        urlblock +\u003d (\"3_2\" -\u003e ph_3_2)\r\n        urlblock +\u003d (\"baseurl\" -\u003e baseurl)\r\n        urls \u003d urls :+ urlblock\r\n        urlblock \u003d Map()\r\n        cnt \u003d 0\r\n      }else{\r\n        if(cnt\u003d\u003d0){\r\n          urlblock +\u003d (\"wapurl\" -\u003e tmp(i))\r\n          cnt \u003d cnt+1\r\n        }else if(cnt\u003d\u003d1){\r\n          urlblock +\u003d (\"clk\" -\u003e tmp(i))\r\n          cnt \u003d cnt+1\r\n        }else if(cnt\u003d\u003d2){\r\n          urlblock +\u003d (\"2\" -\u003e tmp(i))\r\n          cnt \u003d cnt+1\r\n        }\r\n      }\r\n    }\r\n    return Some(new Logrow(userid, uuid, page, time, search_type, query, urls))\r\n    }\r\n    \r\n    def filter(row:Logrow): Boolean \u003d {\r\n      var flag \u003d false\r\n      for (i \u003c- 0 to row.urls.length - 1) {\r\n        var urlblock \u003d row.urls(i)\r\n        var url \u003d \"\"\r\n//        println(urlblock.get(\"vrid\").get.toString)\r\n        if (urlblock.get(\"vrid\").get.toString \u003d\u003d \"50022601\") {\r\n          if (urlblock.get(\"baseurl\").get \u003d\u003d \"\") {\r\n            url \u003d urlblock.get(\"wapurl\").get.toString\r\n          } else {\r\n            url \u003d urlblock.get(\"baseurl\").get.toString\r\n          }\r\n          if (row.query.length \u003e 1 \u0026\u0026 url.length \u003e 1) {\r\n            return true\r\n          }\r\n        }\r\n        if (i \u003e 3) {\r\n          return false\r\n        }\r\n      }\r\n      return flag\r\n    }\r\n\r\n    def filterVRID(x: Option[Logrow]) \u003d x match {\r\n      case Some(s) \u003d\u003e filter(s)\r\n      case None \u003d\u003e false\r\n    }\r\n\r\n    \r\n\r\n\r\n    def show(x: Option[Logrow]) \u003d x match {\r\n      case Some(s) \u003d\u003e s.query\r\n      case None \u003d\u003e false\r\n    }\r\n\r\n    def trans_dataframe(row:Logrow)\u003d{\r\n      var time \u003d DateFormat(row.time)\r\n//      var time \u003d row.time\r\n      var query \u003d row.query\r\n      var clk \u003d 0\r\n      for (i \u003c- 0 to row.urls.length - 1) {\r\n        var urlblock \u003d row.urls(i)\r\n        if (urlblock.get(\"vrid\").get.toString \u003d\u003d \"50022601\") {\r\n          clk \u003d urlblock.get(\"clk\").get.toInt\r\n          (time,query,clk)\r\n        }\r\n      }\r\n      (time,query,clk)\r\n    }",
+      "user": "anonymous",
+      "dateUpdated": "Mar 20, 2018 11:45:51 AM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "import java.net.{URLDecoder, URLEncoder}\nimport java.text.SimpleDateFormat\nimport java.util.Date\ndefined class Logrow\ndefined class DFrow\nDateFormat: (time: String)String\ndecode: (value: String)String\ngetRow: (line: String)Option[Logrow]\nfilter: (row: Logrow)Boolean\nfilterVRID: (x: Option[Logrow])Boolean\nshow: (x: Option[Logrow])Any\ntrans_dataframe: (row: Logrow)(String, String, Int)\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1521457205913_458678211",
+      "id": "20180319-190005_75138238",
+      "dateCreated": "Mar 19, 2018 7:00:05 PM",
+      "dateStarted": "Mar 20, 2018 11:45:52 AM",
+      "dateFinished": "Mar 20, 2018 11:46:31 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "val a \u003d sc.parallelize(1 to 9)\r\nval b \u003d a.map(_*3)\r\nb.collect().foreach(println)",
+      "user": "anonymous",
+      "dateUpdated": "Mar 20, 2018 11:46:01 AM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "a: org.apache.spark.rdd.RDD[Int] \u003d ParallelCollectionRDD[0] at parallelize at \u003cconsole\u003e:30\nb: org.apache.spark.rdd.RDD[Int] \u003d MapPartitionsRDD[1] at map at \u003cconsole\u003e:32\n3\n6\n9\n12\n15\n18\n21\n24\n27\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1521457244837_-34307724",
+      "id": "20180319-190044_1360643532",
+      "dateCreated": "Mar 19, 2018 7:00:44 PM",
+      "dateStarted": "Mar 20, 2018 11:46:01 AM",
+      "dateFinished": "Mar 20, 2018 11:46:42 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "var result \u003d lograw.map(x\u003d\u003egetRow(x)).filter(filterVRID).map(x\u003d\u003ex.get).map(trans_dataframe).map(r \u003d\u003e DFrow(r._1,r._2,r._3.toInt)).toDF()\r\n// print(lograw.count())",
+      "user": "anonymous",
+      "dateUpdated": "Mar 19, 2018 9:13:07 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "result: org.apache.spark.sql.DataFrame \u003d [time: string, query: string ... 1 more field]\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1521457265930_-604105521",
+      "id": "20180319-190105_734919432",
+      "dateCreated": "Mar 19, 2018 7:01:05 PM",
+      "dateStarted": "Mar 19, 2018 9:13:07 PM",
+      "dateFinished": "Mar 19, 2018 9:13:10 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "for(i\u003c- 701 to 712){\n    val inputPath \u003d \"/user/webrank/clicklog/ms/201\"+i.toString+\"/*\"\n    println(inputPath)\n    var lograw \u003d sc.textFile(inputPath)\n    var result \u003d lograw.map(x\u003d\u003egetRow(x)).filter(filterVRID).map(x\u003d\u003ex.get).map(trans_dataframe).map(r \u003d\u003e (r._1,r._2,r._3.toInt)).toDF()\n    result.registerTempTable(\"result\")\n    var sql_result \u003d sqlContext.sql(\"SELECT query,count(*) as pv,sum(clk) as clkpv FROM result group by query\")\n    sql_result.write.csv(\"/user/web_research/liuqin/out/query_pv_clk_50022601_201\"+i.toString)\n}",
+      "user": "anonymous",
+      "dateUpdated": "Jul 11, 2018 7:51:16 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "warning: there was one deprecation warning; re-run with -deprecation for details\n/user/webrank/clicklog/ms/201701/*\n/user/webrank/clicklog/ms/201702/*\n/user/webrank/clicklog/ms/201703/*\n/user/webrank/clicklog/ms/201704/*\n/user/webrank/clicklog/ms/201705/*\n/user/webrank/clicklog/ms/201706/*\n/user/webrank/clicklog/ms/201707/*\n/user/webrank/clicklog/ms/201708/*\n/user/webrank/clicklog/ms/201709/*\n/user/webrank/clicklog/ms/201710/*\n/user/webrank/clicklog/ms/201711/*\n/user/webrank/clicklog/ms/201712/*\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1521517618321_-684585602",
+      "id": "20180320-114658_2040691153",
+      "dateCreated": "Mar 20, 2018 11:46:58 AM",
+      "dateStarted": "Mar 20, 2018 11:55:35 AM",
+      "dateFinished": "Mar 20, 2018 5:01:37 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "for(i\u003c- 801 to 803){\n    val inputPath \u003d \"/user/webrank/clicklog/ms/201\"+i.toString+\"/*\"\n    println(inputPath)\n    var lograw \u003d sc.textFile(inputPath)\n    var result \u003d lograw.map(x\u003d\u003egetRow(x)).filter(filterVRID).map(x\u003d\u003ex.get).map(trans_dataframe).map(r \u003d\u003e DFrow(r._1,r._2,r._3.toInt)).toDF()\n    result.registerTempTable(\"result\")\n    var sql_result \u003d sqlContext.sql(\"SELECT query,count(*) as pv,sum(clk) as clkpv FROM result group by query\")\n    sql_result.write.csv(\"/user/web_research/liuqin/out/query_pv_clk_50022601_201\"+i.toString)\n}",
+      "user": "anonymous",
+      "dateUpdated": "Mar 20, 2018 5:07:16 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "warning: there was one deprecation warning; re-run with -deprecation for details\n/user/webrank/clicklog/ms/201801/*\n/user/webrank/clicklog/ms/201802/*\n/user/webrank/clicklog/ms/201803/*\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1521536801642_1654177685",
+      "id": "20180320-170641_2050432166",
+      "dateCreated": "Mar 20, 2018 5:06:41 PM",
+      "dateStarted": "Mar 20, 2018 5:07:16 PM",
+      "dateFinished": "Mar 20, 2018 6:27:11 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "for(i \u003c-701 to 712){\r\n    val inputPath \u003d \"/user/webrank/clicklog/ms/201\"+i.toString+\"/*\"\r\n      println(inputPath)\r\n    }",
+      "user": "anonymous",
+      "dateUpdated": "Mar 20, 2018 11:52:59 AM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "jobName": "paragraph_1521517713723_687367679",
+      "id": "20180320-114833_214731091",
+      "dateCreated": "Mar 20, 2018 11:48:33 AM",
+      "status": "READY",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "result.registerTempTable(\"result\")\r\nval sql_result \u003d sqlContext.sql(\"SELECT query,count(*) as pv,sum(clk) as clkpv FROM result group by query\")\r\nsql_result.write.csv(\"/user/web_research/liuqin/out/query_pv_clk_50022601_2018\")",
+      "user": "anonymous",
+      "dateUpdated": "Mar 19, 2018 9:13:13 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "warning: there was one deprecation warning; re-run with -deprecation for details\nsql_result: org.apache.spark.sql.DataFrame \u003d [query: string, pv: bigint ... 1 more field]\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1521459027302_2065473569",
+      "id": "20180319-193027_1721040289",
+      "dateCreated": "Mar 19, 2018 7:30:27 PM",
+      "dateStarted": "Mar 19, 2018 9:13:13 PM",
+      "dateFinished": "Mar 19, 2018 10:18:49 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "user": "anonymous",
+      "config": {},
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "jobName": "paragraph_1521466167013_-1090035004",
+      "id": "20180319-212927_1027013001",
+      "dateCreated": "Mar 19, 2018 9:29:27 PM",
+      "status": "READY",
+      "progressUpdateIntervalMs": 500
+    }
+  ],
+  "name": "/viewpoint/q_pv_clkpv",
+  "id": "2DAP1RJ8D",
+  "angularObjects": {
+    "2D9M8ATZ9:shared_process": [],
+    "2D859SF5B:shared_process": [],
+    "2D99W32FC:shared_process": [],
+    "2DA8NG9YB:shared_process": [],
+    "2DBCA9BMV:shared_process": [],
+    "2DA29EQ39:shared_process": [],
+    "2D86PKHDE:shared_process": [],
+    "2D8ZMX5FY:shared_process": [],
+    "2D8ZFKME2:shared_process": [],
+    "2DBAZD2WP:shared_process": [],
+    "2D8SP4FH8:shared_process": [],
+    "2DAESRJYD:shared_process": [],
+    "2DA7377EZ:shared_process": [],
+    "2D9NTGN5D::2DAP1RJ8D": [],
+    "2D8DH9K51:shared_process": [],
+    "2D85K8KV7:shared_process": [],
+    "2D958F7RN:shared_process": [],
+    "2DAVR7XRG:shared_process": [],
+    "2DBX9FA55:shared_process": []
+  },
+  "config": {},
+  "info": {}
+}

@@ -1,0 +1,248 @@
+{
+  "paragraphs": [
+    {
+      "text": "%spark\nsc.hadoopConfiguration.set(\"textinputformat.record.delimiter\",\"\\n@\\n\")\nval tauaPath \u003d \"hdfs://master004.diablo.hadoop.nm.ted:8020/user/webkm/liuqin/view_sort/ans_sort_askcls\"\nval raw \u003d sc.textFile(tauaPath)",
+      "user": "anonymous",
+      "dateUpdated": "May 10, 2018 1:00:07 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "tauaPath: String \u003d hdfs://master004.diablo.hadoop.nm.ted:8020/user/webkm/liuqin/view_sort/ans_sort_askcls\nraw: org.apache.spark.rdd.RDD[String] \u003d hdfs://master004.diablo.hadoop.nm.ted:8020/user/webkm/liuqin/view_sort/ans_sort_askcls MapPartitionsRDD[1] at textFile at \u003cconsole\u003e:29\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1521456447432_1409317243",
+      "id": "20180319-184727_672584883",
+      "dateCreated": "Mar 19, 2018 6:47:27 PM",
+      "dateStarted": "May 10, 2018 1:00:07 PM",
+      "dateFinished": "May 10, 2018 1:01:51 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%spark\nraw.count()",
+      "user": "anonymous",
+      "dateUpdated": "May 10, 2018 1:00:20 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "res1: Long \u003d 49941\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1525928413665_-1316828841",
+      "id": "20180510-130013_1373824239",
+      "dateCreated": "May 10, 2018 1:00:13 PM",
+      "dateStarted": "May 10, 2018 1:00:20 PM",
+      "dateFinished": "May 10, 2018 1:01:58 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "def lineToM(l : String)\u003d {\n    var line \u003d l\n    if(line.startsWith(\"\\\"\")\u0026\u0026line.endsWith(\"\\\"\")){\n      line \u003d line.substring(1,line.length-1)\n    }\n    val regex \u003d \"@[A-Za-z._]{1,30}:\".r\n    val tags \u003d regex findAllIn line toArray\n    val contents \u003d line.split(\"@[A-Za-z._]{1,30}:\",-1)\n    \n    var M:Map[String,String] \u003d Map()\n    \n    for(i\u003c-0 until tags.length){\n      var tag \u003d tags(i)\n      var content \u003d contents(i+1)\n      M +\u003d (tag -\u003e content.trim())\n    }\n    M\n  }\n  \n",
+      "user": "anonymous",
+      "dateUpdated": "May 10, 2018 1:04:50 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "warning: there was one feature warning; re-run with -feature for details\nlineToM: (l: String)Map[String,String]\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1525928067102_-1868849924",
+      "id": "20180510-125427_1225282630",
+      "dateCreated": "May 10, 2018 12:54:27 PM",
+      "dateStarted": "May 10, 2018 1:04:50 PM",
+      "dateFinished": "May 10, 2018 1:04:51 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "var lograw \u003d raw.map(x\u003d\u003elineToM(x)).map(m \u003d\u003e{\n      var o \u003d \"\"\n      for((k,v)\u003c- m ) o \u003d o+k+v+\"\\t\"\n      o.trim()\n    }).map(t \u003d\u003et replaceAll (\"[\\\\n]+\", \"\"))\n",
+      "user": "anonymous",
+      "dateUpdated": "May 10, 2018 1:42:33 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "lograw: org.apache.spark.rdd.RDD[String] \u003d MapPartitionsRDD[10] at map at \u003cconsole\u003e:37\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1525928356480_123008812",
+      "id": "20180510-125916_1444964871",
+      "dateCreated": "May 10, 2018 12:59:16 PM",
+      "dateStarted": "May 10, 2018 1:42:33 PM",
+      "dateFinished": "May 10, 2018 1:42:34 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "lograw.count()",
+      "user": "anonymous",
+      "dateUpdated": "May 10, 2018 1:08:16 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "res7: Long \u003d 49941\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1525928822304_-965374663",
+      "id": "20180510-130702_1753301956",
+      "dateCreated": "May 10, 2018 1:07:02 PM",
+      "dateStarted": "May 10, 2018 1:08:16 PM",
+      "dateFinished": "May 10, 2018 1:08:28 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "lograw.saveAsTextFile(\"/user/webrank/liuqin/view_sort/ans_sort_askcls_atline\")",
+      "user": "anonymous",
+      "dateUpdated": "May 10, 2018 1:43:56 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": []
+      },
+      "apps": [],
+      "jobName": "paragraph_1525928896410_-212882435",
+      "id": "20180510-130816_652561126",
+      "dateCreated": "May 10, 2018 1:08:16 PM",
+      "dateStarted": "May 10, 2018 1:43:56 PM",
+      "dateFinished": "May 10, 2018 1:47:20 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "user": "anonymous",
+      "config": {},
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "jobName": "paragraph_1525928999480_-2044013009",
+      "id": "20180510-130959_1507507444",
+      "dateCreated": "May 10, 2018 1:09:59 PM",
+      "status": "READY",
+      "progressUpdateIntervalMs": 500
+    }
+  ],
+  "name": "/util/mult2line",
+  "id": "2DAZ8CKEF",
+  "angularObjects": {
+    "2D9M8ATZ9:shared_process": [],
+    "2D859SF5B:shared_process": [],
+    "2D99W32FC:shared_process": [],
+    "2D9NTGN5D::2DAZ8CKEF": [],
+    "2DA8NG9YB:shared_process": [],
+    "2DBCA9BMV:shared_process": [],
+    "2DA29EQ39:shared_process": [],
+    "2D86PKHDE:shared_process": [],
+    "2D8ZMX5FY:shared_process": [],
+    "2D8ZFKME2:shared_process": [],
+    "2DBAZD2WP:shared_process": [],
+    "2D8SP4FH8:shared_process": [],
+    "2DAESRJYD:shared_process": [],
+    "2DA7377EZ:shared_process": [],
+    "2D8DH9K51:shared_process": [],
+    "2D85K8KV7:shared_process": [],
+    "2D958F7RN:shared_process": [],
+    "2DAVR7XRG:shared_process": [],
+    "2DBX9FA55:shared_process": []
+  },
+  "config": {},
+  "info": {}
+}

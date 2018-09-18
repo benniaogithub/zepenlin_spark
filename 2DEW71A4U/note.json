@@ -1,0 +1,349 @@
+{
+  "paragraphs": [
+    {
+      "text": "%spark\nsc.hadoopConfiguration.set(\"textinputformat.record.delimiter\",\"\\n\")\nval tauaPath \u003d \"/user/webrank/liuqin/view_sort/score_data_filtered_atline_re\"\nval raw \u003d sc.textFile(tauaPath)",
+      "user": "anonymous",
+      "dateUpdated": "Jun 8, 2018 12:24:49 PM",
+      "config": {
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "results": {},
+        "enabled": true,
+        "editorSetting": {
+          "language": "scala"
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "tauaPath: String \u003d /user/webrank/liuqin/view_sort/score_data_filtered_atline_re\nraw: org.apache.spark.rdd.RDD[String] \u003d /user/webrank/liuqin/view_sort/score_data_filtered_atline_re MapPartitionsRDD[1] at textFile at \u003cconsole\u003e:29\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1528430925277_-138522084",
+      "id": "20180319-184727_672584883",
+      "dateCreated": "Jun 8, 2018 12:08:45 PM",
+      "dateStarted": "Jun 8, 2018 12:24:49 PM",
+      "dateFinished": "Jun 8, 2018 12:25:51 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%spark\nraw.count()",
+      "user": "anonymous",
+      "dateUpdated": "Jun 8, 2018 12:24:51 PM",
+      "config": {
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "results": {},
+        "enabled": true,
+        "editorSetting": {
+          "language": "scala"
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "res1: Long \u003d 14101600\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1528430925282_-151218797",
+      "id": "20180510-130013_1373824239",
+      "dateCreated": "Jun 8, 2018 12:08:45 PM",
+      "dateStarted": "Jun 8, 2018 12:24:52 PM",
+      "dateFinished": "Jun 8, 2018 12:27:04 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "def lineToM(l : String)\u003d {\n    var line \u003d l\n    if(line.startsWith(\"\\\"\")\u0026\u0026line.endsWith(\"\\\"\")){\n      line \u003d line.substring(1,line.length-1)\n    }\n    val regex \u003d \"@[A-Za-z._]{1,30}:\".r\n    val tags \u003d regex findAllIn line toArray\n    val contents \u003d line.split(\"@[A-Za-z._]{1,30}:\",-1)\n    \n    var M:Map[String,String] \u003d Map()\n    \n    for(i\u003c-0 until tags.length){\n      var tag \u003d tags(i)\n      var content \u003d contents(i+1)\n      M +\u003d (tag -\u003e content.trim())\n    }\n    M\n  }\n  \n",
+      "user": "anonymous",
+      "dateUpdated": "Jun 8, 2018 12:24:53 PM",
+      "config": {
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "results": {},
+        "enabled": true,
+        "editorSetting": {
+          "language": "scala"
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "warning: there was one feature warning; re-run with -feature for details\nlineToM: (l: String)Map[String,String]\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1528430925283_-151603546",
+      "id": "20180510-125427_1225282630",
+      "dateCreated": "Jun 8, 2018 12:08:45 PM",
+      "dateStarted": "Jun 8, 2018 12:25:52 PM",
+      "dateFinished": "Jun 8, 2018 12:27:06 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "var lograw \u003d raw.map(x\u003d\u003elineToM(x)).map(m \u003d\u003e{\n      var o \u003d \"\"\n      for((k,v)\u003c- m ) o \u003d o+k+v+\"\\n\"\n      o.trim()\n      o \u003d o+\"@\"\n      o\n    })\n",
+      "user": "anonymous",
+      "dateUpdated": "Jun 8, 2018 12:25:08 PM",
+      "config": {
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "results": {},
+        "enabled": true,
+        "editorSetting": {
+          "language": "scala"
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "lograw: org.apache.spark.rdd.RDD[String] \u003d MapPartitionsRDD[3] at map at \u003cconsole\u003e:33\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1528430925284_-153527291",
+      "id": "20180510-125916_1444964871",
+      "dateCreated": "Jun 8, 2018 12:08:45 PM",
+      "dateStarted": "Jun 8, 2018 12:27:05 PM",
+      "dateFinished": "Jun 8, 2018 12:27:07 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "lograw.take(10)",
+      "user": "anonymous",
+      "dateUpdated": "Jun 8, 2018 12:25:11 PM",
+      "config": {
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "results": {},
+        "enabled": true,
+        "editorSetting": {
+          "language": "scala"
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "res4: Array[String] \u003d\nArray(@ASK.DATE:2013-02-06 13:34:17\n@ID:d100f9554d4b953f0769d30c85d9f05e\n@QER.URI:http://www.babytree.com/user/showuser.php?uid\u003du10913264432\u0026tab\u003dmyknow\n@GROUP.EXT:宝宝可以游泳么？\n@AWR.NAME:山东宸妈\n@GROUP.SCORE:1.976972\n@ASK.VIEWS:可以|不可以\n@SOURCE:babytree\n@GROUP.ID:001f4e07d3d0c2abc97eb701c8e3f7ee\n@ASK.TITLE:宝宝可以游泳么？\n@ASK.HTYPE:YON\n@ANS.ID:b562b95b71867206b63259cf1e08389a\n@ANS.CONTENT:不适合游泳，容易引起感染，宝妈还是多注意护理的\n@AWR.URI:http://www.babytree.com/user/showuser.php?uid\u003du3505318445\u0026tab\u003dmyknow\n@OP_NUM:0\n@QER.NAME:苦涩的玫瑰\n@SP_NUM:0\n@ASK.EXT:宝宝肚脐有少量血迹溢出，可以游泳么？\n@ANS.VIEW:不可以\n@GROUP.TAG:不可以\n@ANS.QACOV:OP\n@ANS.QACOV_LEVEL:0.8469\n@ASK.ID:001f4e07d3d0c2abc97eb701c8e3f7ee\n@URI:http://www.babytree.com/ask/detail/5101862\n@ACCEPT:false\n@ANS.DATE:2013-02-06 14:27:00\n@, @ASK.DATE:2013-02-06 13:34:17\n..."
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1528430925285_-153912040",
+      "id": "20180516-181336_139900502",
+      "dateCreated": "Jun 8, 2018 12:08:45 PM",
+      "dateStarted": "Jun 8, 2018 12:27:07 PM",
+      "dateFinished": "Jun 8, 2018 12:27:08 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "lograw.count()",
+      "user": "anonymous",
+      "dateUpdated": "Jun 8, 2018 12:25:14 PM",
+      "config": {
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "results": {},
+        "enabled": true,
+        "editorSetting": {
+          "language": "scala"
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "res5: Long \u003d 14101600\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1528430925286_-152757793",
+      "id": "20180510-130702_1753301956",
+      "dateCreated": "Jun 8, 2018 12:08:45 PM",
+      "dateStarted": "Jun 8, 2018 12:27:07 PM",
+      "dateFinished": "Jun 8, 2018 12:27:40 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "lograw.saveAsTextFile(\"/user/webrank/liuqin/view_sort/score_data_filtered_001\")",
+      "user": "anonymous",
+      "dateUpdated": "Jun 8, 2018 12:27:54 PM",
+      "config": {
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "results": {},
+        "enabled": true,
+        "editorSetting": {
+          "language": "scala"
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": []
+      },
+      "apps": [],
+      "jobName": "paragraph_1528430925287_-153142542",
+      "id": "20180510-130816_652561126",
+      "dateCreated": "Jun 8, 2018 12:08:45 PM",
+      "dateStarted": "Jun 8, 2018 12:27:54 PM",
+      "dateFinished": "Jun 8, 2018 12:28:40 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "sc.stop()",
+      "user": "anonymous",
+      "dateUpdated": "Jun 8, 2018 12:30:50 PM",
+      "config": {
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "results": {},
+        "enabled": true,
+        "editorSetting": {
+          "language": "scala"
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": []
+      },
+      "apps": [],
+      "jobName": "paragraph_1528430925288_-155066286",
+      "id": "20180510-130959_1507507444",
+      "dateCreated": "Jun 8, 2018 12:08:45 PM",
+      "dateStarted": "Jun 8, 2018 12:30:50 PM",
+      "dateFinished": "Jun 8, 2018 12:30:51 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "sc.hadoopConfiguration.set(\"textinputformat.record.delimiter\",\"\\n@\\n\")\nval tauaPath \u003d \"/user/webrank/liuqin/view_sort/score_data_filtered_001\"\nval raw \u003d sc.textFile(tauaPath)\nraw.count()",
+      "user": "anonymous",
+      "dateUpdated": "Jun 8, 2018 12:30:32 PM",
+      "config": {
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "results": {},
+        "enabled": true,
+        "editorSetting": {
+          "language": "scala"
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "tauaPath: String \u003d /user/webrank/liuqin/view_sort/score_data_filtered_001\nraw: org.apache.spark.rdd.RDD[String] \u003d /user/webrank/liuqin/view_sort/score_data_filtered_001 MapPartitionsRDD[6] at textFile at \u003cconsole\u003e:29\nres8: Long \u003d 14101600\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1528430925288_-155066286",
+      "id": "20180516-182232_1354537145",
+      "dateCreated": "Jun 8, 2018 12:08:45 PM",
+      "dateStarted": "Jun 8, 2018 12:30:32 PM",
+      "dateFinished": "Jun 8, 2018 12:30:47 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "dateUpdated": "Jun 8, 2018 12:08:45 PM",
+      "config": {},
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "jobName": "paragraph_1528430925290_-154296789",
+      "id": "20180516-183553_456075560",
+      "dateCreated": "Jun 8, 2018 12:08:45 PM",
+      "status": "READY",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    }
+  ],
+  "name": "/viewSort/line2mult_score",
+  "id": "2DEW71A4U",
+  "angularObjects": {
+    "2D9M8ATZ9:shared_process": [],
+    "2D859SF5B:shared_process": [],
+    "2D99W32FC:shared_process": [],
+    "2DA8NG9YB:shared_process": [],
+    "2DBCA9BMV:shared_process": [],
+    "2DA29EQ39:shared_process": [],
+    "2D86PKHDE:shared_process": [],
+    "2D8ZMX5FY:shared_process": [],
+    "2D8ZFKME2:shared_process": [],
+    "2DBAZD2WP:shared_process": [],
+    "2D8SP4FH8:shared_process": [],
+    "2DAESRJYD:shared_process": [],
+    "2DA7377EZ:shared_process": [],
+    "2D9NTGN5D::2DEW71A4U": [],
+    "2D8DH9K51:shared_process": [],
+    "2D85K8KV7:shared_process": [],
+    "2D958F7RN:shared_process": [],
+    "2DAVR7XRG:shared_process": [],
+    "2DBX9FA55:shared_process": []
+  },
+  "config": {},
+  "info": {}
+}

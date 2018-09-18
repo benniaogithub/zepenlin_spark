@@ -1,0 +1,313 @@
+{
+  "paragraphs": [
+    {
+      "text": "%md ## 线上数据抽样url",
+      "dateUpdated": "Jul 26, 2018 5:19:14 PM",
+      "config": {
+        "tableHide": true,
+        "editorSetting": {
+          "language": "markdown",
+          "editOnDblClick": true
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/markdown",
+        "editorHide": false,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "HTML",
+            "data": "\u003cdiv class\u003d\"markdown-body\"\u003e\n\u003ch2\u003e采样评价和选择问答案分类准确率\u003c/h2\u003e\n\u003c/div\u003e"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1532596732020_-364336253",
+      "id": "20180426-125946_729598550",
+      "dateCreated": "Jul 26, 2018 5:18:52 PM",
+      "status": "READY",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": " \r\n def lineToURL(line : String)\u003d {\r\n\r\n    val regex \u003d \"@[A-Za-z._]{1,30}:\".r\r\n    val tags \u003d regex findAllIn line toArray\r\n    val contents \u003d line.split(\"@[A-Za-z._]{1,30}:\",-1)\r\n   \r\n \r\n    var url\u003d\"\"\r\n    try{\r\n      for(i\u003c-0 until tags.length){\r\n        var tag \u003d tags(i)\r\n        var content \u003d contents(i+1)\r\n     \r\n        if(tag\u003d\u003d\"@URI:\"){\r\n          url \u003d content.trim()\r\n        }\r\n      }\r\n    }catch{\r\n      case e: Exception \u003d\u003e {\r\n        url \u003d \"\"\r\n      }\r\n    }\r\n    url\r\n  }\r\n  \r\n  \r\n   ",
+      "user": "anonymous",
+      "dateUpdated": "Jul 26, 2018 5:22:09 PM",
+      "config": {
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "results": {},
+        "enabled": true,
+        "editorSetting": {
+          "language": "scala"
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "warning: there was one feature warning; re-run with -feature for details\nlineToURL: (line: String)String\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1532596732040_-285847478",
+      "id": "20180425-182839_1949268193",
+      "dateCreated": "Jul 26, 2018 5:18:52 PM",
+      "dateStarted": "Jul 26, 2018 5:22:09 PM",
+      "dateFinished": "Jul 26, 2018 5:23:32 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "case class Row_qaID(ask:String,ID:String,ans:String)",
+      "dateUpdated": "Jul 26, 2018 5:18:52 PM",
+      "config": {
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "results": {},
+        "enabled": true,
+        "editorSetting": {
+          "language": "scala"
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "defined class Row_qaID\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1532596732044_-287386473",
+      "id": "20180711-153014_88717447",
+      "dateCreated": "Jul 26, 2018 5:18:52 PM",
+      "status": "READY",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "sc.hadoopConfiguration.set(\"textinputformat.record.delimiter\",\"\\n@\\n\")",
+      "user": "anonymous",
+      "dateUpdated": "Jul 26, 2018 5:23:48 PM",
+      "config": {
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "results": {},
+        "enabled": true,
+        "editorSetting": {
+          "language": "scala"
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": []
+      },
+      "apps": [],
+      "jobName": "paragraph_1532596732110_-311240905",
+      "id": "20180717-163339_1052776971",
+      "dateCreated": "Jul 26, 2018 5:18:52 PM",
+      "dateStarted": "Jul 26, 2018 5:23:48 PM",
+      "dateFinished": "Jul 26, 2018 5:23:48 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "\nval inputPath \u003d \"hdfs://master004.diablo.hadoop.nm.ted:8020/user/webkm/xuen/lizhi_temp/score_data/part-r-00000\"\nprintln(inputPath)\nvar lograw \u003d sc.textFile(inputPath)",
+      "user": "anonymous",
+      "dateUpdated": "Jul 26, 2018 5:24:50 PM",
+      "config": {
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "results": {},
+        "enabled": true,
+        "editorSetting": {
+          "language": "scala"
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "inputPath: String \u003d hdfs://master004.diablo.hadoop.nm.ted:8020/user/webkm/xuen/lizhi_temp/score_data/part-r-00000\nhdfs://master004.diablo.hadoop.nm.ted:8020/user/webkm/xuen/lizhi_temp/score_data/part-r-00000\nlograw: org.apache.spark.rdd.RDD[String] \u003d hdfs://master004.diablo.hadoop.nm.ted:8020/user/webkm/xuen/lizhi_temp/score_data/part-r-00000 MapPartitionsRDD[5] at textFile at \u003cconsole\u003e:29\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1532596732080_-288925469",
+      "id": "20180712-211538_1919452188",
+      "dateCreated": "Jul 26, 2018 5:18:52 PM",
+      "dateStarted": "Jul 26, 2018 5:24:50 PM",
+      "dateFinished": "Jul 26, 2018 5:24:51 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "lograw.count()",
+      "user": "anonymous",
+      "dateUpdated": "Jul 26, 2018 5:24:53 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "res13: Long \u003d 1305930\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1532597065720_-1863442206",
+      "id": "20180726-172425_1914593316",
+      "dateCreated": "Jul 26, 2018 5:24:25 PM",
+      "dateStarted": "Jul 26, 2018 5:24:53 PM",
+      "dateFinished": "Jul 26, 2018 5:25:09 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": " var tall \u003d lograw.map(x \u003d\u003elineToURL(x))",
+      "user": "anonymous",
+      "dateUpdated": "Jul 26, 2018 5:25:20 PM",
+      "config": {
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "results": {},
+        "enabled": true,
+        "editorSetting": {
+          "language": "scala"
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "tall: org.apache.spark.rdd.RDD[String] \u003d MapPartitionsRDD[6] at map at \u003cconsole\u003e:33\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1532596732123_-303930676",
+      "id": "20180717-164045_796221646",
+      "dateCreated": "Jul 26, 2018 5:18:52 PM",
+      "dateStarted": "Jul 26, 2018 5:25:20 PM",
+      "dateFinished": "Jul 26, 2018 5:25:21 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "sc.parallelize(tall.takeOrdered(10000)).saveAsTextFile(\"/user/webrank/liuqin/statistic/url_sample_10000.csv\")",
+      "user": "anonymous",
+      "dateUpdated": "Jul 26, 2018 5:34:13 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": []
+      },
+      "apps": [],
+      "jobName": "paragraph_1532597564363_656767070",
+      "id": "20180726-173244_319370896",
+      "dateCreated": "Jul 26, 2018 5:32:44 PM",
+      "dateStarted": "Jul 26, 2018 5:34:13 PM",
+      "dateFinished": "Jul 26, 2018 5:35:30 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "dateUpdated": "Jul 26, 2018 5:18:52 PM",
+      "config": {},
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "jobName": "paragraph_1532596732157_-318551134",
+      "id": "20180712-112412_359117437",
+      "dateCreated": "Jul 26, 2018 5:18:52 PM",
+      "status": "READY",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    }
+  ],
+  "name": "Statistics/sample_url",
+  "id": "2DJJXEX64",
+  "angularObjects": {
+    "2D9M8ATZ9:shared_process": [],
+    "2D859SF5B:shared_process": [],
+    "2D99W32FC:shared_process": [],
+    "2DA8NG9YB:shared_process": [],
+    "2DBCA9BMV:shared_process": [],
+    "2DA29EQ39:shared_process": [],
+    "2D86PKHDE:shared_process": [],
+    "2D8ZMX5FY:shared_process": [],
+    "2D9NTGN5D::2DJJXEX64": [],
+    "2D8ZFKME2:shared_process": [],
+    "2DBAZD2WP:shared_process": [],
+    "2D8SP4FH8:shared_process": [],
+    "2DAESRJYD:shared_process": [],
+    "2DA7377EZ:shared_process": [],
+    "2D8DH9K51:shared_process": [],
+    "2D85K8KV7:shared_process": [],
+    "2D958F7RN:shared_process": [],
+    "2DAVR7XRG:shared_process": [],
+    "2DBX9FA55:shared_process": []
+  },
+  "config": {},
+  "info": {}
+}

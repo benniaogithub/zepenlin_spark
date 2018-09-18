@@ -1,0 +1,349 @@
+{
+  "paragraphs": [
+    {
+      "text": "%dep\nz.load(\"com.huaban:jieba-analysis:jar:1.0.2\")\n",
+      "user": "anonymous",
+      "dateUpdated": "Aug 10, 2018 4:28:38 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "res0: org.apache.zeppelin.dep.Dependency \u003d org.apache.zeppelin.dep.Dependency@783ae892\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1533889594183_599275140",
+      "id": "20180810-162634_1163831747",
+      "dateCreated": "Aug 10, 2018 4:26:34 PM",
+      "dateStarted": "Aug 10, 2018 4:28:38 PM",
+      "dateFinished": "Aug 10, 2018 4:28:48 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "import com.huaban.analysis.jieba.JiebaSegmenter\n",
+      "user": "anonymous",
+      "dateUpdated": "Aug 10, 2018 4:29:08 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "import com.huaban.analysis.jieba.JiebaSegmenter\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1533889741537_749325567",
+      "id": "20180810-162901_2134830883",
+      "dateCreated": "Aug 10, 2018 4:29:01 PM",
+      "dateStarted": "Aug 10, 2018 4:29:08 PM",
+      "dateFinished": "Aug 10, 2018 4:30:32 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "new JiebaSegmenter().sentenceProcess(\"你好吗哈哈哈\")",
+      "user": "anonymous",
+      "dateUpdated": "Aug 10, 2018 4:30:15 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "res0: java.util.List[String] \u003d [你好, 吗, 哈哈哈]\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1533889791559_-1413671453",
+      "id": "20180810-162951_1407228611",
+      "dateCreated": "Aug 10, 2018 4:29:51 PM",
+      "dateStarted": "Aug 10, 2018 4:30:15 PM",
+      "dateFinished": "Aug 10, 2018 4:30:33 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%spark\n\n\nimport scala.math.min\nimport java.util.Collections\nimport com.huaban.analysis.jieba.JiebaSegmenter\nimport org.apache.spark.sql._\n\ndef removeCbrackets(line : String) : String \u003d {\n    try {\n      return  line replaceAll (\"\u003c.*?\u003e\", \"\")\n    }\n    catch {\n      case ex: Exception \u003d\u003e \"\"\n    }\n  }\n\n  def httpNom(line : String) : String \u003d {\n    try {\n      val caseInsensitivePattern \u003d \"\"\"^(?i)(http|ftp|https)://\"\"\".r\n      return  caseInsensitivePattern.replaceFirstIn(line.trim(),\"http://\")\n      //      line replaceAll (caseInsensitivePattern, )\n    }\n    catch {\n      case ex: Exception \u003d\u003e \"\"\n    }\n  }\n\n  def removePunc(line : String) : String \u003d {\n    try {\n      return  line replaceAll (\"[\\\\s+\\\\.\\\\!\\\\/_,，。？\\\\$%\\\\^\\\\*\\\\\\\"\\\u0027+｀｀`\\\\｀·——《》｀()?【】:：;～；;“”！，。？、~@#￥%……\u0026*（）]+\", \"\")\n    }\n    catch {\n      case ex: Exception \u003d\u003e \"\"\n    }\n  }\n\n  def hash(s:String)\u003d{\n    val m \u003d java.security.MessageDigest.getInstance(\"MD5\")\n    val b \u003d s.getBytes(\"UTF-8\")\n    m.update(b,0,b.length)\n    new java.math.BigInteger(1,m.digest()).toString(16).trim()\n  }\n\n  def queryhash(s:String)\u003d{\n    var line \u003d s\n    var i_ma \u003d line.indexOf(\"吗\")\n    var i_1 \u003d line.indexOf(\"?\")\n    var i_2 \u003d line.indexOf(\"？\")\n    if(i_1\u003e0){\n      if(i_2\u003e0){\n        i_1 \u003d min(i_1,i_2)\n      }\n      if(i_ma\u003e0){\n        i_1 \u003d min(i_1,i_ma)\n      }\n    }else{\n      if(i_2\u003e0){\n        if(i_ma\u003e0){\n          i_2 \u003d min(i_2,i_ma)\n        }\n        i_1 \u003d i_2\n      }else{\n        i_1 \u003d i_ma\n      }\n    }\n    if(i_1\u003e0){\n      line \u003d line.substring(0,i_1+1)\n    }\n    line \u003d removeCbrackets(line)\n    line \u003d removePunc(line)\n    var temps \u003d new JiebaSegmenter().sentenceProcess(line)\n    //    s \u003d s.split\n    //    println(s)\n    Collections.sort(temps)\n    //    println(s)\n    import scala.collection.JavaConversions._\n    var o \u003d \"\"\n    for (attribute \u003c- temps) {\n      o +\u003d attribute\n    }\n    var ID \u003d hash(o)\n    //    println(o)\n    ID\n  }\n\n\n\n  def lineToID_URI(line : String)\u003d {\n//    val regex \u003d \"@[A-Z._]{1,15}:\".r\n//    val tags \u003d regex findAllIn line toArray\n//    val contents \u003d line.split(\"@[A-Z_.]{1,15}:\",-1)\n    val regex \u003d \"@[A-Za-z._]{1,30}:\".r\n    val tags \u003d regex findAllIn line toArray\n    val contents \u003d line.split(\"@[A-Za-z._]{1,30}:\",-1)\n    //         println(tags.length)\n    //         println(contents.length)\n    //         var M:Map[String,String] \u003d Map()\n    var ans \u003d \"\"\n    var ask \u003d \"\"\n    var URI \u003d \"\"\n    try{\n      for(i\u003c-0 until tags.length){\n        var tag \u003d tags(i)\n        var content \u003d contents(i+1)\n        //     print(tag)\n        //     println(content)\n        if(tag\u003d\u003d\"@ANS.CONTENT:\"){\n          ans \u003d content.trim()\n        }\n        else if(tag\u003d\u003d\"@URI:\"){\n          URI \u003d httpNom(content.trim())\n        }\n        else if(tag\u003d\u003d\"@ASK.TITLE:\"){\n          ask \u003d content.trim()\n//          ask \u003d queryhash(ask)\n        }\n\n        //     M +\u003d (tag -\u003e content)\n      }\n    }catch{\n      case e: Exception \u003d\u003e {\n        ask \u003d \"\"\n        ans \u003d \"\"\n        URI \u003d \"\"\n      }\n    }\n    (ask,ans,URI,line)\n  }\n\n  def lineToID(l : String)\u003d {\n    var line \u003d l\n    if(line.startsWith(\"\\\"\")\u0026\u0026line.endsWith(\"\\\"\")){\n      line \u003d line.substring(1,line.length-1)\n    }\n    val regex \u003d \"@[A-Za-z._]{1,30}:\".r\n    val tags \u003d regex findAllIn line toArray\n    val contents \u003d line.split(\"@[A-Za-z._]{1,30}:\",-1)\n\n    var query_id \u003d \"\"\n    var QLEVEL \u003d \"\"\n    var QTYPE \u003d \"\"\n    var pv \u003d \"\"\n    var query \u003d \"\"\n\n    try{\n      for(i\u003c-0 until tags.length){\n        var tag \u003d tags(i)\n        var content \u003d contents(i+1)\n        //     print(tag)\n        //     println(content)\n        if(tag\u003d\u003d\"@QLEVEL:\"){\n          QLEVEL \u003d content.trim()\n        }\n        else if(tag\u003d\u003d\"@QTYPE:\"){\n          QTYPE \u003d content.trim()\n        }\n        else if(tag\u003d\u003d\"@query:\"){\n          query \u003d content.trim()\n          query_id \u003d queryhash(query)\n        }else if(tag\u003d\u003d\"@pv:\"){\n          pv \u003d content.trim()\n        }\n      }\n    }catch{\n      case e: Exception \u003d\u003e {\n        query_id \u003d \"\"\n        QLEVEL \u003d \"\"\n        QTYPE \u003d \"\"\n        pv \u003d \"\"\n        query \u003d \"\"\n      }\n    }\n    (query_id,QLEVEL,QTYPE,pv,query)\n  }\n\n  def lineToQU(l : String)\u003d {\n    var line \u003d l\n    if(line.startsWith(\"\\\"\")\u0026\u0026line.endsWith(\"\\\"\")){\n      line \u003d line.substring(1,line.length-1)\n    }\n    if(line.startsWith(\"[\")\u0026\u0026line.endsWith(\"]\")){\n      line \u003d line.substring(1,line.length-1)\n    }\n    val regex \u003d \"@[A-Za-z._]{1,30}:\".r\n    val tags \u003d regex findAllIn line toArray\n    val contents \u003d line.split(\"@[A-Za-z._]{1,30}:\",-1)\n\n    var url \u003d \"\"\n    var query \u003d \"\"\n\n    try{\n      for(i\u003c-0 until tags.length){\n        var tag \u003d tags(i)\n        var content \u003d contents(i+1)\n        //     print(tag)\n        //     println(content)\n        if(tag\u003d\u003d\"@url:\"){\n          url \u003d httpNom(content.trim())\n        } else if(tag\u003d\u003d\"@query:\") {\n          query \u003d content.trim()\n        }\n      }\n    }catch{\n      case e: Exception \u003d\u003e {\n        url \u003d \"\"\n        query \u003d \"\"\n      }\n    }\n    (query,url)\n  }\n\n  case class Row_qaua(ask_id: String,ans: String,URI: String,op: String)\n  case class Row_tpq(query_id:String,QLEVEL: String,QTYPE: String,pv: String,query: String)\n  case class Row_tpu(query:String,url: String)",
+      "user": "anonymous",
+      "dateUpdated": "May 16, 2018 4:01:05 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "import scala.math.min\nimport java.util.Collections\nimport com.huaban.analysis.jieba.JiebaSegmenter\nimport org.apache.spark.sql._\nremoveCbrackets: (line: String)String\nhttpNom: (line: String)String\nremovePunc: (line: String)String\nhash: (s: String)String\nqueryhash: (s: String)String\nwarning: there was one feature warning; re-run with -feature for details\nlineToID_URI: (line: String)(String, String, String, String)\nwarning: there was one feature warning; re-run with -feature for details\nlineToID: (l: String)(String, String, String, String, String)\nwarning: there was one feature warning; re-run with -feature for details\nlineToQU: (l: String)(String, String)\ndefined class Row_qaua\ndefined class Row_tpq\ndefined class Row_tpu\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1526455321549_673385264",
+      "id": "20180516-152201_334754446",
+      "dateCreated": "May 16, 2018 3:22:01 PM",
+      "dateStarted": "May 16, 2018 4:01:05 PM",
+      "dateFinished": "May 16, 2018 4:02:00 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%spark\n",
+      "user": "anonymous",
+      "dateUpdated": "Aug 10, 2018 4:26:27 PM",
+      "config": {},
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "jobName": "paragraph_1533889587283_350327278",
+      "id": "20180810-162627_2342406",
+      "dateCreated": "Aug 10, 2018 4:26:27 PM",
+      "status": "READY",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "var src \u003d \"/user/webrank/liuqin/viewpoint/query_map_url_list_tpye1_choice_0707_0803_atline.csv\" \nvar des \u003d \"/user/webrank/liuqin/viewpoint/query_map_url_list_tpye3_choice_201803_maped_ans_t2.parquet\"",
+      "user": "anonymous",
+      "dateUpdated": "May 16, 2018 4:18:58 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "src: String \u003d /user/webrank/liuqin/viewpoint/query_map_url_list_tpye1_choice_0707_0803_atline.csv\ndes: String \u003d /user/webrank/liuqin/viewpoint/query_map_url_list_tpye3_choice_201803_maped_ans_t2.parquet\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1526444907935_-423459324",
+      "id": "20180516-122827_89703132",
+      "dateCreated": "May 16, 2018 12:28:27 PM",
+      "dateStarted": "May 16, 2018 4:18:58 PM",
+      "dateFinished": "May 16, 2018 4:18:59 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "var tqpv \u003d sc.textFile(src).map(x \u003d\u003elineToQU(x)).map(r \u003d\u003e Row_tpu(r._1,r._2)).toDF()\r\ntqpv.createOrReplaceTempView(\"t_tqpv\")\r\n\r\nsc.hadoopConfiguration.set(\"textinputformat.record.delimiter\",\"\\n@\\n\")\r\nval tauaPath \u003d \"hdfs://master004.diablo.hadoop.nm.ted:8020/user/webkm/xuen/lizhi_temp/qapairs,hdfs://master004.diablo.hadoop.nm.ted:8020//user/webkm/xuen/lizhi_temp/baidu_zhidao\"\r\nval raw \u003d sc.textFile(tauaPath)\r\nval data \u003d raw.map(x \u003d\u003elineToID_URI(x)).map(r \u003d\u003e Row_qaua(r._1,r._2,r._3,r._4)).toDF()\r\ndata.createOrReplaceTempView(\"t_all\")\r\n\r\nvar result \u003d sqlContext.sql(\"select t_tqpv.query,t_tqpv.url,t_all.ans,t_all.URI,t_all.op from t_tqpv left join t_all on t_tqpv.url\u003dt_all.URI \")\r\nresult.write.format(\"parquet\").save(des)",
+      "user": "anonymous",
+      "dateUpdated": "May 16, 2018 4:01:13 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "tqpv: org.apache.spark.sql.DataFrame \u003d [query: string, url: string]\ntauaPath: String \u003d hdfs://master004.diablo.hadoop.nm.ted:8020/user/webkm/xuen/lizhi_temp/qapairs,hdfs://master004.diablo.hadoop.nm.ted:8020//user/webkm/xuen/lizhi_temp/baidu_zhidao\nraw: org.apache.spark.rdd.RDD[String] \u003d hdfs://master004.diablo.hadoop.nm.ted:8020/user/webkm/xuen/lizhi_temp/qapairs,hdfs://master004.diablo.hadoop.nm.ted:8020//user/webkm/xuen/lizhi_temp/baidu_zhidao MapPartitionsRDD[5] at textFile at \u003cconsole\u003e:35\ndata: org.apache.spark.sql.DataFrame \u003d [ask_id: string, ans: string ... 2 more fields]\nresult: org.apache.spark.sql.DataFrame \u003d [query: string, url: string ... 3 more fields]\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1526444388786_751046608",
+      "id": "20180516-121948_7837571",
+      "dateCreated": "May 16, 2018 12:19:48 PM",
+      "dateStarted": "May 16, 2018 4:02:00 PM",
+      "dateFinished": "May 16, 2018 4:10:40 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "var tqpv \u003d sc.textFile(src)",
+      "user": "anonymous",
+      "dateUpdated": "May 16, 2018 4:20:44 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {
+          "0": {
+            "graph": {
+              "mode": "table",
+              "height": 170.0,
+              "optionOpen": false
+            }
+          }
+        },
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "tqpv: org.apache.spark.rdd.RDD[String] \u003d /user/webrank/liuqin/viewpoint/query_map_url_list_tpye1_choice_0707_0803_atline.csv MapPartitionsRDD[48] at textFile at \u003cconsole\u003e:35\nres23: Array[String] \u003d\nArray(\"[@query:.广州中医皮 肤.系肤 康放心 @url:http://club.xywy.com/static/20161010/119554259.htm]\n[@query:.广州治疗毛囊炎.系肤 康放心 @url:http://ask.familydoctor.com.cn/q/14814562.html]\n[@query:.广州治疗毛囊炎.系肤 康放心 @url:http://ask.39.net/question/22830134.html]\n[@query:.广州治疗毛囊炎.系肤 康放心 @url:http://www.120ask.com/question/34365524.htm]\n[@query:.广州治青春痘.系肤 康放心 @url:http://ask.39.net/question/46574722.html?0?http://ask.39.net/question/46622330.html?0]\n[@query:.广州治青春痘.系肤 康放心 @url:http://ask.39.net/question/46574722.html]\n[@query:.广州治青春痘.系肤 康放心 @url:http://ask.39.net/question/46622330.html]\n[@query:.广州疤痕医院.可肤 康放心 @url:http://ask.39.net/question/46568999.html]\n[@query:.广州皮 肤科.系肤 康放心 @url:http://ask.39.net/question/46568999.html]\n[@query:.广州皮 肤科.系肤 康放心 @url:http://ask.39.net/question/46568698.html?..."
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1526457797807_723694304",
+      "id": "20180516-160317_316397195",
+      "dateCreated": "May 16, 2018 4:03:17 PM",
+      "dateStarted": "May 16, 2018 4:19:33 PM",
+      "dateFinished": "May 16, 2018 4:19:37 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "var datau \u003d sqlContext.read.load(des)\ndatau.count()",
+      "user": "anonymous",
+      "dateUpdated": "May 16, 2018 4:21:59 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "datau: org.apache.spark.sql.DataFrame \u003d [query: string, url: string ... 3 more fields]\nres24: Long \u003d 133972\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1526458653371_1236088647",
+      "id": "20180516-161733_83648447",
+      "dateCreated": "May 16, 2018 4:17:33 PM",
+      "dateStarted": "May 16, 2018 4:21:59 PM",
+      "dateFinished": "May 16, 2018 4:22:10 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "user": "anonymous",
+      "config": {},
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "jobName": "paragraph_1526458919494_-1337898463",
+      "id": "20180516-162159_1407124335",
+      "dateCreated": "May 16, 2018 4:21:59 PM",
+      "status": "READY",
+      "progressUpdateIntervalMs": 500
+    }
+  ],
+  "name": "util/test_jieba_jar",
+  "id": "2DDZGNUYA",
+  "angularObjects": {
+    "2D9M8ATZ9:shared_process": [],
+    "2D859SF5B:shared_process": [],
+    "2D99W32FC:shared_process": [],
+    "2DA8NG9YB:shared_process": [],
+    "2D9NTGN5D::2DDZGNUYA": [],
+    "2DBCA9BMV:shared_process": [],
+    "2DA29EQ39:shared_process": [],
+    "2D86PKHDE:shared_process": [],
+    "2D8ZMX5FY:shared_process": [],
+    "2D8ZFKME2:shared_process": [],
+    "2DBAZD2WP:shared_process": [],
+    "2D8SP4FH8:shared_process": [],
+    "2DAESRJYD:shared_process": [],
+    "2DA7377EZ:shared_process": [],
+    "2D8DH9K51:shared_process": [],
+    "2D85K8KV7:shared_process": [],
+    "2D958F7RN:shared_process": [],
+    "2DAVR7XRG:shared_process": [],
+    "2DBX9FA55:shared_process": []
+  },
+  "config": {},
+  "info": {}
+}

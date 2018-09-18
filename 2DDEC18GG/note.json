@@ -1,0 +1,181 @@
+{
+  "paragraphs": [
+    {
+      "text": "## %md query-url对的统计pv",
+      "user": "anonymous",
+      "dateUpdated": "Aug 10, 2018 4:19:00 PM",
+      "config": {
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "results": {},
+        "enabled": true,
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": true
+        },
+        "editorHide": false,
+        "tableHide": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "ERROR",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "\u003cconsole\u003e:26: error: not found: value md\n       ## %md query-url对的统计pv\n           ^\n\u003cconsole\u003e:26: error: not found: value url对的统计pv\n       ## %md query-url对的统计pv\n                    ^\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1524751715702_-1622698108",
+      "id": "20180320-181122_1793468431",
+      "dateCreated": "Apr 26, 2018 10:08:35 PM",
+      "dateStarted": "Aug 10, 2018 4:18:52 PM",
+      "dateFinished": "Aug 10, 2018 4:19:43 PM",
+      "status": "ERROR",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "var datau \u003dsqlContext.read.load(\"/user/webrank/liuqin/out/query_map_url_list_all_201803.parquet\")\nvar pos \u003d 803\nfor(k\u003c- 1 to 2){\n    var i \u003d pos-k\n    println(\"/user/webrank/liuqin/out/query_map_url_list_all_201\"+i.toString+\".parquet\")\n    var datau2 \u003dsqlContext.read.load(\"/user/webrank/liuqin/out/query_map_url_list_all_201\"+i.toString+\".parquet\")\n    datau \u003d datau.unionAll(datau2)\n    datau.registerTempTable(\"resultu\")\n    datau \u003d sqlContext.sql(\"SELECT query,url,sum(pv) as pv FROM resultu group by query,url\")\n    datau.write.format(\"parquet\").save(\"/user/webrank/liuqin/out/query_map_url_list_all_0\"+i.toString+\"_0803.parquet\")\n}",
+      "dateUpdated": "Apr 26, 2018 10:22:45 PM",
+      "config": {
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "results": {},
+        "enabled": true,
+        "editorSetting": {
+          "language": "scala"
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "warning: there were two deprecation warnings; re-run with -deprecation for details\n/user/web_research/liuqin/out/baseurl_pv_clkpv_all_201802.parquet\n/user/web_research/liuqin/out/baseurl_pv_clkpv_all_201803.parquet\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1524751715705_-1625391350",
+      "id": "20180420-163745_473762514",
+      "dateCreated": "Apr 26, 2018 10:08:35 PM",
+      "status": "READY",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "var datau \u003dsqlContext.read.load(\"/user/webrank/liuqin/out/query_map_url_list_all_0801_0803.parquet\")\nvar pos \u003d 712\nfor(k\u003c- 0 to 5){\n    var i \u003d pos-k\n    println(\"/user/webrank/liuqin/out/query_map_url_list_all_201\"+i.toString+\".parquet\")\n    var datau2 \u003dsqlContext.read.load(\"/user/webrank/liuqin/out/query_map_url_list_all_201\"+i.toString+\".parquet\")\n    datau \u003d datau.unionAll(datau2)\n    datau.registerTempTable(\"resultu\")\n    datau \u003d sqlContext.sql(\"SELECT query,url,sum(pv) as pv FROM resultu group by query,url\")\n    datau.write.format(\"parquet\").save(\"/user/webrank/liuqin/out/query_map_url_list_all_0\"+i.toString+\"_0803.parquet\")\n}",
+      "dateUpdated": "Apr 26, 2018 10:21:05 PM",
+      "config": {
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "results": {},
+        "enabled": true,
+        "editorSetting": {
+          "language": "scala"
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "warning: there were two deprecation warnings; re-run with -deprecation for details\n/user/web_research/liuqin/out/baseurl_pv_clkpv_all_201711.parquet\n/user/web_research/liuqin/out/baseurl_pv_clkpv_all_201712.parquet\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1524751715704_-1625006601",
+      "id": "20180420-163725_884630501",
+      "dateCreated": "Apr 26, 2018 10:08:35 PM",
+      "status": "READY",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "datau.count()",
+      "dateUpdated": "Apr 26, 2018 10:08:35 PM",
+      "config": {
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "results": {},
+        "enabled": true,
+        "editorSetting": {
+          "language": "scala"
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "res3: Long \u003d 15701037947\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1524751715705_-1625391350",
+      "id": "20180320-214907_2000362348",
+      "dateCreated": "Apr 26, 2018 10:08:35 PM",
+      "status": "READY",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "dateUpdated": "Apr 26, 2018 10:08:35 PM",
+      "config": {},
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "jobName": "paragraph_1524751715706_-1624237103",
+      "id": "20180418-212717_824859502",
+      "dateCreated": "Apr 26, 2018 10:08:35 PM",
+      "status": "READY",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    }
+  ],
+  "name": "/viewpoint/sum_query_url_pv",
+  "id": "2DDEC18GG",
+  "angularObjects": {
+    "2D9M8ATZ9:shared_process": [],
+    "2D859SF5B:shared_process": [],
+    "2D99W32FC:shared_process": [],
+    "2DA8NG9YB:shared_process": [],
+    "2DBCA9BMV:shared_process": [],
+    "2DA29EQ39:shared_process": [],
+    "2D86PKHDE:shared_process": [],
+    "2D8ZMX5FY:shared_process": [],
+    "2D9NTGN5D::2DDEC18GG": [],
+    "2D8ZFKME2:shared_process": [],
+    "2DBAZD2WP:shared_process": [],
+    "2D8SP4FH8:shared_process": [],
+    "2DAESRJYD:shared_process": [],
+    "2DA7377EZ:shared_process": [],
+    "2D8DH9K51:shared_process": [],
+    "2D85K8KV7:shared_process": [],
+    "2D958F7RN:shared_process": [],
+    "2DAVR7XRG:shared_process": [],
+    "2DBX9FA55:shared_process": []
+  },
+  "config": {},
+  "info": {}
+}

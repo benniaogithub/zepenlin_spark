@@ -1,0 +1,222 @@
+{
+  "paragraphs": [
+    {
+      "text": "%md ## sum url展示和点击",
+      "user": "anonymous",
+      "dateUpdated": "Aug 10, 2018 4:20:50 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "markdown",
+          "editOnDblClick": true
+        },
+        "editorMode": "ace/mode/markdown",
+        "editorHide": true,
+        "tableHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "HTML",
+            "data": "\u003cdiv class\u003d\"markdown-body\"\u003e\n\u003ch2\u003esum url展示和点击\u003c/h2\u003e\n\u003c/div\u003e"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1533889220025_1899192244",
+      "id": "20180810-162020_1146056267",
+      "dateCreated": "Aug 10, 2018 4:20:20 PM",
+      "dateStarted": "Aug 10, 2018 4:20:50 PM",
+      "dateFinished": "Aug 10, 2018 4:20:50 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "var datau \u003dsqlContext.read.load(\"/user/webrank/liuqin/out/baseurl_pv_clkpv_all_0707_0801.parquet\")",
+      "user": "anonymous",
+      "dateUpdated": "Apr 23, 2018 3:12:24 PM",
+      "config": {
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "results": {},
+        "enabled": true,
+        "editorSetting": {
+          "language": "scala"
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "datau: org.apache.spark.sql.DataFrame \u003d [url: string, pv: bigint ... 1 more field]\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1524212599998_49230509",
+      "id": "20180320-181122_1793468431",
+      "dateCreated": "Apr 20, 2018 4:23:19 PM",
+      "dateStarted": "Apr 23, 2018 3:12:24 PM",
+      "dateFinished": "Apr 23, 2018 3:12:41 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "for(i\u003c- 711 to 712){\n    println(\"/user/web_research/liuqin/out/baseurl_pv_clkpv_all_201\"+i.toString+\".parquet\")\n    var datau2 \u003dsqlContext.read.load(\"/user/web_research/liuqin/out/baseurl_pv_clkpv_all_201\"+i.toString+\".parquet\")\n    \n    // print(data2.count())\n    datau \u003d datau.unionAll(datau2)\n    datau.registerTempTable(\"resultu\")\n    datau \u003d sqlContext.sql(\"SELECT url,sum(pv) as pv,sum(clkpv) as clkpv FROM resultu group by url\")\n    datau.write.format(\"parquet\").save(\"/user/webrank/liuqin/out/baseurl_pv_clkpv_all_0707_0\"+i.toString+\".parquet\")\n    // print(data.count())\n}",
+      "user": "anonymous",
+      "dateUpdated": "Apr 20, 2018 5:32:41 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "warning: there were two deprecation warnings; re-run with -deprecation for details\n/user/web_research/liuqin/out/baseurl_pv_clkpv_all_201711.parquet\n/user/web_research/liuqin/out/baseurl_pv_clkpv_all_201712.parquet\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1524213445218_1047677451",
+      "id": "20180420-163725_884630501",
+      "dateCreated": "Apr 20, 2018 4:37:25 PM",
+      "dateStarted": "Apr 20, 2018 5:32:41 PM",
+      "dateFinished": "Apr 20, 2018 6:34:47 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "for(i\u003c- 802 to 803){\n    println(\"/user/web_research/liuqin/out/baseurl_pv_clkpv_all_201\"+i.toString+\".parquet\")\n    var datau2 \u003dsqlContext.read.load(\"/user/web_research/liuqin/out/baseurl_pv_clkpv_all_201\"+i.toString+\".parquet\")\n    datau \u003d datau.unionAll(datau2)\n    datau.registerTempTable(\"resultu\")\n    datau \u003d sqlContext.sql(\"SELECT url,sum(pv) as pv,sum(clkpv) as clkpv FROM resultu group by url\")\n    datau.write.format(\"parquet\").save(\"/user/webrank/liuqin/out/baseurl_pv_clkpv_all_0707_0\"+i.toString+\".parquet\")\n    // print(data.count())\n}",
+      "user": "anonymous",
+      "dateUpdated": "Apr 23, 2018 3:12:34 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "warning: there were two deprecation warnings; re-run with -deprecation for details\n/user/web_research/liuqin/out/baseurl_pv_clkpv_all_201802.parquet\n/user/web_research/liuqin/out/baseurl_pv_clkpv_all_201803.parquet\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1524213465832_-1348508050",
+      "id": "20180420-163745_473762514",
+      "dateCreated": "Apr 20, 2018 4:37:45 PM",
+      "dateStarted": "Apr 23, 2018 3:12:34 PM",
+      "dateFinished": "Apr 23, 2018 4:38:51 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "datau.count()",
+      "user": "anonymous",
+      "dateUpdated": "Apr 23, 2018 7:12:15 PM",
+      "config": {
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "results": {},
+        "enabled": true,
+        "editorSetting": {
+          "language": "scala"
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "res3: Long \u003d 15701037947\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1524212600001_34225301",
+      "id": "20180320-214907_2000362348",
+      "dateCreated": "Apr 20, 2018 4:23:20 PM",
+      "dateStarted": "Apr 23, 2018 7:12:15 PM",
+      "dateFinished": "Apr 23, 2018 8:03:28 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "dateUpdated": "Apr 20, 2018 4:23:20 PM",
+      "config": {},
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "jobName": "paragraph_1524212600002_35379548",
+      "id": "20180418-212717_824859502",
+      "dateCreated": "Apr 20, 2018 4:23:20 PM",
+      "status": "READY",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    }
+  ],
+  "name": "/viewpoint/sum_url_pv",
+  "id": "2DE1K7GWD",
+  "angularObjects": {
+    "2D9M8ATZ9:shared_process": [],
+    "2D859SF5B:shared_process": [],
+    "2D99W32FC:shared_process": [],
+    "2DA8NG9YB:shared_process": [],
+    "2DBCA9BMV:shared_process": [],
+    "2DA29EQ39:shared_process": [],
+    "2D86PKHDE:shared_process": [],
+    "2D8ZMX5FY:shared_process": [],
+    "2D8ZFKME2:shared_process": [],
+    "2DBAZD2WP:shared_process": [],
+    "2D8SP4FH8:shared_process": [],
+    "2DAESRJYD:shared_process": [],
+    "2DA7377EZ:shared_process": [],
+    "2D8DH9K51:shared_process": [],
+    "2D9NTGN5D::2DE1K7GWD": [],
+    "2D85K8KV7:shared_process": [],
+    "2D958F7RN:shared_process": [],
+    "2DAVR7XRG:shared_process": [],
+    "2DBX9FA55:shared_process": []
+  },
+  "config": {},
+  "info": {}
+}

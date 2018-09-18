@@ -1,0 +1,227 @@
+{
+  "paragraphs": [
+    {
+      "text": "%md ## 医疗评价类数据根据展现聚类以及综合分析",
+      "dateUpdated": "Sep 17, 2018 6:11:26 PM",
+      "config": {
+        "tableHide": false,
+        "editorSetting": {
+          "language": "markdown",
+          "editOnDblClick": true
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/markdown",
+        "editorHide": true,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "HTML",
+            "data": "\u003cdiv class\u003d\"markdown-body\"\u003e\n\u003ch2\u003e医疗评价类数据根据展现聚类以及综合分析\u003c/h2\u003e\n\u003c/div\u003e"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1537179086862_658336099",
+      "id": "20180903-162217_428414874",
+      "dateCreated": "Sep 17, 2018 6:11:26 PM",
+      "status": "READY",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md ### 包括check 日志抽取url连成一串是否正确",
+      "dateUpdated": "Sep 17, 2018 6:11:26 PM",
+      "config": {
+        "tableHide": false,
+        "editorSetting": {
+          "language": "markdown",
+          "editOnDblClick": true
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/markdown",
+        "editorHide": true,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "HTML",
+            "data": "\u003cdiv class\u003d\"markdown-body\"\u003e\n\u003ch3\u003e包括check 日志抽取url连成一串是否正确\u003c/h3\u003e\n\u003c/div\u003e"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1537179086865_667954822",
+      "id": "20180910-211844_483506108",
+      "dateCreated": "Sep 17, 2018 6:11:26 PM",
+      "status": "READY",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%spark\ncase class UURow(URL1 : String,URL2:String)\ndef httpNom(line : String) : String \u003d {\ntry {\n  val caseInsensitivePattern \u003d \"\"\"^(?i)(http|ftp|https)://\"\"\".r\n  return  caseInsensitivePattern.replaceFirstIn(line.trim(),\"http://\")\n  //      line replaceAll (caseInsensitivePattern, )\n}\ncatch {\n  case ex: Exception \u003d\u003e \"\"\n}\n}\n\ndef getHost(line : String) : String \u003d {\n    if (line \u003d\u003d null || line.trim().equals(\"\")) {\n      return \"\";\n    }\n    try {\n      val caseInsensitivePattern \u003d \"\"\"(?\u003c\u003d//|)((\\w)+\\.)+\\w+(:\\d*)?\"\"\".r\n      return  caseInsensitivePattern.findFirstIn(line).get\n      //      line replaceAll (caseInsensitivePattern, )\n    }\n    catch {\n      case ex: Exception \u003d\u003e \"\"\n    }\n  }\n  \n  def lineToM(l : String)\u003d {\n    var line \u003d l\n    if(line.startsWith(\"\\\"\")\u0026\u0026line.endsWith(\"\\\"\")){\n      line \u003d line.substring(1,line.length-1)\n    }\n    if(line.startsWith(\"[\")\u0026\u0026line.endsWith(\"]\")){\n      line \u003d line.substring(1,line.length-1)\n    }\n    val regex \u003d \"@[A-Za-z._]{1,30}:\".r\n    val tags \u003d regex findAllIn line toArray\n    val contents \u003d line.split(\"@[A-Za-z._]{1,30}:\",-1)\n    \n    var M:Map[String,String] \u003d Map()\n    \n    for(i\u003c-0 until tags.length){\n      var tag \u003d tags(i)\n      var content \u003d contents(i+1)\n      M +\u003d (tag -\u003e content.trim())\n    }\n    M\n  }\n\n\n",
+      "dateUpdated": "Sep 17, 2018 6:11:26 PM",
+      "config": {
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "results": {},
+        "enabled": true,
+        "editorSetting": {
+          "language": "scala"
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "defined class UURow\nhttpNom: (line: String)String\ngetHost: (line: String)String\nwarning: there was one feature warning; re-run with -feature for details\nlineToM: (l: String)Map[String,String]\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1537179086866_669109069",
+      "id": "20180903-155321_1007836885",
+      "dateCreated": "Sep 17, 2018 6:11:26 PM",
+      "status": "READY",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%spark\nimport java.net.{URLDecoder, URLEncoder}\nimport java.text.SimpleDateFormat\nimport java.util.Date\nimport scala.collection.mutable.ArrayBuffer\ncase class Logrow(userid:String,uuid:String, page:String, time : String, search_type : String, query : String,urls:List[Map[String,String]])\ncase class QURow(query : String,URL:String)\n\n\ndef DateFormat(time:String):String\u003d{\n    var sdf:SimpleDateFormat \u003d new SimpleDateFormat(\"yyyyMMdd\")\n    var date:String \u003d sdf.format(new Date((time.toLong*1000)))\n    return date\n}\n\ndef decode(value:String): String \u003d URLDecoder.decode(value, \"gbk\")\n\ndef getRow(line : String):Option[Logrow]\u003d {\n    //    var userid, uuid, page, time, search_type \u003d \"\"\n    val regex\u003d\"\"\"^\\d+$\"\"\".r\n    var userid, uuid, page,time,search_type,unknown \u003d \"\"\n    var tmp \u003d line.trim().split(\u0027\\t\u0027)\n    if (tmp.length \u003c 2) {\n      return None\n    }\n    var tmp0 \u003d tmp(0).trim().split(\u0027#\u0027)\n    if (tmp0.length !\u003d 5 \u0026\u0026 tmp0.length !\u003d 6) {\n      return None\n    }\n    if(tmp0.length \u003d\u003d 5){\n      userid \u003d tmp0(0)\n      uuid \u003d tmp0(1)\n      page \u003d tmp0(2)\n      time \u003d tmp0(3)\n      search_type \u003d tmp0(4)\n    }else if(tmp0.length \u003d\u003d 6){\n      userid \u003d tmp0(0)\n      uuid \u003d tmp0(1)\n      page \u003d tmp0(2)\n      time \u003d tmp0(3)\n      search_type \u003d tmp0(4)\n      unknown \u003d tmp0(5)\n    }\n    var query \u003d decode(tmp(1))\n    var urls:List[Map[String,String]] \u003d List()\n    var urlblock:Map[String,String]\u003d Map()\n    var cnt \u003d 0\n    for(i \u003c- 2 to tmp.length-1){\n      //      println(tmp(i))\n      //      println(tmp(i).trim().split(\"#\",-1).length)\n      if (((tmp(i).trim().split(\"#\",-1).length) \u003e\u003d 4) \u0026\u0026 regex.findFirstMatchIn((tmp(i).trim().split(\"#\",-1)(1))) !\u003d None){\n        var tmp_i \u003d tmp(i).trim().split(\"#\",-1)\n        if(tmp_i.length !\u003d 4){\n          tmp_i \u003d Array(\"\",\"\",\"\",\"\")\n        }\n        var Array(vrid, ph_3_1, ph_3_2, baseurl) \u003d tmp_i\n        baseurl \u003d decode(baseurl)\n        urlblock +\u003d (\"vrid\" -\u003e vrid)\n        urlblock +\u003d (\"3_1\" -\u003e ph_3_1)\n        urlblock +\u003d (\"3_2\" -\u003e ph_3_2)\n        urlblock +\u003d (\"baseurl\" -\u003e baseurl)\n        urls \u003d urls :+ urlblock\n        urlblock \u003d Map()\n        cnt \u003d 0\n      }else{\n        if(cnt\u003d\u003d0){\n          urlblock +\u003d (\"wapurl\" -\u003e tmp(i))\n          cnt \u003d cnt+1\n        }else if(cnt\u003d\u003d1){\n          urlblock +\u003d (\"clk\" -\u003e tmp(i))\n          cnt \u003d cnt+1\n        }else if(cnt\u003d\u003d2){\n          urlblock +\u003d (\"2\" -\u003e tmp(i))\n          cnt \u003d cnt+1\n        }\n      }\n    }\n    return Some(new Logrow(userid, uuid, page, time, search_type, query, urls))\n  }\n\n def trans_dataframe(row:Logrow)\u003d {\n    val filterURI \u003d List(\"ask.yaolan.com\", \"www.120ask.com\", \"www.babytree.com\", \"club.xywy.com\", \"ask.39.net\", \n      \"www.haodf.com\", \"ask.ci123.com\", \"ask.familydoctor.com.cn\", \"bbs.tianya.cn\")\n    var list \u003d ArrayBuffer[(String,String)]()\n    var urls \u003d row.urls.map(urlblock \u003d\u003e {\n      var url \u003d \"\"\n      if (urlblock.get(\"baseurl\").getOrElse(\"\") \u003d\u003d \"\") {\n        url \u003d urlblock.get(\"wapurl\").getOrElse(\"\").toString\n      } else {\n        url \u003d urlblock.get(\"baseurl\").getOrElse(\"\").toString\n      }\n      url \u003d httpNom(url)\n      url\n    })\n    urls \u003d urls.filter(x\u003d\u003efilterURI.contains(getHost(x))).sorted\n    // urls.foreach(println)\n    // print(urls.length)\n    val len \u003d urls.length\n    if(len\u003e1){\n      var url_1 \u003d \"\"\n      var url_2 \u003d \"\"\n\n      for (i \u003c- 0 to len - 2) {\n        url_1  \u003d urls(i)\n        for (j \u003c- i+1 to len - 1) {\n          url_2  \u003d urls(j)\n          list +\u003d ((url_1,url_2))\n        }\n      }\n    }\n    list.toList\n  }\n \n \n\ndef filterNone(x: Option[Logrow]) \u003d x match {\n      case Some(s) \u003d\u003e true\n      case None \u003d\u003e false\n    }\n\n   \n",
+      "dateUpdated": "Sep 17, 2018 6:11:26 PM",
+      "config": {
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "results": {},
+        "enabled": true,
+        "editorSetting": {
+          "language": "scala"
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "import java.net.{URLDecoder, URLEncoder}\nimport java.text.SimpleDateFormat\nimport java.util.Date\nimport scala.collection.mutable.ArrayBuffer\ndefined class Logrow\ndefined class QURow\nDateFormat: (time: String)String\ndecode: (value: String)String\ngetRow: (line: String)Option[Logrow]\ntrans_dataframe: (row: Logrow)List[(String, String)]\nfilterNone: (x: Option[Logrow])Boolean\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1537179086867_668724320",
+      "id": "20180903-160145_1586586791",
+      "dateCreated": "Sep 17, 2018 6:11:26 PM",
+      "status": "READY",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md ## check  http 有多个连接在一起是正常的 \n",
+      "dateUpdated": "Sep 17, 2018 6:11:26 PM",
+      "config": {
+        "tableHide": false,
+        "editorSetting": {
+          "language": "markdown",
+          "editOnDblClick": true
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/markdown",
+        "editorHide": true,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "HTML",
+            "data": "\u003cdiv class\u003d\"markdown-body\"\u003e\n\u003ch2\u003echeck http 有多个连接在一起是正常的\u003c/h2\u003e\n\u003c/div\u003e"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1537179086868_666800575",
+      "id": "20180904-180922_34384454",
+      "dateCreated": "Sep 17, 2018 6:11:26 PM",
+      "status": "READY",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "dateUpdated": "Sep 17, 2018 6:11:26 PM",
+      "config": {
+        "tableHide": false,
+        "editorSetting": {
+          "language": "scala"
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "jobName": "paragraph_1537179086926_633712170",
+      "id": "20180516-183553_456075560",
+      "dateCreated": "Sep 17, 2018 6:11:26 PM",
+      "status": "READY",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    }
+  ],
+  "name": "/util/check_with_raw_log",
+  "id": "2DQKDDVBC",
+  "angularObjects": {
+    "2D9NTGN5D::2DQKDDVBC": [],
+    "2D9M8ATZ9:shared_process": [],
+    "2D859SF5B:shared_process": [],
+    "2D99W32FC:shared_process": [],
+    "2DA8NG9YB:shared_process": [],
+    "2DBCA9BMV:shared_process": [],
+    "2DA29EQ39:shared_process": [],
+    "2D86PKHDE:shared_process": [],
+    "2D8ZMX5FY:shared_process": [],
+    "2D8ZFKME2:shared_process": [],
+    "2DBAZD2WP:shared_process": [],
+    "2D8SP4FH8:shared_process": [],
+    "2DAESRJYD:shared_process": [],
+    "2DA7377EZ:shared_process": [],
+    "2D8DH9K51:shared_process": [],
+    "2D85K8KV7:shared_process": [],
+    "2D958F7RN:shared_process": [],
+    "2DAVR7XRG:shared_process": [],
+    "2DBX9FA55:shared_process": []
+  },
+  "config": {},
+  "info": {}
+}

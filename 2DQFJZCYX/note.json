@@ -1,0 +1,166 @@
+{
+  "paragraphs": [
+    {
+      "text": "%dep\nz.load(\"com.alibaba:fastjson:jar:1.2.47\")\n",
+      "user": "anonymous",
+      "dateUpdated": "Sep 10, 2018 10:13:35 PM",
+      "config": {
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "results": {},
+        "enabled": true,
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "res0: org.apache.zeppelin.dep.Dependency \u003d org.apache.zeppelin.dep.Dependency@caa0acd\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1536587506627_-1782230309",
+      "id": "20180810-162634_1163831747",
+      "dateCreated": "Sep 10, 2018 9:51:46 PM",
+      "dateStarted": "Sep 10, 2018 10:13:35 PM",
+      "dateFinished": "Sep 10, 2018 10:14:28 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "import com.alibaba.fastjson.JSON\n",
+      "user": "anonymous",
+      "dateUpdated": "Sep 10, 2018 10:13:38 PM",
+      "config": {
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "results": {},
+        "enabled": true,
+        "editorSetting": {
+          "language": "scala"
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "import com.alibaba.fastjson.JSON\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1536587506632_-1785693049",
+      "id": "20180810-162901_2134830883",
+      "dateCreated": "Sep 10, 2018 9:51:46 PM",
+      "dateStarted": "Sep 10, 2018 10:13:38 PM",
+      "dateFinished": "Sep 10, 2018 10:15:16 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "var line \u003d \"{\\\"key\\\":\\\"51272592\\\",\\\"question\\\":\\\"一咬合牙齿就痛，特别是大牙，是怎么回事啊\\\",\\\"wapurl\\\":\\\"http://wapask.39.net/question/51272\\n592.html\\\",\\\"url\\\":\\\"http://ask.39.net/question/51272592.html\\\",\\\"queDesc\\\":\\\"你好，带牙套第10天，现在一咬合牙齿就痛，特别是\\n牙，是怎么回事啊\\\",\\\"from\\\":\\\"39健康网\\\",\\\"showurl\\\":\\\"www.39.net\\\",\\\"answer\\\":\\\"根据你的情可能跟牙周炎或牙髓炎有关。建议注意增加\\n饮水，避免辛辣上火的食物，并考虑就诊进行局部检查或局部X光等项目检查一下，明确诊断后再根据病因配合应用牛黄解毒片、抗生\\n素、非甾体类抗炎药等药物对症治疗可能会有所好转。\\\",\\\"answerMan\\\":{\\\"name\\\":\\\"司金瑞\\\",\\\"level\\\":\\\"主治医师\\\",\\\"hospital\\\":\\\"威县梨\\n屯中心卫生院\\\",\\\"hospitalLv\\\":\\\"其他\\\",\\\"department\\\":\\\"全科\\\",\\\"expertDescr\\\":\\\"消化内科如急慢性胃肠道炎、胃十二指肠溃疡等病变。\\n\\\",\\\"iconUrl\\\":\\\"http://pimg.39.net/upload/my/c200845/20170907/org/1881149.jpg\\\"},\\\"tags\\\":[ \\\"女\\\",  \\\"26岁\\\",  \\\"牙套\\\" ],\\\"patie\\nnt\\\":{\\\"gender\\\":2,\\\"ageKey\\\":0,\\\"shortAppeal\\\":[ \\\"牙齿\\\",  \\\"牙髓炎\\\",  \\\"牙周炎\\\",  \\\"温热\\\",  \\\"牛黄解毒片\\\",  \\\"上火\\\",  \\\"牙套\\\" ],\\\"\\ncity\\\":\\\"\\\"}}\"\r\nval json \u003d JSON.parseObject(line)\r\nprintln(json.get(\"question\"))\r\nprintln(json.get(\"queDesc\"))\r\nprintln(json.get(\"url\"))\r\nprintln(json.get(\"answer\"))",
+      "user": "anonymous",
+      "dateUpdated": "Sep 10, 2018 10:19:51 PM",
+      "config": {
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "results": {},
+        "enabled": true,
+        "editorSetting": {
+          "language": "scala"
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "line: String \u003d\n{\"key\":\"51272592\",\"question\":\"一咬合牙齿就痛，特别是大牙，是怎么回事啊\",\"wapurl\":\"http://wapask.39.net/question/51272\n592.html\",\"url\":\"http://ask.39.net/question/51272592.html\",\"queDesc\":\"你好，带牙套第10天，现在一咬合牙齿就痛，特别是\n牙，是怎么回事啊\",\"from\":\"39健康网\",\"showurl\":\"www.39.net\",\"answer\":\"根据你的情可能跟牙周炎或牙髓炎有关。建议注意增加\n饮水，避免辛辣上火的食物，并考虑就诊进行局部检查或局部X光等项目检查一下，明确诊断后再根据病因配合应用牛黄解毒片、抗生\n素、非甾体类抗炎药等药物对症治疗可能会有所好转。\",\"answerMan\":{\"name\":\"司金瑞\",\"level\":\"主治医师\",\"hospital\":\"威县梨\n屯中心卫生院\",\"hospitalLv\":\"其他\",\"department\":\"全科\",\"expertDescr\":\"消化内科如急慢性胃肠道炎、胃十二指肠溃疡等病变。\n\",\"iconUrl\":\"http://pimg.39.net/upload/my/c200845/20170907/org/1881149.jpg\"},\"tags\":[ \"女\",  \"26岁\",  \"牙套\" ],\"patie\nnt\":{\"gender\":2,\"ageKey\":0,\"shortAppeal\":[ \"牙齿\",  \"牙髓炎\",  \"牙周炎\",  \"温热\",  \"牛黄解毒片\",  \"上火\",  \"牙套\" ],\"\ncity\":\"\"}}\njson: com.alibaba.fastjson.JSONObject \u003d {\"question\":\"一咬合牙齿就痛，特别是大牙，是怎么回事啊\",\"queDesc\":\"你好，带牙套第10天，现在一咬合牙齿就痛，特别是\\n牙，是怎么回事啊\",\"answer\":\"根据你的情可能跟牙周炎或牙髓炎有关。建议注意增加\\n饮水，避免辛辣上火的食物，并考虑就诊进行局部检查或局部X光等项目检查一下，明确诊断后再根据病因配合应用牛黄解毒片、抗生\\n素、非甾体类抗炎药等药物对症治疗可能会有所好转。\",\"wapurl\":\"http://wapask.39.net/question/51272\\n592.html\",\"patie\\nnt\":{\"ageKey\":0,\"gender\":2,\"shortAppeal\":[\"牙齿\",\"牙髓炎\",\"牙周炎\",\"温热\",\"牛黄解毒片\",\"上火\",\"牙套\"],\"\\ncity\":\"\"},\"from\":\"39健康网\",\"showurl\":\"www.39.net\",\"answerMan\":{\"expertDescr\":\"消化内科如急慢性胃肠道炎、胃十二指肠溃疡等病变。\\n\",\"hospitalLv\":\"其他\",\"level\":\"主治医师\",\"name\":\"司金瑞\",\"iconUrl\":\"http://pimg.39.net/upload/my/c200845/20170907/org/1881149.jpg\",\"hospital\":\"威县梨\\n屯中心卫生院\",\"department\":\"全科\"},\"key\":\"51272592\",\"url\":\"http://ask.39.net/question/51272592.html\",\"tags\":[\"女\",\"26岁\",\"牙套\"]}\n一咬合牙齿就痛，特别是大牙，是怎么回事啊\n你好，带牙套第10天，现在一咬合牙齿就痛，特别是\n牙，是怎么回事啊\nhttp://ask.39.net/question/51272592.html\n根据你的情可能跟牙周炎或牙髓炎有关。建议注意增加\n饮水，避免辛辣上火的食物，并考虑就诊进行局部检查或局部X光等项目检查一下，明确诊断后再根据病因配合应用牛黄解毒片、抗生\n素、非甾体类抗炎药等药物对症治疗可能会有所好转。\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1536587506633_-1786077798",
+      "id": "20180810-162951_1407228611",
+      "dateCreated": "Sep 10, 2018 9:51:46 PM",
+      "dateStarted": "Sep 10, 2018 10:19:51 PM",
+      "dateFinished": "Sep 10, 2018 10:19:52 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%spark\n",
+      "dateUpdated": "Sep 10, 2018 9:51:46 PM",
+      "config": {},
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "jobName": "paragraph_1536587506637_-1787616793",
+      "id": "20180810-162627_2342406",
+      "dateCreated": "Sep 10, 2018 9:51:46 PM",
+      "status": "READY",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "dateUpdated": "Sep 10, 2018 9:51:46 PM",
+      "config": {},
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "jobName": "paragraph_1536587506645_-1778382820",
+      "id": "20180516-162159_1407124335",
+      "dateCreated": "Sep 10, 2018 9:51:46 PM",
+      "status": "READY",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    }
+  ],
+  "name": "util/test_fastjson_jar",
+  "id": "2DQFJZCYX",
+  "angularObjects": {
+    "2D9M8ATZ9:shared_process": [],
+    "2D859SF5B:shared_process": [],
+    "2D99W32FC:shared_process": [],
+    "2D9NTGN5D::2DQFJZCYX": [],
+    "2DA8NG9YB:shared_process": [],
+    "2DBCA9BMV:shared_process": [],
+    "2DA29EQ39:shared_process": [],
+    "2D86PKHDE:shared_process": [],
+    "2D8ZMX5FY:shared_process": [],
+    "2D8ZFKME2:shared_process": [],
+    "2DBAZD2WP:shared_process": [],
+    "2D8SP4FH8:shared_process": [],
+    "2DAESRJYD:shared_process": [],
+    "2DA7377EZ:shared_process": [],
+    "2D8DH9K51:shared_process": [],
+    "2D85K8KV7:shared_process": [],
+    "2D958F7RN:shared_process": [],
+    "2DAVR7XRG:shared_process": [],
+    "2DBX9FA55:shared_process": []
+  },
+  "config": {},
+  "info": {}
+}

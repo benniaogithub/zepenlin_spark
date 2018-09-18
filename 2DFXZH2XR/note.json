@@ -1,0 +1,1091 @@
+{
+  "paragraphs": [
+    {
+      "text": "%spark\nsc.hadoopConfiguration.set(\"textinputformat.record.delimiter\",\"\\n@\\n\")\nval tauaPath \u003d \"hdfs://master004.diablo.hadoop.nm.ted:8020/user/webkm/xuen/lizhi_temp/score_data\"\nval raw \u003d sc.textFile(tauaPath)",
+      "user": "anonymous",
+      "dateUpdated": "Jun 7, 2018 10:14:15 PM",
+      "config": {
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "results": {},
+        "enabled": true,
+        "editorSetting": {
+          "language": "scala"
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "tauaPath: String \u003d hdfs://master004.diablo.hadoop.nm.ted:8020/user/webkm/xuen/lizhi_temp/score_data\nraw: org.apache.spark.rdd.RDD[String] \u003d hdfs://master004.diablo.hadoop.nm.ted:8020/user/webkm/xuen/lizhi_temp/score_data MapPartitionsRDD[1] at textFile at \u003cconsole\u003e:29\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1528260597879_1278622985",
+      "id": "20180319-184727_672584883",
+      "dateCreated": "Jun 6, 2018 12:49:57 PM",
+      "dateStarted": "Jun 7, 2018 10:14:15 PM",
+      "dateFinished": "Jun 7, 2018 10:15:06 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%spark\nraw.count()",
+      "user": "anonymous",
+      "dateUpdated": "Jun 6, 2018 12:51:57 PM",
+      "config": {
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "results": {},
+        "enabled": true,
+        "editorSetting": {
+          "language": "scala"
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "res1: Long \u003d 29418350\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1528260597881_1276314492",
+      "id": "20180510-130013_1373824239",
+      "dateCreated": "Jun 6, 2018 12:49:57 PM",
+      "dateStarted": "Jun 6, 2018 12:51:58 PM",
+      "dateFinished": "Jun 6, 2018 12:53:31 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "def lineToM(l : String)\u003d {\n    var line \u003d l\n    if(line.startsWith(\"\\\"\")\u0026\u0026line.endsWith(\"\\\"\")){\n      line \u003d line.substring(1,line.length-1)\n    }\n    val regex \u003d \"@[A-Za-z._]{1,30}:\".r\n    val tags \u003d regex findAllIn line toArray\n    val contents \u003d line.split(\"@[A-Za-z._]{1,30}:\",-1)\n    \n    var M:Map[String,String] \u003d Map()\n    \n    for(i\u003c-0 until tags.length){\n      var tag \u003d tags(i)\n      var content \u003d contents(i+1)\n      M +\u003d (tag -\u003e content.trim())\n    }\n    M\n  }\n  \n",
+      "user": "anonymous",
+      "dateUpdated": "Jun 7, 2018 4:06:51 PM",
+      "config": {
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "results": {},
+        "enabled": true,
+        "editorSetting": {
+          "language": "scala"
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "warning: there was one feature warning; re-run with -feature for details\nlineToM: (l: String)Map[String,String]\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1528260597882_1277468738",
+      "id": "20180510-125427_1225282630",
+      "dateCreated": "Jun 6, 2018 12:49:57 PM",
+      "dateStarted": "Jun 7, 2018 4:06:51 PM",
+      "dateFinished": "Jun 7, 2018 4:06:53 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "var lograw \u003d raw.map(x\u003d\u003elineToM(x)).map(m \u003d\u003e{\n      var o \u003d \"\"\n      for((k,v)\u003c- m ) o \u003d o+k+v+\"\\t\"\n      o.trim()\n    }).map(t \u003d\u003et replaceAll (\"[\\\\n]+\", \"\"))\n",
+      "user": "anonymous",
+      "dateUpdated": "Jun 6, 2018 12:53:05 PM",
+      "config": {
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "results": {},
+        "enabled": true,
+        "editorSetting": {
+          "language": "scala"
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "lograw: org.apache.spark.rdd.RDD[String] \u003d MapPartitionsRDD[4] at map at \u003cconsole\u003e:37\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1528260597882_1277468738",
+      "id": "20180510-125916_1444964871",
+      "dateCreated": "Jun 6, 2018 12:49:57 PM",
+      "dateStarted": "Jun 6, 2018 12:53:32 PM",
+      "dateFinished": "Jun 6, 2018 12:53:34 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "lograw.count()",
+      "user": "anonymous",
+      "dateUpdated": "Jun 6, 2018 12:53:07 PM",
+      "config": {
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "results": {},
+        "enabled": true,
+        "editorSetting": {
+          "language": "scala"
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "res4: Long \u003d 29418350\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1528260597882_1277468738",
+      "id": "20180510-130702_1753301956",
+      "dateCreated": "Jun 6, 2018 12:49:57 PM",
+      "dateStarted": "Jun 6, 2018 12:53:34 PM",
+      "dateFinished": "Jun 6, 2018 12:55:01 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "lograw.take(2000)",
+      "user": "anonymous",
+      "dateUpdated": "Jun 6, 2018 2:59:43 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {
+          "0": {
+            "graph": {
+              "mode": "table",
+              "height": 108.0,
+              "optionOpen": false
+            }
+          }
+        },
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "res7: Array[String] \u003d Array(@ASK.DATE:2015-03-14 14:41:02\t@ID:008515873a9af21e47907ead5a1803e0\t@QER.URI:http://ask.yaolan.com/1935669/questions.html\t@GROUP.EXT:8个月宝宝发烧可以用尼美舒利颗粒吗\t@AWR.NAME:DL朋友\t@GROUP.SCORE:891.8022\t@ASK.VIEWS:可以|不可以\t@SOURCE:yaolan\t@GROUP.ID:0000006e13aa6db2aaa88657c9e76da6\t@ASK.TITLE:8个月宝宝发烧可以用尼美舒利颗粒吗\t@ASK.HTYPE:YON\t@ANS.ID:f973516b603c26056be3e70a017b65a6\t@ANS.CONTENT:你好，一般来说尼美舒利是禁止用于12岁以下的儿童的。所以不建议给孩子服用。\t@AWR.URI:http://ask.yaolan.com/55301302/comments.html\t@OP_NUM:0\t@QER.NAME:waterinriver\t@SP_NUM:0\t@ASK.EXT:8个月宝宝发烧可以用尼美舒利颗粒吗\t@ANS.VIEW:不可以\t@GROUP.TAG:不可以\t@ANS.QACOV:OP\t@ANS.QACOV_LEVEL:0.7568\t@ASK.ID:0000006e13aa6db2aaa88657c9e76da6\t@URI:http://ask.yaolan.com/question/150314083201c36b8a51.html\t@ACCEPT:false\t@ANS.DATE:2015-10-01 14:41:02, @ASK.DATE:2015-03-14 14:41:02\t@..."
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1528260840815_-135765401",
+      "id": "20180606-125400_1945295909",
+      "dateCreated": "Jun 6, 2018 12:54:00 PM",
+      "dateStarted": "Jun 6, 2018 2:59:43 PM",
+      "dateFinished": "Jun 6, 2018 2:59:49 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "sc.parallelize(lograw.take(2000)).saveAsTextFile(\"/user/webrank/liuqin/view_sort/score_data_2000_atline\")",
+      "user": "anonymous",
+      "dateUpdated": "Jun 6, 2018 3:04:44 PM",
+      "config": {
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "results": {},
+        "enabled": true,
+        "editorSetting": {
+          "language": "scala"
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": []
+      },
+      "apps": [],
+      "jobName": "paragraph_1528260597884_1275160245",
+      "id": "20180510-130816_652561126",
+      "dateCreated": "Jun 6, 2018 12:49:57 PM",
+      "dateStarted": "Jun 6, 2018 3:04:44 PM",
+      "dateFinished": "Jun 6, 2018 3:06:56 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "def lineToID_tag(line : String)\u003d {\r\n    val regex \u003d \"@[A-Za-z._]{1,30}:\".r\r\n    val tags \u003d regex findAllIn line toArray\r\n    val contents \u003d line.split(\"@[A-Za-z._]{1,30}:\",-1)\r\n    var ID \u003d \"\"\r\n    var gtag \u003d \"\"\r\n    \r\n    try{\r\n      for(i\u003c-0 until tags.length){\r\n        var tag \u003d tags(i)\r\n        var content \u003d contents(i+1)\r\n        //     print(tag)\r\n        //     println(content)\r\n        if(tag\u003d\u003d\"@GROUP.ID:\"){\r\n           ID \u003d content.trim()\r\n         \r\n        }else if(tag\u003d\u003d\"@GROUP.TAG:\"){\r\n         gtag \u003d content.trim()\r\n          \r\n        }\r\n      }\r\n    }catch{\r\n      case e: Exception \u003d\u003e {\r\n        ID \u003d \"\"\r\n        gtag \u003d\"\"\r\n      }\r\n    }\r\n    (ID,gtag)\r\n  }",
+      "user": "anonymous",
+      "dateUpdated": "Jun 7, 2018 10:14:25 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "warning: there was one feature warning; re-run with -feature for details\nlineToID_tag: (line: String)(String, String)\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1528260597884_1275160245",
+      "id": "20180510-130959_1507507444",
+      "dateCreated": "Jun 6, 2018 12:49:57 PM",
+      "dateStarted": "Jun 7, 2018 10:14:25 PM",
+      "dateFinished": "Jun 7, 2018 10:15:07 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "case class Row_id_tag(id: String,tag: String)\ncase class Row_id_line(id: String,line: String)",
+      "user": "anonymous",
+      "dateUpdated": "Jun 7, 2018 10:14:28 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "defined class Row_id_tag\ndefined class Row_id_line\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1528355228276_1339868340",
+      "id": "20180607-150708_207012244",
+      "dateCreated": "Jun 7, 2018 3:07:08 PM",
+      "dateStarted": "Jun 7, 2018 10:15:07 PM",
+      "dateFinished": "Jun 7, 2018 10:15:08 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "var result \u003d raw.map(x\u003d\u003elineToID_tag(x)).map(r \u003d\u003e Row_id_tag(r._1,r._2)).toDF()",
+      "user": "anonymous",
+      "dateUpdated": "Jun 7, 2018 10:14:35 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "result: org.apache.spark.sql.DataFrame \u003d [id: string, tag: string]\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1528355504718_766590835",
+      "id": "20180607-151144_1184845029",
+      "dateCreated": "Jun 7, 2018 3:11:44 PM",
+      "dateStarted": "Jun 7, 2018 10:15:08 PM",
+      "dateFinished": "Jun 7, 2018 10:15:10 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "lograw.show()",
+      "user": "anonymous",
+      "dateUpdated": "Jun 7, 2018 3:14:43 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "+--------------------+---+\n|                  id|tag|\n+--------------------+---+\n|0000006e13aa6db2a...|不可以|\n|0000006e13aa6db2a...| 可以|\n|00001909b2ec2ec76...|不可以|\n|00001909b2ec2ec76...| 可以|\n|00004a07d85c045c0...| 不是|\n|00004a07d85c045c0...|  是|\n|0000742b61eec4930...|不可以|\n|0000742b61eec4930...| 可以|\n|000075420bc77b926...| 不是|\n|000075420bc77b926...|  是|\n|000075420bc77b926...|  是|\n|00007e87a662efd2a...| 不能|\n|00007e87a662efd2a...|  能|\n|00007e87a662efd2a...|  能|\n|00007e87a662efd2a...|  能|\n|00007e87a662efd2a...|  能|\n|000090b09d311b364...| 不是|\n|000090b09d311b364...|  是|\n|000090b09d311b364...|  是|\n|0000b4d157625f0d8...| 不能|\n+--------------------+---+\nonly showing top 20 rows\n\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1528355577176_-1810949316",
+      "id": "20180607-151257_1641150972",
+      "dateCreated": "Jun 7, 2018 3:12:57 PM",
+      "dateStarted": "Jun 7, 2018 3:14:43 PM",
+      "dateFinished": "Jun 7, 2018 3:14:47 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "lograw.count()",
+      "user": "anonymous",
+      "dateUpdated": "Jun 7, 2018 3:14:45 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "res4: Long \u003d 29418350\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1528355601847_1681847171",
+      "id": "20180607-151321_1710329613",
+      "dateCreated": "Jun 7, 2018 3:13:21 PM",
+      "dateStarted": "Jun 7, 2018 3:14:45 PM",
+      "dateFinished": "Jun 7, 2018 3:15:28 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "result.registerTempTable(\"result\")",
+      "user": "anonymous",
+      "dateUpdated": "Jun 7, 2018 10:15:08 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "warning: there was one deprecation warning; re-run with -deprecation for details\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1528380734710_255729671",
+      "id": "20180607-221214_1095597784",
+      "dateCreated": "Jun 7, 2018 10:12:14 PM",
+      "dateStarted": "Jun 7, 2018 10:15:08 PM",
+      "dateFinished": "Jun 7, 2018 10:15:11 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "\nvar sql_result \u003d sqlContext.sql(\"select id from (select id,sum(score) as s from (SELECT id,tag,case when count(tag)\u003d1 then 1 when count(tag)\u003e1 then 2 else 0 end  as score FROM result group by id,tag)a group by id)b where s\u003e\u003d4\")",
+      "user": "anonymous",
+      "dateUpdated": "Jun 7, 2018 10:15:07 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "sql_result: org.apache.spark.sql.DataFrame \u003d [id: string]\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1528355610687_1847319847",
+      "id": "20180607-151330_1919090350",
+      "dateCreated": "Jun 7, 2018 3:13:30 PM",
+      "dateStarted": "Jun 7, 2018 10:15:11 PM",
+      "dateFinished": "Jun 7, 2018 10:15:12 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "sql_result.show()",
+      "user": "anonymous",
+      "dateUpdated": "Jun 7, 2018 3:41:47 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "+--------------------+\n|                  id|\n+--------------------+\n|ecb2a2bb41fd24672...|\n|ebbf03ea987082914...|\n|fadf89b20a40b3c9c...|\n|68c73dec53572415b...|\n|42d90225fd6fa40c5...|\n|548d883e7cd8eb690...|\n|582aff2db922af495...|\n|e8440ac8608ecb83f...|\n|f22405003df65fb12...|\n|4f5017adffa88dac5...|\n|5ef8d2a7b37ea6d84...|\n|64deb27f90f01a8d4...|\n|426360a9ea671ad66...|\n|44aefbe3f5ce785af...|\n|486dd198c6d3a244d...|\n|e7502c43c3aee9ab2...|\n|5857eb1c271bf891e...|\n|5dc2123a08a592b5f...|\n|fd0201fcb0aab7d71...|\n|ff3ef99e9c2157ff8...|\n+--------------------+\nonly showing top 20 rows\n\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1528357188730_-278777981",
+      "id": "20180607-153948_1461964370",
+      "dateCreated": "Jun 7, 2018 3:39:48 PM",
+      "dateStarted": "Jun 7, 2018 3:41:47 PM",
+      "dateFinished": "Jun 7, 2018 3:42:55 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "sql_result.count()",
+      "user": "anonymous",
+      "dateUpdated": "Jun 7, 2018 10:15:21 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "res3: Long \u003d 1144699\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1528380756037_-1048153703",
+      "id": "20180607-221236_906859723",
+      "dateCreated": "Jun 7, 2018 10:12:36 PM",
+      "dateStarted": "Jun 7, 2018 10:15:21 PM",
+      "dateFinished": "Jun 7, 2018 10:16:50 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "sql_result.count()",
+      "user": "anonymous",
+      "dateUpdated": "Jun 7, 2018 4:03:42 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "res2: Long \u003d 1144699\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1528357313533_-1834369214",
+      "id": "20180607-154153_803070064",
+      "dateCreated": "Jun 7, 2018 3:41:53 PM",
+      "dateStarted": "Jun 7, 2018 4:03:43 PM",
+      "dateFinished": "Jun 7, 2018 4:05:08 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "def lineToID_op(line : String)\u003d {\r\n\r\n    val regex \u003d \"@[A-Za-z._]{1,30}:\".r\r\n    val tags \u003d regex findAllIn line toArray\r\n    val contents \u003d line.split(\"@[A-Za-z._]{1,30}:\",-1)\r\n    var ID \u003d \"\"\r\n    \r\n    try{\r\n      for(i\u003c-0 until tags.length){\r\n        var tag \u003d tags(i)\r\n        var content \u003d contents(i+1)\r\n        //     print(tag)\r\n        //     println(content)\r\n        if(tag\u003d\u003d\"@GROUP.ID:\"){\r\n           ID \u003d content.trim()\r\n        }\r\n      }\r\n    }catch{\r\n      case e: Exception \u003d\u003e {\r\n       \r\n        ID \u003d \"\"\r\n      }\r\n    }\r\n    (ID,line.trim())\r\n  }",
+      "user": "anonymous",
+      "dateUpdated": "Jun 7, 2018 4:03:07 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "warning: there was one feature warning; re-run with -feature for details\nlineToID_op: (line: String)(String, String)\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1528357956368_-1231316090",
+      "id": "20180607-155236_728707002",
+      "dateCreated": "Jun 7, 2018 3:52:36 PM",
+      "dateStarted": "Jun 7, 2018 4:03:07 PM",
+      "dateFinished": "Jun 7, 2018 4:03:08 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "var lograw2 \u003d raw.map(x\u003d\u003elineToM(x)).map(m \u003d\u003e{\n      var o \u003d \"\"\n      for((k,v)\u003c- m ) o \u003d o+k+v+\"\\t\"\n      o.trim()\n    }).map(t \u003d\u003et replaceAll (\"[\\\\n]+\", \"\")).map(x\u003d\u003e(lineToID_op(x))).map(r \u003d\u003e Row_id_line(r._1,r._2)).toDF()",
+      "user": "anonymous",
+      "dateUpdated": "Jun 7, 2018 4:06:55 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "lograw2: org.apache.spark.sql.DataFrame \u003d [id: string, line: string]\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1528357391363_1197607005",
+      "id": "20180607-154311_1209568492",
+      "dateCreated": "Jun 7, 2018 3:43:11 PM",
+      "dateStarted": "Jun 7, 2018 4:06:55 PM",
+      "dateFinished": "Jun 7, 2018 4:06:57 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "lograw2.show()",
+      "user": "anonymous",
+      "dateUpdated": "Jun 7, 2018 4:09:49 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "+--------------------+--------------------+\n|                  id|                line|\n+--------------------+--------------------+\n|0000006e13aa6db2a...|@ASK.DATE:2015-03...|\n|0000006e13aa6db2a...|@ASK.DATE:2015-03...|\n|00001909b2ec2ec76...|@ASK.DATE:2008-06...|\n|00001909b2ec2ec76...|@ASK.DATE:2008-06...|\n|00004a07d85c045c0...|@ASK.DATE:2012-03...|\n|00004a07d85c045c0...|@ASK.DATE:2012-03...|\n|0000742b61eec4930...|@ASK.DATE:2013-04...|\n|0000742b61eec4930...|@ID:a9e62b564b877...|\n|000075420bc77b926...|@ID:65182049183b7...|\n|000075420bc77b926...|@ID:64a37eb16fa3b...|\n|000075420bc77b926...|@ASK.DATE:2007-11...|\n|00007e87a662efd2a...|@ASK.DATE:2009-01...|\n|00007e87a662efd2a...|@ASK.DATE:2012-08...|\n|00007e87a662efd2a...|@ASK.DATE:2006-05...|\n|00007e87a662efd2a...|@ASK.DATE:2008-10...|\n|00007e87a662efd2a...|@ASK.DATE:2016-07...|\n|000090b09d311b364...|@ID:75dd029ea9ec4...|\n|000090b09d311b364...|@ASK.DATE:2017-02...|\n|000090b09d311b364...|@ASK.DATE:2017-02...|\n|0000b4d157625f0d8...|@ASK.DATE:2011-08...|\n+--------------------+--------------------+\nonly showing top 20 rows\n\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1528358984648_2091049193",
+      "id": "20180607-160944_441106033",
+      "dateCreated": "Jun 7, 2018 4:09:44 PM",
+      "dateStarted": "Jun 7, 2018 4:09:49 PM",
+      "dateFinished": "Jun 7, 2018 4:09:50 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "lograw2.count()",
+      "user": "anonymous",
+      "dateUpdated": "Jun 7, 2018 4:06:59 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "res6: Long \u003d 29418350\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1528358668514_1226657977",
+      "id": "20180607-160428_2037807176",
+      "dateCreated": "Jun 7, 2018 4:04:28 PM",
+      "dateStarted": "Jun 7, 2018 4:06:59 PM",
+      "dateFinished": "Jun 7, 2018 4:08:58 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "sql_result.registerTempTable(\"result_1\")\nlograw2.registerTempTable(\"result_2\")",
+      "user": "anonymous",
+      "dateUpdated": "Jun 7, 2018 4:09:37 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "warning: there was one deprecation warning; re-run with -deprecation for details\nwarning: there was one deprecation warning; re-run with -deprecation for details\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1528358675595_1221286817",
+      "id": "20180607-160435_146959842",
+      "dateCreated": "Jun 7, 2018 4:04:35 PM",
+      "dateStarted": "Jun 7, 2018 4:09:37 PM",
+      "dateFinished": "Jun 7, 2018 4:09:38 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "var sql_result \u003d sqlContext.sql(\"select line from result_1 left join result_2 on result_2.id\u003dresult_1.id\")",
+      "user": "anonymous",
+      "dateUpdated": "Jun 7, 2018 4:11:21 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "sql_result: org.apache.spark.sql.DataFrame \u003d [line: string]\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1528358977667_-146265661",
+      "id": "20180607-160937_1254906297",
+      "dateCreated": "Jun 7, 2018 4:09:37 PM",
+      "dateStarted": "Jun 7, 2018 4:11:21 PM",
+      "dateFinished": "Jun 7, 2018 4:11:22 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "sql_result.show()",
+      "user": "anonymous",
+      "dateUpdated": "Jun 7, 2018 4:11:36 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "+--------------------+\n|                line|\n+--------------------+\n|@ASK.DATE:2013-02...|\n|@ASK.DATE:2013-02...|\n|@ASK.DATE:2013-02...|\n|@ASK.DATE:2013-02...|\n|@ASK.DATE:2013-02...|\n|@ASK.DATE:2013-02...|\n|@ASK.DATE:2013-02...|\n|@ASK.DATE:2013-02...|\n|@ASK.DATE:2013-02...|\n|@ASK.DATE:2013-02...|\n|@ASK.DATE:2013-02...|\n|@ASK.DATE:2013-02...|\n|@ASK.DATE:2013-02...|\n|@ASK.DATE:2013-02...|\n|@ASK.DATE:2009-09...|\n|@ASK.DATE:2009-09...|\n|@ASK.DATE:2009-09...|\n|@ASK.DATE:2009-09...|\n|@ASK.DATE:2007-09...|\n|@ASK.DATE:2007-09...|\n+--------------------+\nonly showing top 20 rows\n\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1528359081482_653532069",
+      "id": "20180607-161121_343753823",
+      "dateCreated": "Jun 7, 2018 4:11:21 PM",
+      "dateStarted": "Jun 7, 2018 4:11:36 PM",
+      "dateFinished": "Jun 7, 2018 4:14:34 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "sql_result.count()",
+      "user": "anonymous",
+      "dateUpdated": "Jun 7, 2018 4:11:42 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "res11: Long \u003d 14101600\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1528359096425_-1912142163",
+      "id": "20180607-161136_1156682853",
+      "dateCreated": "Jun 7, 2018 4:11:36 PM",
+      "dateStarted": "Jun 7, 2018 4:11:42 PM",
+      "dateFinished": "Jun 7, 2018 4:27:47 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "sql_result.map(t \u003d\u003et.getAs[String](\"line\")).rdd.saveAsTextFile(\"/user/webrank/liuqin/view_sort/score_data_filtered_atline\")",
+      "user": "anonymous",
+      "dateUpdated": "Jun 7, 2018 4:17:54 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": []
+      },
+      "apps": [],
+      "jobName": "paragraph_1528359102356_1551782833",
+      "id": "20180607-161142_1431638900",
+      "dateCreated": "Jun 7, 2018 4:11:42 PM",
+      "dateStarted": "Jun 7, 2018 4:17:54 PM",
+      "dateFinished": "Jun 7, 2018 4:35:56 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "lograw2.select(\"id\").distinct.count()",
+      "user": "anonymous",
+      "dateUpdated": "Jun 7, 2018 4:36:06 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "res13: Long \u003d 6037493\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1528359474545_1453036470",
+      "id": "20180607-161754_20459013",
+      "dateCreated": "Jun 7, 2018 4:17:54 PM",
+      "dateStarted": "Jun 7, 2018 4:36:06 PM",
+      "dateFinished": "Jun 7, 2018 4:38:10 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "\nvar sql_result_t \u003d sqlContext.sql(\"select id from (select id,sum(score) as s from (SELECT id,tag,case when count(tag)\u003e1 then 2 when count(tag)\u003d1 then 1 else 0 end  as score FROM (select result.id as id,result.tag as tag from result_1 left join result on result.id\u003dresult_1.id)a group by id,tag)a group by id)b where s\u003c4\")",
+      "user": "anonymous",
+      "dateUpdated": "Jun 7, 2018 10:11:16 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "sql_result_t: org.apache.spark.sql.DataFrame \u003d [id: string]\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1528359531561_-328073457",
+      "id": "20180607-161851_1323726077",
+      "dateCreated": "Jun 7, 2018 4:18:51 PM",
+      "dateStarted": "Jun 7, 2018 10:11:16 PM",
+      "dateFinished": "Jun 7, 2018 10:11:17 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "sql_result_t.count()",
+      "user": "anonymous",
+      "dateUpdated": "Jun 7, 2018 10:11:44 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "ERROR",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "org.apache.spark.sql.catalyst.errors.package$TreeNodeException: execute, tree:\nExchange SinglePartition\n+- *HashAggregate(keys\u003d[], functions\u003d[partial_count(1)], output\u003d[count#187L])\n   +- *Project\n      +- *Filter (isnotnull(s#154L) \u0026\u0026 (s#154L \u003c 4))\n         +- *HashAggregate(keys\u003d[id#155], functions\u003d[sum(cast(score#153 as bigint))], output\u003d[s#154L])\n            +- Exchange(coordinator id: 324592653) hashpartitioning(id#155, 200), coordinator[target post-shuffle partition size: 67108864]\n               +- *HashAggregate(keys\u003d[id#155], functions\u003d[partial_sum(cast(score#153 as bigint))], output\u003d[id#155, sum#166L])\n                  +- *HashAggregate(keys\u003d[id#155, tag#156], functions\u003d[count(tag#156), count(tag#156)], output\u003d[id#155, score#153])\n                     +- Exchange(coordinator id: 36342174) hashpartitioning(id#155, tag#156, 200), coordinator[target post-shuffle partition size: 67108864]\n                        +- *HashAggregate(keys\u003d[id#155, tag#156], functions\u003d[partial_count(tag#156), partial_count(tag#156)], output\u003d[id#155, tag#156, count#190L, count#191L])\n                           +- *Project [id#155, tag#156]\n                              +- SortMergeJoin [id#3], [id#155], LeftOuter\n                                 :- *Sort [id#3 ASC NULLS FIRST], false, 0\n                                 :  +- Exchange(coordinator id: 1378294200) hashpartitioning(id#3, 200), coordinator[target post-shuffle partition size: 67108864]\n                                 :     +- *Project [id#3]\n                                 :        +- *Filter (isnotnull(s#11L) \u0026\u0026 (s#11L \u003e\u003d 4))\n                                 :           +- *HashAggregate(keys\u003d[id#3], functions\u003d[sum(cast(score#10 as bigint))], output\u003d[id#3, s#11L])\n                                 :              +- Exchange(coordinator id: 222466819) hashpartitioning(id#3, 200), coordinator[target post-shuffle partition size: 67108864]\n                                 :                 +- *HashAggregate(keys\u003d[id#3], functions\u003d[partial_sum(cast(score#10 as bigint))], output\u003d[id#3, sum#25L])\n                                 :                    +- *HashAggregate(keys\u003d[id#3, tag#4], functions\u003d[count(tag#4)], output\u003d[id#3, score#10])\n                                 :                       +- Exchange(coordinator id: 1508800042) hashpartitioning(id#3, tag#4, 200), coordinator[target post-shuffle partition size: 67108864]\n                                 :                          +- *HashAggregate(keys\u003d[id#3, tag#4], functions\u003d[partial_count(tag#4)], output\u003d[id#3, tag#4, count#27L])\n                                 :                             +- *SerializeFromObject [staticinvoke(class org.apache.spark.unsafe.types.UTF8String, StringType, fromString, assertnotnull(input[0, Row_id_tag, true]).id, true) AS id#3, staticinvoke(class org.apache.spark.unsafe.types.UTF8String, StringType, fromString, assertnotnull(input[0, Row_id_tag, true]).tag, true) AS tag#4]\n                                 :                                +- Scan ExternalRDDScan[obj#2]\n                                 +- *Sort [id#155 ASC NULLS FIRST], false, 0\n                                    +- Exchange(coordinator id: 1378294200) hashpartitioning(id#155, 200), coordinator[target post-shuffle partition size: 67108864]\n                                       +- *SerializeFromObject [staticinvoke(class org.apache.spark.unsafe.types.UTF8String, StringType, fromString, assertnotnull(input[0, Row_id_tag, true]).id, true) AS id#155, staticinvoke(class org.apache.spark.unsafe.types.UTF8String, StringType, fromString, assertnotnull(input[0, Row_id_tag, true]).tag, true) AS tag#156]\n                                          +- Scan ExternalRDDScan[obj#2]\n\n  at org.apache.spark.sql.catalyst.errors.package$.attachTree(package.scala:56)\n  at org.apache.spark.sql.execution.exchange.ShuffleExchange.doExecute(ShuffleExchange.scala:115)\n  at org.apache.spark.sql.execution.SparkPlan$$anonfun$execute$1.apply(SparkPlan.scala:117)\n  at org.apache.spark.sql.execution.SparkPlan$$anonfun$execute$1.apply(SparkPlan.scala:117)\n  at org.apache.spark.sql.execution.SparkPlan$$anonfun$executeQuery$1.apply(SparkPlan.scala:138)\n  at org.apache.spark.rdd.RDDOperationScope$.withScope(RDDOperationScope.scala:151)\n  at org.apache.spark.sql.execution.SparkPlan.executeQuery(SparkPlan.scala:135)\n  at org.apache.spark.sql.execution.SparkPlan.execute(SparkPlan.scala:116)\n  at org.apache.spark.sql.execution.InputAdapter.inputRDDs(WholeStageCodegenExec.scala:252)\n  at org.apache.spark.sql.execution.aggregate.HashAggregateExec.inputRDDs(HashAggregateExec.scala:141)\n  at org.apache.spark.sql.execution.WholeStageCodegenExec.doExecute(WholeStageCodegenExec.scala:386)\n  at org.apache.spark.sql.execution.SparkPlan$$anonfun$execute$1.apply(SparkPlan.scala:117)\n  at org.apache.spark.sql.execution.SparkPlan$$anonfun$execute$1.apply(SparkPlan.scala:117)\n  at org.apache.spark.sql.execution.SparkPlan$$anonfun$executeQuery$1.apply(SparkPlan.scala:138)\n  at org.apache.spark.rdd.RDDOperationScope$.withScope(RDDOperationScope.scala:151)\n  at org.apache.spark.sql.execution.SparkPlan.executeQuery(SparkPlan.scala:135)\n  at org.apache.spark.sql.execution.SparkPlan.execute(SparkPlan.scala:116)\n  at org.apache.spark.sql.execution.SparkPlan.getByteArrayRdd(SparkPlan.scala:228)\n  at org.apache.spark.sql.execution.SparkPlan.executeCollect(SparkPlan.scala:275)\n  at org.apache.spark.sql.Dataset$$anonfun$count$1.apply(Dataset.scala:2430)\n  at org.apache.spark.sql.Dataset$$anonfun$count$1.apply(Dataset.scala:2429)\n  at org.apache.spark.sql.Dataset$$anonfun$55.apply(Dataset.scala:2837)\n  at org.apache.spark.sql.execution.SQLExecution$.withNewExecutionId(SQLExecution.scala:65)\n  at org.apache.spark.sql.Dataset.withAction(Dataset.scala:2836)\n  at org.apache.spark.sql.Dataset.count(Dataset.scala:2429)\n  ... 47 elided\nCaused by: org.apache.spark.sql.catalyst.errors.package$TreeNodeException: execute, tree:\nExchange(coordinator id: 324592653) hashpartitioning(id#155, 200), coordinator[target post-shuffle partition size: 67108864]\n+- *HashAggregate(keys\u003d[id#155], functions\u003d[partial_sum(cast(score#153 as bigint))], output\u003d[id#155, sum#166L])\n   +- *HashAggregate(keys\u003d[id#155, tag#156], functions\u003d[count(tag#156), count(tag#156)], output\u003d[id#155, score#153])\n      +- Exchange(coordinator id: 36342174) hashpartitioning(id#155, tag#156, 200), coordinator[target post-shuffle partition size: 67108864]\n         +- *HashAggregate(keys\u003d[id#155, tag#156], functions\u003d[partial_count(tag#156), partial_count(tag#156)], output\u003d[id#155, tag#156, count#190L, count#191L])\n            +- *Project [id#155, tag#156]\n               +- SortMergeJoin [id#3], [id#155], LeftOuter\n                  :- *Sort [id#3 ASC NULLS FIRST], false, 0\n                  :  +- Exchange(coordinator id: 1378294200) hashpartitioning(id#3, 200), coordinator[target post-shuffle partition size: 67108864]\n                  :     +- *Project [id#3]\n                  :        +- *Filter (isnotnull(s#11L) \u0026\u0026 (s#11L \u003e\u003d 4))\n                  :           +- *HashAggregate(keys\u003d[id#3], functions\u003d[sum(cast(score#10 as bigint))], output\u003d[id#3, s#11L])\n                  :              +- Exchange(coordinator id: 222466819) hashpartitioning(id#3, 200), coordinator[target post-shuffle partition size: 67108864]\n                  :                 +- *HashAggregate(keys\u003d[id#3], functions\u003d[partial_sum(cast(score#10 as bigint))], output\u003d[id#3, sum#25L])\n                  :                    +- *HashAggregate(keys\u003d[id#3, tag#4], functions\u003d[count(tag#4)], output\u003d[id#3, score#10])\n                  :                       +- Exchange(coordinator id: 1508800042) hashpartitioning(id#3, tag#4, 200), coordinator[target post-shuffle partition size: 67108864]\n                  :                          +- *HashAggregate(keys\u003d[id#3, tag#4], functions\u003d[partial_count(tag#4)], output\u003d[id#3, tag#4, count#27L])\n                  :                             +- *SerializeFromObject [staticinvoke(class org.apache.spark.unsafe.types.UTF8String, StringType, fromString, assertnotnull(input[0, Row_id_tag, true]).id, true) AS id#3, staticinvoke(class org.apache.spark.unsafe.types.UTF8String, StringType, fromString, assertnotnull(input[0, Row_id_tag, true]).tag, true) AS tag#4]\n                  :                                +- Scan ExternalRDDScan[obj#2]\n                  +- *Sort [id#155 ASC NULLS FIRST], false, 0\n                     +- Exchange(coordinator id: 1378294200) hashpartitioning(id#155, 200), coordinator[target post-shuffle partition size: 67108864]\n                        +- *SerializeFromObject [staticinvoke(class org.apache.spark.unsafe.types.UTF8String, StringType, fromString, assertnotnull(input[0, Row_id_tag, true]).id, true) AS id#155, staticinvoke(class org.apache.spark.unsafe.types.UTF8String, StringType, fromString, assertnotnull(input[0, Row_id_tag, true]).tag, true) AS tag#156]\n                           +- Scan ExternalRDDScan[obj#2]\n\n  at org.apache.spark.sql.catalyst.errors.package$.attachTree(package.scala:56)\n  at org.apache.spark.sql.execution.exchange.ShuffleExchange.doExecute(ShuffleExchange.scala:115)\n  at org.apache.spark.sql.execution.SparkPlan$$anonfun$execute$1.apply(SparkPlan.scala:117)\n  at org.apache.spark.sql.execution.SparkPlan$$anonfun$execute$1.apply(SparkPlan.scala:117)\n  at org.apache.spark.sql.execution.SparkPlan$$anonfun$executeQuery$1.apply(SparkPlan.scala:138)\n  at org.apache.spark.rdd.RDDOperationScope$.withScope(RDDOperationScope.scala:151)\n  at org.apache.spark.sql.execution.SparkPlan.executeQuery(SparkPlan.scala:135)\n  at org.apache.spark.sql.execution.SparkPlan.execute(SparkPlan.scala:116)\n  at org.apache.spark.sql.execution.InputAdapter.inputRDDs(WholeStageCodegenExec.scala:252)\n  at org.apache.spark.sql.execution.aggregate.HashAggregateExec.inputRDDs(HashAggregateExec.scala:141)\n  at org.apache.spark.sql.execution.FilterExec.inputRDDs(basicPhysicalOperators.scala:124)\n  at org.apache.spark.sql.execution.ProjectExec.inputRDDs(basicPhysicalOperators.scala:42)\n  at org.apache.spark.sql.execution.aggregate.HashAggregateExec.inputRDDs(HashAggregateExec.scala:141)\n  at org.apache.spark.sql.execution.WholeStageCodegenExec.doExecute(WholeStageCodegenExec.scala:386)\n  at org.apache.spark.sql.execution.SparkPlan$$anonfun$execute$1.apply(SparkPlan.scala:117)\n  at org.apache.spark.sql.execution.SparkPlan$$anonfun$execute$1.apply(SparkPlan.scala:117)\n  at org.apache.spark.sql.execution.SparkPlan$$anonfun$executeQuery$1.apply(SparkPlan.scala:138)\n  at org.apache.spark.rdd.RDDOperationScope$.withScope(RDDOperationScope.scala:151)\n  at org.apache.spark.sql.execution.SparkPlan.executeQuery(SparkPlan.scala:135)\n  at org.apache.spark.sql.execution.SparkPlan.execute(SparkPlan.scala:116)\n  at org.apache.spark.sql.execution.exchange.ShuffleExchange.prepareShuffleDependency(ShuffleExchange.scala:88)\n  at org.apache.spark.sql.execution.exchange.ShuffleExchange$$anonfun$doExecute$1.apply(ShuffleExchange.scala:124)\n  at org.apache.spark.sql.execution.exchange.ShuffleExchange$$anonfun$doExecute$1.apply(ShuffleExchange.scala:115)\n  at org.apache.spark.sql.catalyst.errors.package$.attachTree(package.scala:52)\n  ... 71 more\nCaused by: org.apache.spark.sql.catalyst.errors.package$TreeNodeException: execute, tree:\nExchange(coordinator id: 36342174) hashpartitioning(id#155, tag#156, 200), coordinator[target post-shuffle partition size: 67108864]\n+- *HashAggregate(keys\u003d[id#155, tag#156], functions\u003d[partial_count(tag#156), partial_count(tag#156)], output\u003d[id#155, tag#156, count#190L, count#191L])\n   +- *Project [id#155, tag#156]\n      +- SortMergeJoin [id#3], [id#155], LeftOuter\n         :- *Sort [id#3 ASC NULLS FIRST], false, 0\n         :  +- Exchange(coordinator id: 1378294200) hashpartitioning(id#3, 200), coordinator[target post-shuffle partition size: 67108864]\n         :     +- *Project [id#3]\n         :        +- *Filter (isnotnull(s#11L) \u0026\u0026 (s#11L \u003e\u003d 4))\n         :           +- *HashAggregate(keys\u003d[id#3], functions\u003d[sum(cast(score#10 as bigint))], output\u003d[id#3, s#11L])\n         :              +- Exchange(coordinator id: 222466819) hashpartitioning(id#3, 200), coordinator[target post-shuffle partition size: 67108864]\n         :                 +- *HashAggregate(keys\u003d[id#3], functions\u003d[partial_sum(cast(score#10 as bigint))], output\u003d[id#3, sum#25L])\n         :                    +- *HashAggregate(keys\u003d[id#3, tag#4], functions\u003d[count(tag#4)], output\u003d[id#3, score#10])\n         :                       +- Exchange(coordinator id: 1508800042) hashpartitioning(id#3, tag#4, 200), coordinator[target post-shuffle partition size: 67108864]\n         :                          +- *HashAggregate(keys\u003d[id#3, tag#4], functions\u003d[partial_count(tag#4)], output\u003d[id#3, tag#4, count#27L])\n         :                             +- *SerializeFromObject [staticinvoke(class org.apache.spark.unsafe.types.UTF8String, StringType, fromString, assertnotnull(input[0, Row_id_tag, true]).id, true) AS id#3, staticinvoke(class org.apache.spark.unsafe.types.UTF8String, StringType, fromString, assertnotnull(input[0, Row_id_tag, true]).tag, true) AS tag#4]\n         :                                +- Scan ExternalRDDScan[obj#2]\n         +- *Sort [id#155 ASC NULLS FIRST], false, 0\n            +- Exchange(coordinator id: 1378294200) hashpartitioning(id#155, 200), coordinator[target post-shuffle partition size: 67108864]\n               +- *SerializeFromObject [staticinvoke(class org.apache.spark.unsafe.types.UTF8String, StringType, fromString, assertnotnull(input[0, Row_id_tag, true]).id, true) AS id#155, staticinvoke(class org.apache.spark.unsafe.types.UTF8String, StringType, fromString, assertnotnull(input[0, Row_id_tag, true]).tag, true) AS tag#156]\n                  +- Scan ExternalRDDScan[obj#2]\n\n  at org.apache.spark.sql.catalyst.errors.package$.attachTree(package.scala:56)\n  at org.apache.spark.sql.execution.exchange.ShuffleExchange.doExecute(ShuffleExchange.scala:115)\n  at org.apache.spark.sql.execution.SparkPlan$$anonfun$execute$1.apply(SparkPlan.scala:117)\n  at org.apache.spark.sql.execution.SparkPlan$$anonfun$execute$1.apply(SparkPlan.scala:117)\n  at org.apache.spark.sql.execution.SparkPlan$$anonfun$executeQuery$1.apply(SparkPlan.scala:138)\n  at org.apache.spark.rdd.RDDOperationScope$.withScope(RDDOperationScope.scala:151)\n  at org.apache.spark.sql.execution.SparkPlan.executeQuery(SparkPlan.scala:135)\n  at org.apache.spark.sql.execution.SparkPlan.execute(SparkPlan.scala:116)\n  at org.apache.spark.sql.execution.InputAdapter.inputRDDs(WholeStageCodegenExec.scala:252)\n  at org.apache.spark.sql.execution.aggregate.HashAggregateExec.inputRDDs(HashAggregateExec.scala:141)\n  at org.apache.spark.sql.execution.aggregate.HashAggregateExec.inputRDDs(HashAggregateExec.scala:141)\n  at org.apache.spark.sql.execution.WholeStageCodegenExec.doExecute(WholeStageCodegenExec.scala:386)\n  at org.apache.spark.sql.execution.SparkPlan$$anonfun$execute$1.apply(SparkPlan.scala:117)\n  at org.apache.spark.sql.execution.SparkPlan$$anonfun$execute$1.apply(SparkPlan.scala:117)\n  at org.apache.spark.sql.execution.SparkPlan$$anonfun$executeQuery$1.apply(SparkPlan.scala:138)\n  at org.apache.spark.rdd.RDDOperationScope$.withScope(RDDOperationScope.scala:151)\n  at org.apache.spark.sql.execution.SparkPlan.executeQuery(SparkPlan.scala:135)\n  at org.apache.spark.sql.execution.SparkPlan.execute(SparkPlan.scala:116)\n  at org.apache.spark.sql.execution.exchange.ShuffleExchange.prepareShuffleDependency(ShuffleExchange.scala:88)\n  at org.apache.spark.sql.execution.exchange.ExchangeCoordinator.doEstimationIfNecessary(ExchangeCoordinator.scala:211)\n  at org.apache.spark.sql.execution.exchange.ExchangeCoordinator.postShuffleRDD(ExchangeCoordinator.scala:259)\n  at org.apache.spark.sql.execution.exchange.ShuffleExchange$$anonfun$doExecute$1.apply(ShuffleExchange.scala:120)\n  at org.apache.spark.sql.execution.exchange.ShuffleExchange$$anonfun$doExecute$1.apply(ShuffleExchange.scala:115)\n  at org.apache.spark.sql.catalyst.errors.package$.attachTree(package.scala:52)\n  ... 94 more\nCaused by: org.apache.spark.sql.catalyst.errors.package$TreeNodeException: execute, tree:\nExchange(coordinator id: 1378294200) hashpartitioning(id#3, 200), coordinator[target post-shuffle partition size: 67108864]\n+- *Project [id#3]\n   +- *Filter (isnotnull(s#11L) \u0026\u0026 (s#11L \u003e\u003d 4))\n      +- *HashAggregate(keys\u003d[id#3], functions\u003d[sum(cast(score#10 as bigint))], output\u003d[id#3, s#11L])\n         +- Exchange(coordinator id: 222466819) hashpartitioning(id#3, 200), coordinator[target post-shuffle partition size: 67108864]\n            +- *HashAggregate(keys\u003d[id#3], functions\u003d[partial_sum(cast(score#10 as bigint))], output\u003d[id#3, sum#25L])\n               +- *HashAggregate(keys\u003d[id#3, tag#4], functions\u003d[count(tag#4)], output\u003d[id#3, score#10])\n                  +- Exchange(coordinator id: 1508800042) hashpartitioning(id#3, tag#4, 200), coordinator[target post-shuffle partition size: 67108864]\n                     +- *HashAggregate(keys\u003d[id#3, tag#4], functions\u003d[partial_count(tag#4)], output\u003d[id#3, tag#4, count#27L])\n                        +- *SerializeFromObject [staticinvoke(class org.apache.spark.unsafe.types.UTF8String, StringType, fromString, assertnotnull(input[0, Row_id_tag, true]).id, true) AS id#3, staticinvoke(class org.apache.spark.unsafe.types.UTF8String, StringType, fromString, assertnotnull(input[0, Row_id_tag, true]).tag, true) AS tag#4]\n                           +- Scan ExternalRDDScan[obj#2]\n\n  at org.apache.spark.sql.catalyst.errors.package$.attachTree(package.scala:56)\n  at org.apache.spark.sql.execution.exchange.ShuffleExchange.doExecute(ShuffleExchange.scala:115)\n  at org.apache.spark.sql.execution.SparkPlan$$anonfun$execute$1.apply(SparkPlan.scala:117)\n  at org.apache.spark.sql.execution.SparkPlan$$anonfun$execute$1.apply(SparkPlan.scala:117)\n  at org.apache.spark.sql.execution.SparkPlan$$anonfun$executeQuery$1.apply(SparkPlan.scala:138)\n  at org.apache.spark.rdd.RDDOperationScope$.withScope(RDDOperationScope.scala:151)\n  at org.apache.spark.sql.execution.SparkPlan.executeQuery(SparkPlan.scala:135)\n  at org.apache.spark.sql.execution.SparkPlan.execute(SparkPlan.scala:116)\n  at org.apache.spark.sql.execution.InputAdapter.inputRDDs(WholeStageCodegenExec.scala:252)\n  at org.apache.spark.sql.execution.SortExec.inputRDDs(SortExec.scala:121)\n  at org.apache.spark.sql.execution.WholeStageCodegenExec.doExecute(WholeStageCodegenExec.scala:386)\n  at org.apache.spark.sql.execution.SparkPlan$$anonfun$execute$1.apply(SparkPlan.scala:117)\n  at org.apache.spark.sql.execution.SparkPlan$$anonfun$execute$1.apply(SparkPlan.scala:117)\n  at org.apache.spark.sql.execution.SparkPlan$$anonfun$executeQuery$1.apply(SparkPlan.scala:138)\n  at org.apache.spark.rdd.RDDOperationScope$.withScope(RDDOperationScope.scala:151)\n  at org.apache.spark.sql.execution.SparkPlan.executeQuery(SparkPlan.scala:135)\n  at org.apache.spark.sql.execution.SparkPlan.execute(SparkPlan.scala:116)\n  at org.apache.spark.sql.execution.joins.SortMergeJoinExec.doExecute(SortMergeJoinExec.scala:136)\n  at org.apache.spark.sql.execution.SparkPlan$$anonfun$execute$1.apply(SparkPlan.scala:117)\n  at org.apache.spark.sql.execution.SparkPlan$$anonfun$execute$1.apply(SparkPlan.scala:117)\n  at org.apache.spark.sql.execution.SparkPlan$$anonfun$executeQuery$1.apply(SparkPlan.scala:138)\n  at org.apache.spark.rdd.RDDOperationScope$.withScope(RDDOperationScope.scala:151)\n  at org.apache.spark.sql.execution.SparkPlan.executeQuery(SparkPlan.scala:135)\n  at org.apache.spark.sql.execution.SparkPlan.execute(SparkPlan.scala:116)\n  at org.apache.spark.sql.execution.InputAdapter.inputRDDs(WholeStageCodegenExec.scala:252)\n  at org.apache.spark.sql.execution.ProjectExec.inputRDDs(basicPhysicalOperators.scala:42)\n  at org.apache.spark.sql.execution.aggregate.HashAggregateExec.inputRDDs(HashAggregateExec.scala:141)\n  at org.apache.spark.sql.execution.WholeStageCodegenExec.doExecute(WholeStageCodegenExec.scala:386)\n  at org.apache.spark.sql.execution.SparkPlan$$anonfun$execute$1.apply(SparkPlan.scala:117)\n  at org.apache.spark.sql.execution.SparkPlan$$anonfun$execute$1.apply(SparkPlan.scala:117)\n  at org.apache.spark.sql.execution.SparkPlan$$anonfun$executeQuery$1.apply(SparkPlan.scala:138)\n  at org.apache.spark.rdd.RDDOperationScope$.withScope(RDDOperationScope.scala:151)\n  at org.apache.spark.sql.execution.SparkPlan.executeQuery(SparkPlan.scala:135)\n  at org.apache.spark.sql.execution.SparkPlan.execute(SparkPlan.scala:116)\n  at org.apache.spark.sql.execution.exchange.ShuffleExchange.prepareShuffleDependency(ShuffleExchange.scala:88)\n  at org.apache.spark.sql.execution.exchange.ExchangeCoordinator.doEstimationIfNecessary(ExchangeCoordinator.scala:211)\n  at org.apache.spark.sql.execution.exchange.ExchangeCoordinator.postShuffleRDD(ExchangeCoordinator.scala:259)\n  at org.apache.spark.sql.execution.exchange.ShuffleExchange$$anonfun$doExecute$1.apply(ShuffleExchange.scala:120)\n  at org.apache.spark.sql.execution.exchange.ShuffleExchange$$anonfun$doExecute$1.apply(ShuffleExchange.scala:115)\n  at org.apache.spark.sql.catalyst.errors.package$.attachTree(package.scala:52)\n  ... 117 more\nCaused by: org.apache.spark.sql.catalyst.errors.package$TreeNodeException: execute, tree:\nExchange(coordinator id: 222466819) hashpartitioning(id#3, 200), coordinator[target post-shuffle partition size: 67108864]\n+- *HashAggregate(keys\u003d[id#3], functions\u003d[partial_sum(cast(score#10 as bigint))], output\u003d[id#3, sum#25L])\n   +- *HashAggregate(keys\u003d[id#3, tag#4], functions\u003d[count(tag#4)], output\u003d[id#3, score#10])\n      +- Exchange(coordinator id: 1508800042) hashpartitioning(id#3, tag#4, 200), coordinator[target post-shuffle partition size: 67108864]\n         +- *HashAggregate(keys\u003d[id#3, tag#4], functions\u003d[partial_count(tag#4)], output\u003d[id#3, tag#4, count#27L])\n            +- *SerializeFromObject [staticinvoke(class org.apache.spark.unsafe.types.UTF8String, StringType, fromString, assertnotnull(input[0, Row_id_tag, true]).id, true) AS id#3, staticinvoke(class org.apache.spark.unsafe.types.UTF8String, StringType, fromString, assertnotnull(input[0, Row_id_tag, true]).tag, true) AS tag#4]\n               +- Scan ExternalRDDScan[obj#2]\n\n  at org.apache.spark.sql.catalyst.errors.package$.attachTree(package.scala:56)\n  at org.apache.spark.sql.execution.exchange.ShuffleExchange.doExecute(ShuffleExchange.scala:115)\n  at org.apache.spark.sql.execution.SparkPlan$$anonfun$execute$1.apply(SparkPlan.scala:117)\n  at org.apache.spark.sql.execution.SparkPlan$$anonfun$execute$1.apply(SparkPlan.scala:117)\n  at org.apache.spark.sql.execution.SparkPlan$$anonfun$executeQuery$1.apply(SparkPlan.scala:138)\n  at org.apache.spark.rdd.RDDOperationScope$.withScope(RDDOperationScope.scala:151)\n  at org.apache.spark.sql.execution.SparkPlan.executeQuery(SparkPlan.scala:135)\n  at org.apache.spark.sql.execution.SparkPlan.execute(SparkPlan.scala:116)\n  at org.apache.spark.sql.execution.InputAdapter.inputRDDs(WholeStageCodegenExec.scala:252)\n  at org.apache.spark.sql.execution.aggregate.HashAggregateExec.inputRDDs(HashAggregateExec.scala:141)\n  at org.apache.spark.sql.execution.FilterExec.inputRDDs(basicPhysicalOperators.scala:124)\n  at org.apache.spark.sql.execution.ProjectExec.inputRDDs(basicPhysicalOperators.scala:42)\n  at org.apache.spark.sql.execution.WholeStageCodegenExec.doExecute(WholeStageCodegenExec.scala:386)\n  at org.apache.spark.sql.execution.SparkPlan$$anonfun$execute$1.apply(SparkPlan.scala:117)\n  at org.apache.spark.sql.execution.SparkPlan$$anonfun$execute$1.apply(SparkPlan.scala:117)\n  at org.apache.spark.sql.execution.SparkPlan$$anonfun$executeQuery$1.apply(SparkPlan.scala:138)\n  at org.apache.spark.rdd.RDDOperationScope$.withScope(RDDOperationScope.scala:151)\n  at org.apache.spark.sql.execution.SparkPlan.executeQuery(SparkPlan.scala:135)\n  at org.apache.spark.sql.execution.SparkPlan.execute(SparkPlan.scala:116)\n  at org.apache.spark.sql.execution.exchange.ShuffleExchange.prepareShuffleDependency(ShuffleExchange.scala:88)\n  at org.apache.spark.sql.execution.exchange.ExchangeCoordinator.doEstimationIfNecessary(ExchangeCoordinator.scala:211)\n  at org.apache.spark.sql.execution.exchange.ExchangeCoordinator.postShuffleRDD(ExchangeCoordinator.scala:259)\n  at org.apache.spark.sql.execution.exchange.ShuffleExchange$$anonfun$doExecute$1.apply(ShuffleExchange.scala:120)\n  at org.apache.spark.sql.execution.exchange.ShuffleExchange$$anonfun$doExecute$1.apply(ShuffleExchange.scala:115)\n  at org.apache.spark.sql.catalyst.errors.package$.attachTree(package.scala:52)\n  ... 156 more\nCaused by: org.apache.spark.sql.catalyst.errors.package$TreeNodeException: execute, tree:\nExchange(coordinator id: 1508800042) hashpartitioning(id#3, tag#4, 200), coordinator[target post-shuffle partition size: 67108864]\n+- *HashAggregate(keys\u003d[id#3, tag#4], functions\u003d[partial_count(tag#4)], output\u003d[id#3, tag#4, count#27L])\n   +- *SerializeFromObject [staticinvoke(class org.apache.spark.unsafe.types.UTF8String, StringType, fromString, assertnotnull(input[0, Row_id_tag, true]).id, true) AS id#3, staticinvoke(class org.apache.spark.unsafe.types.UTF8String, StringType, fromString, assertnotnull(input[0, Row_id_tag, true]).tag, true) AS tag#4]\n      +- Scan ExternalRDDScan[obj#2]\n\n  at org.apache.spark.sql.catalyst.errors.package$.attachTree(package.scala:56)\n  at org.apache.spark.sql.execution.exchange.ShuffleExchange.doExecute(ShuffleExchange.scala:115)\n  at org.apache.spark.sql.execution.SparkPlan$$anonfun$execute$1.apply(SparkPlan.scala:117)\n  at org.apache.spark.sql.execution.SparkPlan$$anonfun$execute$1.apply(SparkPlan.scala:117)\n  at org.apache.spark.sql.execution.SparkPlan$$anonfun$executeQuery$1.apply(SparkPlan.scala:138)\n  at org.apache.spark.rdd.RDDOperationScope$.withScope(RDDOperationScope.scala:151)\n  at org.apache.spark.sql.execution.SparkPlan.executeQuery(SparkPlan.scala:135)\n  at org.apache.spark.sql.execution.SparkPlan.execute(SparkPlan.scala:116)\n  at org.apache.spark.sql.execution.InputAdapter.inputRDDs(WholeStageCodegenExec.scala:252)\n  at org.apache.spark.sql.execution.aggregate.HashAggregateExec.inputRDDs(HashAggregateExec.scala:141)\n  at org.apache.spark.sql.execution.aggregate.HashAggregateExec.inputRDDs(HashAggregateExec.scala:141)\n  at org.apache.spark.sql.execution.WholeStageCodegenExec.doExecute(WholeStageCodegenExec.scala:386)\n  at org.apache.spark.sql.execution.SparkPlan$$anonfun$execute$1.apply(SparkPlan.scala:117)\n  at org.apache.spark.sql.execution.SparkPlan$$anonfun$execute$1.apply(SparkPlan.scala:117)\n  at org.apache.spark.sql.execution.SparkPlan$$anonfun$executeQuery$1.apply(SparkPlan.scala:138)\n  at org.apache.spark.rdd.RDDOperationScope$.withScope(RDDOperationScope.scala:151)\n  at org.apache.spark.sql.execution.SparkPlan.executeQuery(SparkPlan.scala:135)\n  at org.apache.spark.sql.execution.SparkPlan.execute(SparkPlan.scala:116)\n  at org.apache.spark.sql.execution.exchange.ShuffleExchange.prepareShuffleDependency(ShuffleExchange.scala:88)\n  at org.apache.spark.sql.execution.exchange.ExchangeCoordinator.doEstimationIfNecessary(ExchangeCoordinator.scala:211)\n  at org.apache.spark.sql.execution.exchange.ExchangeCoordinator.postShuffleRDD(ExchangeCoordinator.scala:259)\n  at org.apache.spark.sql.execution.exchange.ShuffleExchange$$anonfun$doExecute$1.apply(ShuffleExchange.scala:120)\n  at org.apache.spark.sql.execution.exchange.ShuffleExchange$$anonfun$doExecute$1.apply(ShuffleExchange.scala:115)\n  at org.apache.spark.sql.catalyst.errors.package$.attachTree(package.scala:52)\n  ... 180 more\nCaused by: java.lang.IllegalStateException: Cannot call methods on a stopped SparkContext.\nThis stopped SparkContext was created at:\n\norg.apache.spark.sql.SparkSession$Builder.getOrCreate(SparkSession.scala:901)\nsun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)\nsun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)\nsun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)\njava.lang.reflect.Method.invoke(Method.java:498)\norg.apache.zeppelin.spark.Utils.invokeMethod(Utils.java:38)\norg.apache.zeppelin.spark.Utils.invokeMethod(Utils.java:33)\norg.apache.zeppelin.spark.SparkInterpreter.createSparkSession(SparkInterpreter.java:368)\norg.apache.zeppelin.spark.SparkInterpreter.getSparkSession(SparkInterpreter.java:233)\norg.apache.zeppelin.spark.SparkInterpreter.open(SparkInterpreter.java:841)\norg.apache.zeppelin.interpreter.LazyOpenInterpreter.open(LazyOpenInterpreter.java:70)\norg.apache.zeppelin.interpreter.remote.RemoteInterpreterServer$InterpretJob.jobRun(RemoteInterpreterServer.java:491)\norg.apache.zeppelin.scheduler.Job.run(Job.java:175)\norg.apache.zeppelin.scheduler.FIFOScheduler$1.run(FIFOScheduler.java:139)\njava.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511)\njava.util.concurrent.FutureTask.run(FutureTask.java:266)\njava.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.access$201(ScheduledThreadPoolExecutor.java:180)\njava.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:293)\njava.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)\njava.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)\n\nThe currently active SparkContext was created at:\n\n(No active SparkContext.)\n\n  at org.apache.spark.SparkContext.assertNotStopped(SparkContext.scala:100)\n  at org.apache.spark.SparkContext.submitMapStage(SparkContext.scala:2187)\n  at org.apache.spark.sql.execution.exchange.ExchangeCoordinator.doEstimationIfNecessary(ExchangeCoordinator.scala:217)\n  at org.apache.spark.sql.execution.exchange.ExchangeCoordinator.postShuffleRDD(ExchangeCoordinator.scala:259)\n  at org.apache.spark.sql.execution.exchange.ShuffleExchange$$anonfun$doExecute$1.apply(ShuffleExchange.scala:120)\n  at org.apache.spark.sql.execution.exchange.ShuffleExchange$$anonfun$doExecute$1.apply(ShuffleExchange.scala:115)\n  at org.apache.spark.sql.catalyst.errors.package$.attachTree(package.scala:52)\n  ... 203 more\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1528359956157_-837484290",
+      "id": "20180607-162556_1608885361",
+      "dateCreated": "Jun 7, 2018 4:25:56 PM",
+      "dateStarted": "Jun 7, 2018 10:11:44 PM",
+      "dateFinished": "Jun 7, 2018 10:11:45 PM",
+      "status": "ERROR",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "sql_result_t.count()",
+      "user": "anonymous",
+      "dateUpdated": "Jun 7, 2018 4:46:08 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "res15: Long \u003d 1144699\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1528361106706_1590709226",
+      "id": "20180607-164506_172646421",
+      "dateCreated": "Jun 7, 2018 4:45:06 PM",
+      "dateStarted": "Jun 7, 2018 4:46:09 PM",
+      "dateFinished": "Jun 7, 2018 4:49:33 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "user": "anonymous",
+      "config": {},
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "jobName": "paragraph_1528361168920_683714861",
+      "id": "20180607-164608_648415321",
+      "dateCreated": "Jun 7, 2018 4:46:08 PM",
+      "status": "READY",
+      "progressUpdateIntervalMs": 500
+    }
+  ],
+  "name": "viewSort/mult2line_score",
+  "id": "2DFXZH2XR",
+  "angularObjects": {
+    "2D9M8ATZ9:shared_process": [],
+    "2D859SF5B:shared_process": [],
+    "2D99W32FC:shared_process": [],
+    "2DA8NG9YB:shared_process": [],
+    "2DBCA9BMV:shared_process": [],
+    "2DA29EQ39:shared_process": [],
+    "2D86PKHDE:shared_process": [],
+    "2D8ZMX5FY:shared_process": [],
+    "2D8ZFKME2:shared_process": [],
+    "2DBAZD2WP:shared_process": [],
+    "2D8SP4FH8:shared_process": [],
+    "2DAESRJYD:shared_process": [],
+    "2DA7377EZ:shared_process": [],
+    "2D8DH9K51:shared_process": [],
+    "2D85K8KV7:shared_process": [],
+    "2D9NTGN5D::2DFXZH2XR": [],
+    "2D958F7RN:shared_process": [],
+    "2DAVR7XRG:shared_process": [],
+    "2DBX9FA55:shared_process": []
+  },
+  "config": {},
+  "info": {}
+}

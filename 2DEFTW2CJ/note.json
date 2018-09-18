@@ -1,0 +1,53 @@
+{
+  "paragraphs": [
+    {
+      "text": "\r\n  def removeCbrackets(line : String) : String \u003d {\r\n    try {\r\n      return  line replaceAll (\"\u003c.*?\u003e\", \"\")\r\n    }\r\n    catch {\r\n      case ex: Exception \u003d\u003e \"\"\r\n    }\r\n  }\r\n\r\n  \r\n  def removePunc(line : String) : String \u003d {\r\n    try {\r\n      return  line replaceAll (\"[\\\\s+\\\\.\\\\!\\\\/_,，。？\\\\$%\\\\^\\\\*\\\\\\\"\\\u0027+｀｀`\\\\｀·——《》｀()?【】:：;～；;“”！，。？、~@#￥%……\u0026*（）]+\", \"\")\r\n    }\r\n    catch {\r\n      case ex: Exception \u003d\u003e \"\"\r\n    }\r\n  }\r\n\r\n  def hash(s:String)\u003d{\r\n    val m \u003d java.security.MessageDigest.getInstance(\"MD5\")\r\n    val b \u003d s.getBytes(\"UTF-8\")\r\n    m.update(b,0,b.length)\r\n    new java.math.BigInteger(1,m.digest()).toString(16).trim()\r\n  }\r\n\r\n\r\n\r\n\r\n  def lineToID_op(line : String)\u003d {\r\n\r\n    val regex \u003d \"@[A-Za-z._]{1,30}:\".r\r\n    val tags \u003d regex findAllIn line toArray\r\n    val contents \u003d line.split(\"@[A-Za-z._]{1,30}:\",-1)\r\n  \r\n    var ans \u003d \"\"\r\n    var ask \u003d \"\"\r\n    \r\n    try{\r\n      for(i\u003c-0 until tags.length){\r\n        var tag \u003d tags(i)\r\n        var content \u003d contents(i+1)\r\n        //     print(tag)\r\n        //     println(content)\r\n        if(tag\u003d\u003d\"@ANS.CONTENT:\"){\r\n           ans \u003d content.trim()\r\n          ans \u003d removeCbrackets(ans)\r\n          ans \u003d removePunc(ans)\r\n        }else if(tag\u003d\u003d\"@ASK.TITLE:\"){\r\n         ask \u003d content.trim()\r\n          ask \u003d removeCbrackets(ask)\r\n          ask \u003d removePunc(ask)\r\n        }\r\n      }\r\n        if(ask.length\u003c\u003d20)asklen\u003dask.length\r\n        if(ans.length\u003c\u003d25)anslen\u003dans.length\r\n        var context \u003d ask.substring(0,asklen)+ ans.substring(0,anslen)\r\n        var ID \u003d hash(context)\r\n        \r\n    }catch{\r\n      case e: Exception \u003d\u003e {\r\n        ask \u003d \"\"\r\n        ans \u003d \"\"\r\n        ID \u003d \"\"\r\n      }\r\n    }\r\n    (ID,ask,ans,line.trim())\r\n  }\r\n\r\n  def lineToID_line(l : String)\u003d {\r\n    var line \u003d l\r\n    if(line.startsWith(\"\\\"\")\u0026\u0026line.endsWith(\"\\\"\")){\r\n      line \u003d line.substring(1,line.length-1)\r\n    }\r\n    val regex \u003d \"@[A-Za-z._]{1,30}:\".r\r\n    val tags \u003d regex findAllIn line toArray\r\n    val contents \u003d line.split(\"@[A-Za-z._]{1,30}:\",-1)\r\n\r\n    var ask \u003d \"\"\r\n    var ans \u003d \"\"\r\n    var cls \u003d \"\"\r\n   \r\n\r\n    try{\r\n      for(i\u003c-0 until tags.length){\r\n        var tag \u003d tags(i)\r\n        var content \u003d contents(i+1)\r\n       \r\n        if(tag\u003d\u003d\"@CLS:\")\r\n          cls \u003d content.trim()\r\n        }\r\n        else if(tag\u003d\u003d\"@ANS:\"){\r\n          ans \u003d content.trim()\r\n          ans \u003d removeCbrackets(ans)\r\n          ans \u003d removePunc(ans)\r\n        }\r\n        else if(tag\u003d\u003d\"@ASK:\"){\r\n          ask \u003d content.trim()\r\n          ask \u003d removeCbrackets(ask)\r\n          ask \u003d removePunc(ask)\r\n        }\r\n        \r\n    if(ask.length\u003c\u003d20)asklen\u003dask.length\r\n    if(ans.length\u003c\u003d25)anslen\u003dans.length\r\n    var context \u003d ask.substring(0,asklen)+ ans.substring(0,anslen)\r\n    //         println(context)\r\n    var ID \u003d hash(context)\r\n    }catch{\r\n      case e: Exception \u003d\u003e {\r\n        ask \u003d \"\"\r\n        ans \u003d \"\"\r\n        cls \u003d \"\"\r\n        ID \u003d \"\"\r\n      }\r\n    }\r\n    (ID,ask,ans,cls)\r\n  }\r\n\r\n\r\n  case class Row_qaua(ask_id: String,ans: String,URI: String,op: String)\r\n  case class Row_tpq(query_id:String,QLEVEL: String,QTYPE: String,pv: String,query: String)\r\n  case class Row_tpu(query:String,url: String)",
+      "user": "anonymous",
+      "dateUpdated": "May 9, 2018 4:09:51 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "jobName": "paragraph_1525852362081_-1329172068",
+      "id": "20180509-155242_965554257",
+      "dateCreated": "May 9, 2018 3:52:42 PM",
+      "status": "READY",
+      "progressUpdateIntervalMs": 500
+    }
+  ],
+  "name": "viewSort/qa_map_op",
+  "id": "2DEFTW2CJ",
+  "angularObjects": {
+    "2D9NTGN5D::2DEFTW2CJ": [],
+    "2D9M8ATZ9:shared_process": [],
+    "2D859SF5B:shared_process": [],
+    "2D99W32FC:shared_process": [],
+    "2DA8NG9YB:shared_process": [],
+    "2DBCA9BMV:shared_process": [],
+    "2DA29EQ39:shared_process": [],
+    "2D86PKHDE:shared_process": [],
+    "2D8ZMX5FY:shared_process": [],
+    "2D8ZFKME2:shared_process": [],
+    "2DBAZD2WP:shared_process": [],
+    "2D8SP4FH8:shared_process": [],
+    "2DAESRJYD:shared_process": [],
+    "2DA7377EZ:shared_process": [],
+    "2D8DH9K51:shared_process": [],
+    "2D85K8KV7:shared_process": [],
+    "2D958F7RN:shared_process": [],
+    "2DAVR7XRG:shared_process": [],
+    "2DBX9FA55:shared_process": []
+  },
+  "config": {},
+  "info": {}
+}
