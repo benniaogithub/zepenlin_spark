@@ -637,21 +637,40 @@
         "forms": {}
       },
       "results": {
-        "code": "ERROR",
+        "code": "SUCCESS",
         "msg": [
           {
             "type": "TEXT",
-            "data": "\u003cconsole\u003e:24: error: not found: value df_uun_2\n       df_uun_2.count()\n       ^\n"
+            "data": "res35: Long \u003d 11530\n"
           }
         ]
+      },
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            "http://10.143.62.213:4040/jobs",
+            "http://10.143.62.213:4040/jobs",
+            "http://10.143.62.213:4040/jobs",
+            "http://10.143.62.213:4040/jobs",
+            "http://10.143.62.213:4040/jobs",
+            "http://10.143.62.213:4040/jobs",
+            "http://10.143.62.213:4040/jobs",
+            "http://10.143.62.213:4040/jobs"
+          ],
+          "interpreterSettingId": "spark"
+        }
       },
       "apps": [],
       "jobName": "paragraph_1537258296721_603906812",
       "id": "20180918-161136_592563835",
       "dateCreated": "2018-09-18 16:11:36.000",
-      "dateStarted": "2018-09-18 18:20:44.831",
-      "dateFinished": "2018-09-18 18:20:45.263",
-      "status": "ERROR",
+      "dateStarted": "2018-09-18 18:21:30.148",
+      "dateFinished": "2018-09-18 18:29:00.828",
+      "status": "FINISHED",
       "progressUpdateIntervalMs": 500
     },
     {
