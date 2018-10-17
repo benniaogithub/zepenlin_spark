@@ -1,0 +1,870 @@
+{
+  "paragraphs": [
+    {
+      "text": "%md ## 按月循环统计",
+      "user": "anonymous",
+      "dateUpdated": "Oct 17, 2018 3:10:37 PM",
+      "config": {
+        "tableHide": false,
+        "editorSetting": {
+          "language": "markdown",
+          "editOnDblClick": true
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/markdown",
+        "editorHide": true,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "HTML",
+            "data": "\u003cdiv class\u003d\"markdown-body\"\u003e\n\u003ch2\u003e按月循环统计\u003c/h2\u003e\n\u003c/div\u003e"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1539760167674_1176093891",
+      "id": "20180426-130520_1060407789",
+      "dateCreated": "Oct 17, 2018 3:09:27 PM",
+      "dateStarted": "Oct 17, 2018 3:10:37 PM",
+      "dateFinished": "Oct 17, 2018 3:10:40 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "import java.net.{URLDecoder, URLEncoder}\r\nimport java.text.SimpleDateFormat\r\nimport java.util.Date\r\n\r\ncase class Logrow(userid:String,uuid:String, page:String, time : String, search_type : String, query : String,urls:List[Map[String,String]])\r\ncase class DFrow(query:String,url:String)\r\n\r\ndef httpNom(line : String) : String \u003d {\r\ntry {\r\n  val caseInsensitivePattern \u003d \"\"\"^(?i)(http|ftp|https)://\"\"\".r\r\n  return  caseInsensitivePattern.replaceFirstIn(line.trim(),\"http://\")\r\n  //      line replaceAll (caseInsensitivePattern, )\r\n}\r\ncatch {\r\n  case ex: Exception \u003d\u003e \"\"\r\n}\r\n}\r\n\r\ndef DateFormat(time:String):String\u003d{\r\n    var sdf:SimpleDateFormat \u003d new SimpleDateFormat(\"yyyyMMdd\")\r\n    var date:String \u003d sdf.format(new Date((time.toLong*1000)))\r\n    return date\r\n}\r\n\r\ndef decode(value:String): String \u003d URLDecoder.decode(value, \"gbk\")\r\n  \r\ndef getRow(line : String):Option[Logrow]\u003d {\r\n//    var userid, uuid, page, time, search_type \u003d \"\"\r\nval regex\u003d\"\"\"^\\d+$\"\"\".r\r\nvar userid, uuid, page,time,search_type,unknown \u003d \"\"\r\nvar tmp \u003d line.trim().split(\u0027\\t\u0027)\r\nif (tmp.length \u003c 2) {\r\n  return None\r\n}\r\nvar tmp0 \u003d tmp(0).trim().split(\u0027#\u0027)\r\nif (tmp0.length !\u003d 5 \u0026\u0026 tmp0.length !\u003d 6) {\r\n  return None\r\n}\r\nif(tmp0.length \u003d\u003d 5){\r\n  userid \u003d tmp0(0)\r\n  uuid \u003d tmp0(1)\r\n  page \u003d tmp0(2)\r\n  time \u003d tmp0(3)\r\n  search_type \u003d tmp0(4)\r\n}else if(tmp0.length \u003d\u003d 6){\r\n  userid \u003d tmp0(0)\r\n  uuid \u003d tmp0(1)\r\n  page \u003d tmp0(2)\r\n  time \u003d tmp0(3)\r\n  search_type \u003d tmp0(4)\r\n  unknown \u003d tmp0(5)\r\n}\r\nvar query \u003d decode(tmp(1))\r\nvar urls:List[Map[String,String]] \u003d List()\r\nvar urlblock:Map[String,String]\u003d Map()\r\nvar cnt \u003d 0\r\nfor(i \u003c- 2 to tmp.length-1){\r\n  //      println(tmp(i))\r\n  //      println(tmp(i).trim().split(\"#\",-1).length)\r\n  if (((tmp(i).trim().split(\"#\",-1).length) \u003e\u003d 4) \u0026\u0026 regex.findFirstMatchIn((tmp(i).trim().split(\"#\",-1)(1))) !\u003d None){\r\n    var tmp_i \u003d tmp(i).trim().split(\"#\",-1)\r\n    if(tmp_i.length !\u003d 4){\r\n      tmp_i \u003d Array(\"\",\"\",\"\",\"\")\r\n    }\r\n    var Array(vrid, ph_3_1, ph_3_2, baseurl) \u003d tmp_i\r\n    baseurl \u003d decode(baseurl)\r\n    urlblock +\u003d (\"vrid\" -\u003e vrid)\r\n    urlblock +\u003d (\"3_1\" -\u003e ph_3_1)\r\n    urlblock +\u003d (\"3_2\" -\u003e ph_3_2)\r\n    urlblock +\u003d (\"baseurl\" -\u003e baseurl)\r\n    urls \u003d urls :+ urlblock\r\n    urlblock \u003d Map()\r\n    cnt \u003d 0\r\n  }else{\r\n    if(cnt\u003d\u003d0){\r\n      urlblock +\u003d (\"wapurl\" -\u003e tmp(i))\r\n      cnt \u003d cnt+1\r\n    }else if(cnt\u003d\u003d1){\r\n      urlblock +\u003d (\"clk\" -\u003e tmp(i))\r\n      cnt \u003d cnt+1\r\n    }else if(cnt\u003d\u003d2){\r\n      urlblock +\u003d (\"2\" -\u003e tmp(i))\r\n      cnt \u003d cnt+1\r\n    }\r\n  }\r\n}\r\nreturn Some(new Logrow(userid, uuid, page, time, search_type, query, urls))\r\n}\r\n\r\n\r\ndef trans_dataframe(row:Logrow)\u003d{\r\n    \r\n    var query \u003d row.query\r\n    var urls \u003d row.urls.map(urlblock \u003d\u003e {\r\n       var url \u003d \"\"\r\n       if (urlblock.get(\"baseurl\").getOrElse(\"\") \u003d\u003d \"\") {\r\n        url \u003d urlblock.get(\"wapurl\").getOrElse(\"\").toString\r\n       } else {\r\n        url \u003d urlblock.get(\"baseurl\").getOrElse(\"\").toString\r\n       }\r\n       url \u003d httpNom(url)\r\n       (query,url)\r\n      })\r\n     urls\r\n }\r\n     \r\ndef filterNone(x: Option[Logrow]) \u003d x match {\r\n      case Some(s) \u003d\u003e true\r\n      case None \u003d\u003e false\r\n    }\r\n   ",
+      "user": "anonymous",
+      "dateUpdated": "Oct 17, 2018 8:31:02 PM",
+      "config": {
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "results": {},
+        "enabled": true,
+        "editorSetting": {
+          "language": "scala"
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "import java.net.{URLDecoder, URLEncoder}\nimport java.text.SimpleDateFormat\nimport java.util.Date\ndefined class Logrow\ndefined class DFrow\nhttpNom: (line: String)String\nDateFormat: (time: String)String\ndecode: (value: String)String\ngetRow: (line: String)Option[Logrow]\ntrans_dataframe: (row: Logrow)List[(String, String)]\nfilterNone: (x: Option[Logrow])Boolean\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1539760167723_1243424949",
+      "id": "20180320-181122_1793468431",
+      "dateCreated": "Oct 17, 2018 3:09:27 PM",
+      "dateStarted": "Oct 17, 2018 8:31:02 PM",
+      "dateFinished": "Oct 17, 2018 8:31:55 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "def getHost(line : String) : String \u003d {\r\n    if (line \u003d\u003d null || line.trim().equals(\"\")) {\r\n      return \"\";\r\n    }\r\n    try {\r\n      val caseInsensitivePattern \u003d \"\"\"(?\u003c\u003d//|)((\\w)+\\.)+\\w+(:\\d*)?\"\"\".r\r\n      return  caseInsensitivePattern.findFirstIn(line).get\r\n      //      line replaceAll (caseInsensitivePattern, )\r\n    }\r\n    catch {\r\n      case ex: Exception \u003d\u003e \"\"\r\n    }\r\n  }",
+      "user": "anonymous",
+      "dateUpdated": "Oct 17, 2018 8:31:40 PM",
+      "config": {
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "results": {},
+        "enabled": true,
+        "editorSetting": {
+          "language": "scala"
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "getHost: (line: String)String\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1539760167725_1241116455",
+      "id": "20180426-133827_44961009",
+      "dateCreated": "Oct 17, 2018 3:09:27 PM",
+      "dateStarted": "Oct 17, 2018 8:31:40 PM",
+      "dateFinished": "Oct 17, 2018 8:31:56 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "def lineToM(l : String)\u003d {\r\n    var line \u003d l\r\n    if(line.startsWith(\"\\\"\")\u0026\u0026line.endsWith(\"\\\"\")){\r\n      line \u003d line.substring(1,line.length-1)\r\n    }\r\n    val regex \u003d \"@[A-Za-z._]{1,30}:\".r\r\n    val tags \u003d regex findAllIn line toArray\r\n    val contents \u003d line.split(\"@[A-Za-z._]{1,30}:\",-1)\r\n    \r\n    var M:Map[String,String] \u003d Map()\r\n    \r\n    for(i\u003c-0 until tags.length){\r\n      var tag \u003d tags(i)\r\n      var content \u003d contents(i+1)\r\n      M +\u003d (tag -\u003e content.trim())\r\n    }\r\n    M\r\n  }\r\n  \r\n  \r\n  def lineToQuery(l : String)\u003d {\r\n    var line \u003d l\r\n    if(line.startsWith(\"\\\"\")\u0026\u0026line.endsWith(\"\\\"\")){\r\n      line \u003d line.substring(1,line.length-1)\r\n    }\r\n    val regex \u003d \"@[A-Za-z._]{1,30}:\".r\r\n    val tags \u003d regex findAllIn line toArray\r\n    val contents \u003d line.split(\"@[A-Za-z._]{1,30}:\",-1)\r\n\r\n    var query_id \u003d \"\"\r\n    var QLEVEL \u003d \"\"\r\n    var QTYPE \u003d \"\"\r\n    var pv \u003d \"\"\r\n    var query \u003d \"\"\r\n\r\n    try{\r\n      for(i\u003c-0 until tags.length){\r\n        var tag \u003d tags(i)\r\n        var content \u003d contents(i+1)\r\n        //     print(tag)\r\n        //     println(content)\r\n        if(tag\u003d\u003d\"@query:\"){\r\n          query \u003d content.trim()\r\n\r\n        }\r\n      }\r\n      \r\n      }catch{\r\n        case e: Exception \u003d\u003e {\r\n          pv \u003d \"\"\r\n        }\r\n      }\r\n      (query)\r\n  }\r\n  \r\n  \r\n  case class Row_q(query:String)\r\n  case class Row_qaua(query_url: String,pv: Int)\r\n  case class Row_qupv(query: String,url: String,pv: Int)",
+      "user": "anonymous",
+      "dateUpdated": "Oct 17, 2018 8:31:42 PM",
+      "config": {
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "results": {},
+        "enabled": true,
+        "editorSetting": {
+          "language": "scala"
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "warning: there was one feature warning; re-run with -feature for details\nlineToM: (l: String)Map[String,String]\nwarning: there was one feature warning; re-run with -feature for details\nlineToQuery: (l: String)String\ndefined class Row_q\ndefined class Row_qaua\ndefined class Row_qupv\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1539760167760_1239962209",
+      "id": "20180428-151437_337329508",
+      "dateCreated": "Oct 17, 2018 3:09:27 PM",
+      "dateStarted": "Oct 17, 2018 8:31:56 PM",
+      "dateFinished": "Oct 17, 2018 8:31:57 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": " val filterURI \u003d List(\"www.120ask.com\", \"wzjlsogoupc.guahao.com\", \"www.mfk.com\", \"sns.guahao.com\", \"www.cnkang.com\", \n      \"www.youlai.cn\", \"www.39yst.com\", \"www.sytown.cn\", \"ask.39.net\")",
+      "user": "anonymous",
+      "dateUpdated": "Oct 17, 2018 8:31:47 PM",
+      "config": {
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "results": {},
+        "enabled": true,
+        "editorSetting": {
+          "language": "scala"
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "filterURI: List[String] \u003d List(www.120ask.com, wzjlsogoupc.guahao.com, www.mfk.com, sns.guahao.com, www.cnkang.com, www.youlai.cn, www.39yst.com, www.sytown.cn, ask.39.net)\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1539760167738_1249965680",
+      "id": "20180426-133137_1018124676",
+      "dateCreated": "Oct 17, 2018 3:09:27 PM",
+      "dateStarted": "Oct 17, 2018 8:31:56 PM",
+      "dateFinished": "Oct 17, 2018 8:31:57 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "var i \u003d 801\nval inputPath \u003d \"/user/webrank/clicklog/ms/201808/20180\"+i.toString+\"/*\"\n// val inputPath \u003d \"/user/webrank/clicklog/ms/201808/20180801/*\"\nprintln(inputPath)\nvar lograw \u003d sc.textFile(inputPath)\nvar result \u003d lograw.map(x\u003d\u003egetRow(x)).filter(filterNone).map(x\u003d\u003ex.get).filter(_.urls!\u003dNone).filter(_.urls.length \u003e 1).map(trans_dataframe).flatMap(list \u003d\u003e list).filter(x\u003d\u003efilterURI.contains(getHost(x._2)))\n// result.registerTempTable(\"result\")\nvar datardd2 \u003d result.map(p\u003d\u003e(\"@query:\" + p._1 + \"\\t@url:\" + p._2,1)).reduceByKey(_ + _)\nvar datardd \u003d datardd2\ndatardd.persist()\n// datardd.count()",
+      "user": "anonymous",
+      "dateUpdated": "Oct 17, 2018 8:32:52 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "i: Int \u003d 801\ninputPath: String \u003d /user/webrank/clicklog/ms/201808/20180801/*\n/user/webrank/clicklog/ms/201808/20180801/*\nlograw: org.apache.spark.rdd.RDD[String] \u003d /user/webrank/clicklog/ms/201808/20180801/* MapPartitionsRDD[1] at textFile at \u003cconsole\u003e:34\nresult: org.apache.spark.rdd.RDD[(String, String)] \u003d MapPartitionsRDD[9] at filter at \u003cconsole\u003e:52\ndatardd2: org.apache.spark.rdd.RDD[(String, Int)] \u003d ShuffledRDD[11] at reduceByKey at \u003cconsole\u003e:55\ndatardd: org.apache.spark.rdd.RDD[(String, Int)] \u003d ShuffledRDD[11] at reduceByKey at \u003cconsole\u003e:55\nres17: org.apache.spark.rdd.RDD[(String, Int)] \u003d ShuffledRDD[11] at reduceByKey at \u003cconsole\u003e:55\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1539760920183_-1685608252",
+      "id": "20181017-152200_1147564160",
+      "dateCreated": "Oct 17, 2018 3:22:00 PM",
+      "dateStarted": "Oct 17, 2018 8:32:52 PM",
+      "dateFinished": "Oct 17, 2018 8:33:00 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "for(i\u003c- 802 to 809){\n    // val inputPath \u003d \"/user/webrank/clicklog/ms/201\"+i.toString+\"/*\"\n    val inputPath \u003d \"/user/webrank/clicklog/ms/201808/20180\"+i.toString+\"/*\"\n    println(inputPath)\n    lograw \u003d sc.textFile(inputPath)\n    result \u003d lograw.map(x\u003d\u003egetRow(x)).filter(filterNone).map(x\u003d\u003ex.get).filter(_.urls!\u003dNone).filter(_.urls.length \u003e 1).map(trans_dataframe).flatMap(list \u003d\u003e list).filter(x\u003d\u003efilterURI.contains(getHost(x._2)))\n    datardd2 \u003d result.map(p\u003d\u003e(\"@query:\" + p._1 + \"\\t@url:\" + p._2,1)).reduceByKey(_ + _)\n    datardd \u003d datardd.union(datardd2)\n    datardd \u003d datardd.reduceByKey(_ + _)\n    datardd.persist()\n}",
+      "user": "anonymous",
+      "dateUpdated": "Oct 17, 2018 8:33:05 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "/user/webrank/clicklog/ms/201808/20180802/*\n/user/webrank/clicklog/ms/201808/20180803/*\n/user/webrank/clicklog/ms/201808/20180804/*\n/user/webrank/clicklog/ms/201808/20180805/*\n/user/webrank/clicklog/ms/201808/20180806/*\n/user/webrank/clicklog/ms/201808/20180807/*\n/user/webrank/clicklog/ms/201808/20180808/*\n/user/webrank/clicklog/ms/201808/20180809/*\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1539760697840_-1744781317",
+      "id": "20181017-151817_1769960576",
+      "dateCreated": "Oct 17, 2018 3:18:17 PM",
+      "dateStarted": "Oct 17, 2018 8:33:05 PM",
+      "dateFinished": "Oct 17, 2018 8:33:43 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "datardd.count()",
+      "user": "anonymous",
+      "dateUpdated": "Oct 17, 2018 8:33:50 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": "org.apache.zeppelin.interpreter.InterpreterException: org.apache.thrift.transport.TTransportException: java.net.ConnectException: 拒绝连接 (Connection refused)",
+      "apps": [],
+      "jobName": "paragraph_1539779295103_1374447682",
+      "id": "20181017-202815_48152830",
+      "dateCreated": "Oct 17, 2018 8:28:15 PM",
+      "dateStarted": "Oct 17, 2018 8:28:20 PM",
+      "dateFinished": "Oct 17, 2018 8:28:20 PM",
+      "status": "ERROR",
+      "errorMessage": "java.net.ConnectException: 拒绝连接 (Connection refused)\n\tat java.net.PlainSocketImpl.socketConnect(Native Method)\n\tat java.net.AbstractPlainSocketImpl.doConnect(AbstractPlainSocketImpl.java:350)\n\tat java.net.AbstractPlainSocketImpl.connectToAddress(AbstractPlainSocketImpl.java:206)\n\tat java.net.AbstractPlainSocketImpl.connect(AbstractPlainSocketImpl.java:188)\n\tat java.net.SocksSocketImpl.connect(SocksSocketImpl.java:392)\n\tat java.net.Socket.connect(Socket.java:589)\n\tat org.apache.thrift.transport.TSocket.open(TSocket.java:182)\n\tat org.apache.zeppelin.interpreter.remote.ClientFactory.create(ClientFactory.java:51)\n\tat org.apache.zeppelin.interpreter.remote.ClientFactory.create(ClientFactory.java:37)\n\tat org.apache.commons.pool2.BasePooledObjectFactory.makeObject(BasePooledObjectFactory.java:60)\n\tat org.apache.commons.pool2.impl.GenericObjectPool.create(GenericObjectPool.java:861)\n\tat org.apache.commons.pool2.impl.GenericObjectPool.borrowObject(GenericObjectPool.java:435)\n\tat org.apache.commons.pool2.impl.GenericObjectPool.borrowObject(GenericObjectPool.java:363)\n\tat org.apache.zeppelin.interpreter.remote.RemoteInterpreterProcess.getClient(RemoteInterpreterProcess.java:92)\n\tat org.apache.zeppelin.interpreter.remote.RemoteInterpreter.interpret(RemoteInterpreter.java:352)\n\tat org.apache.zeppelin.interpreter.LazyOpenInterpreter.interpret(LazyOpenInterpreter.java:97)\n\tat org.apache.zeppelin.notebook.Paragraph.jobRun(Paragraph.java:406)\n\tat org.apache.zeppelin.scheduler.Job.run(Job.java:175)\n\tat org.apache.zeppelin.scheduler.RemoteScheduler$JobRunner.run(RemoteScheduler.java:329)\n\tat java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511)\n\tat java.util.concurrent.FutureTask.run(FutureTask.java:266)\n\tat java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.access$201(ScheduledThreadPoolExecutor.java:180)\n\tat java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:293)\n\tat java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)\n\tat java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)\n\tat java.lang.Thread.run(Thread.java:748)\n",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md ### 转成df\n",
+      "user": "anonymous",
+      "dateUpdated": "Oct 17, 2018 4:04:28 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "markdown",
+          "editOnDblClick": true
+        },
+        "editorMode": "ace/mode/markdown",
+        "editorHide": true,
+        "tableHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "HTML",
+            "data": "\u003cdiv class\u003d\"markdown-body\"\u003e\n\u003ch3\u003e转成df\u003c/h3\u003e\n\u003c/div\u003e"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1539763452846_-2024483082",
+      "id": "20181017-160412_437407716",
+      "dateCreated": "Oct 17, 2018 4:04:12 PM",
+      "dateStarted": "Oct 17, 2018 4:04:28 PM",
+      "dateFinished": "Oct 17, 2018 4:04:28 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "var df_qupv \u003d datardd.map(m \u003d\u003e(lineToM(m._1).get(\"@query:\").get,lineToM(m._1).get(\"@url:\").get,m._2)).map(r \u003d\u003e Row_qupv(r._1,r._2,r._3)).toDF()",
+      "user": "anonymous",
+      "dateUpdated": "Oct 17, 2018 5:33:38 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "df_qupv: org.apache.spark.sql.DataFrame \u003d [query: string, url: string ... 1 more field]\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1539763438091_-1370794701",
+      "id": "20181017-160358_1966962815",
+      "dateCreated": "Oct 17, 2018 4:03:58 PM",
+      "dateStarted": "Oct 17, 2018 5:33:38 PM",
+      "dateFinished": "Oct 17, 2018 5:33:39 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "df_qupv.show()",
+      "user": "anonymous",
+      "dateUpdated": "Oct 17, 2018 5:33:52 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "+--------------------+--------------------+---+\n|               query|                 url| pv|\n+--------------------+--------------------+---+\n|           女孩破处是什么感觉|http://www.cnkang...|  2|\n|        武汉治疗白癜风要花多少钱|http://ask.39.net...|  1|\n|            肩膀像抽筋一样痛|http://www.120ask...|  1|\n|            游泳后为什么口渴|http://www.120ask...|  1|\n|         西宁什么地方可以做人流|http://ask.39.net...|  2|\n|           射完精后后蛮想小便|http://ask.39.net...|  1|\n|           孩子黄疸多少算正常|http://ask.39.net...|  1|\n|           深海迷茫导管怎么用|http://ask.39.net...|  1|\n|     母亲答应让我大鸡巴插入乱淫高潮|http://www.cnkang...|  1|\n|        熙微和生态美哪款化妆品好|http://www.120ask...|  1|\n|          北京鼻炎什么医院最好|http://www.120ask...|  1|\n|       浙江治疗白癜风哪家医院好吗|http://ask.39.net...|  1|\n|       闻到鱼腥味想吐喝牛奶也想吐|http://www.120ask...|  1|\n|           心管搏动是不是胎心|http://ask.39.net...|  5|\n|        慢性咽炎吃的什么药好的快|http://www.120ask...|  1|\n|阴道内长个东西，有时有，有时又不见...|http://www.120ask...|  1|\n|              减肥贴管用吗|http://www.120ask...|  1|\n|     姨妈已经十来天了还没走，怎么办|http://ask.39.net...|  1|\n|          海虾和皮蛋能一起吃吗|http://ask.39.net...|  1|\n|               媳妇想要了|http://www.120ask...|  1|\n+--------------------+--------------------+---+\nonly showing top 20 rows\n\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1539768825077_926076846",
+      "id": "20181017-173345_1219912642",
+      "dateCreated": "Oct 17, 2018 5:33:45 PM",
+      "dateStarted": "Oct 17, 2018 5:33:52 PM",
+      "dateFinished": "Oct 17, 2018 5:33:53 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md ### 转成输出@格式",
+      "user": "anonymous",
+      "dateUpdated": "Oct 17, 2018 4:05:05 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "markdown",
+          "editOnDblClick": true
+        },
+        "editorMode": "ace/mode/markdown",
+        "editorHide": true,
+        "tableHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "HTML",
+            "data": "\u003cdiv class\u003d\"markdown-body\"\u003e\n\u003ch3\u003e转成输出@格式\u003c/h3\u003e\n\u003c/div\u003e"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1539763484630_253107813",
+      "id": "20181017-160444_550771131",
+      "dateCreated": "Oct 17, 2018 4:04:44 PM",
+      "dateStarted": "Oct 17, 2018 4:05:05 PM",
+      "dateFinished": "Oct 17, 2018 4:05:05 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "datardd.map(m \u003d\u003e(m._1+\"\\t@pv:\"+m._2)).saveAsTextFile(\"/user/webrank/liuqin/Medical_Tagging_polymerization/query_url_pv_201801_201809.csv\")\n\n\n\n",
+      "user": "anonymous",
+      "dateUpdated": "Oct 17, 2018 8:27:50 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": "org.apache.zeppelin.interpreter.InterpreterException: org.apache.thrift.transport.TTransportException: java.net.ConnectException: 拒绝连接 (Connection refused)",
+      "apps": [],
+      "jobName": "paragraph_1539761930801_1996690487",
+      "id": "20181017-153850_1241650956",
+      "dateCreated": "Oct 17, 2018 3:38:50 PM",
+      "dateStarted": "Oct 17, 2018 8:27:51 PM",
+      "dateFinished": "Oct 17, 2018 8:27:51 PM",
+      "status": "ERROR",
+      "errorMessage": "java.net.ConnectException: 拒绝连接 (Connection refused)\n\tat java.net.PlainSocketImpl.socketConnect(Native Method)\n\tat java.net.AbstractPlainSocketImpl.doConnect(AbstractPlainSocketImpl.java:350)\n\tat java.net.AbstractPlainSocketImpl.connectToAddress(AbstractPlainSocketImpl.java:206)\n\tat java.net.AbstractPlainSocketImpl.connect(AbstractPlainSocketImpl.java:188)\n\tat java.net.SocksSocketImpl.connect(SocksSocketImpl.java:392)\n\tat java.net.Socket.connect(Socket.java:589)\n\tat org.apache.thrift.transport.TSocket.open(TSocket.java:182)\n\tat org.apache.zeppelin.interpreter.remote.ClientFactory.create(ClientFactory.java:51)\n\tat org.apache.zeppelin.interpreter.remote.ClientFactory.create(ClientFactory.java:37)\n\tat org.apache.commons.pool2.BasePooledObjectFactory.makeObject(BasePooledObjectFactory.java:60)\n\tat org.apache.commons.pool2.impl.GenericObjectPool.create(GenericObjectPool.java:861)\n\tat org.apache.commons.pool2.impl.GenericObjectPool.borrowObject(GenericObjectPool.java:435)\n\tat org.apache.commons.pool2.impl.GenericObjectPool.borrowObject(GenericObjectPool.java:363)\n\tat org.apache.zeppelin.interpreter.remote.RemoteInterpreterProcess.getClient(RemoteInterpreterProcess.java:92)\n\tat org.apache.zeppelin.interpreter.remote.RemoteInterpreter.interpret(RemoteInterpreter.java:352)\n\tat org.apache.zeppelin.interpreter.LazyOpenInterpreter.interpret(LazyOpenInterpreter.java:97)\n\tat org.apache.zeppelin.notebook.Paragraph.jobRun(Paragraph.java:406)\n\tat org.apache.zeppelin.scheduler.Job.run(Job.java:175)\n\tat org.apache.zeppelin.scheduler.RemoteScheduler$JobRunner.run(RemoteScheduler.java:329)\n\tat java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511)\n\tat java.util.concurrent.FutureTask.run(FutureTask.java:266)\n\tat java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.access$201(ScheduledThreadPoolExecutor.java:180)\n\tat java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:293)\n\tat java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)\n\tat java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)\n\tat java.lang.Thread.run(Thread.java:748)\n",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md ### 加随机数",
+      "user": "anonymous",
+      "dateUpdated": "Oct 17, 2018 4:09:51 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "markdown",
+          "editOnDblClick": true
+        },
+        "editorMode": "ace/mode/markdown",
+        "editorHide": true,
+        "tableHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "HTML",
+            "data": "\u003cdiv class\u003d\"markdown-body\"\u003e\n\u003ch3\u003e加随机数\u003c/h3\u003e\n\u003c/div\u003e"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1539763771537_-1959387710",
+      "id": "20181017-160931_1133716065",
+      "dateCreated": "Oct 17, 2018 4:09:31 PM",
+      "dateStarted": "Oct 17, 2018 4:09:51 PM",
+      "dateFinished": "Oct 17, 2018 4:09:51 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "var i \u003d 806\nval inputPath \u003d \"/user/webrank/clicklog/ms/201\"+i.toString+\"/*\"\nprintln(inputPath)\nvar lograw \u003d sc.textFile(inputPath)\nvar result \u003d lograw.map(x\u003d\u003egetRow(x)).filter(filterNone).map(x\u003d\u003ex.get).filter(_.urls!\u003dNone).filter(_.urls.length \u003e 1).map(trans_dataframe).flatMap(list \u003d\u003e list).filter(x\u003d\u003efilterURI.contains(getHost(x._2)))\n// result.registerTempTable(\"result\")\nvar datardd \u003d result.map(p\u003d\u003e(\"@query:\" + p._1 + \"\\t@url:\" + p._2+\"\\t@qrandom:\"+(new util.Random).nextInt(10),1)).reduceByKey(_ + _)\ndatardd.persist()\nvar datardd2 \u003d datardd\n\ndatardd.count()\n",
+      "user": "anonymous",
+      "dateUpdated": "Oct 17, 2018 5:22:50 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": true
+        },
+        "editorMode": "ace/mode/scala",
+        "editorHide": false,
+        "tableHide": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "ERROR",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "i: Int \u003d 806\ninputPath: String \u003d /user/webrank/clicklog/ms/201806/*\n/user/webrank/clicklog/ms/201806/*\nlograw: org.apache.spark.rdd.RDD[String] \u003d /user/webrank/clicklog/ms/201806/* MapPartitionsRDD[1] at textFile at \u003cconsole\u003e:34\nresult: org.apache.spark.sql.DataFrame \u003d [query: string, url: string]\ndatardd: org.apache.spark.rdd.RDD[(String, Int)] \u003d ShuffledRDD[16] at reduceByKey at \u003cconsole\u003e:57\nres16: org.apache.spark.rdd.RDD[(String, Int)] \u003d ShuffledRDD[16] at reduceByKey at \u003cconsole\u003e:57\ndatardd2: org.apache.spark.rdd.RDD[(String, Int)] \u003d ShuffledRDD[16] at reduceByKey at \u003cconsole\u003e:57\norg.apache.spark.SparkException: Job 0 cancelled part of cancelled job group zeppelin-20181017-160954_201843736\n  at org.apache.spark.scheduler.DAGScheduler.org$apache$spark$scheduler$DAGScheduler$$failJobAndIndependentStages(DAGScheduler.scala:1499)\n  at org.apache.spark.scheduler.DAGScheduler.handleJobCancellation(DAGScheduler.scala:1439)\n  at org.apache.spark.scheduler.DAGScheduler$$anonfun$handleJobGroupCancelled$1.apply$mcVI$sp(DAGScheduler.scala:799)\n  at org.apache.spark.scheduler.DAGScheduler$$anonfun$handleJobGroupCancelled$1.apply(DAGScheduler.scala:799)\n  at org.apache.spark.scheduler.DAGScheduler$$anonfun$handleJobGroupCancelled$1.apply(DAGScheduler.scala:799)\n  at scala.collection.mutable.HashSet.foreach(HashSet.scala:78)\n  at org.apache.spark.scheduler.DAGScheduler.handleJobGroupCancelled(DAGScheduler.scala:799)\n  at org.apache.spark.scheduler.DAGSchedulerEventProcessLoop.doOnReceive(DAGScheduler.scala:1689)\n  at org.apache.spark.scheduler.DAGSchedulerEventProcessLoop.onReceive(DAGScheduler.scala:1669)\n  at org.apache.spark.scheduler.DAGSchedulerEventProcessLoop.onReceive(DAGScheduler.scala:1658)\n  at org.apache.spark.util.EventLoop$$anon$1.run(EventLoop.scala:48)\n  at org.apache.spark.scheduler.DAGScheduler.runJob(DAGScheduler.scala:630)\n  at org.apache.spark.SparkContext.runJob(SparkContext.scala:2022)\n  at org.apache.spark.SparkContext.runJob(SparkContext.scala:2043)\n  at org.apache.spark.SparkContext.runJob(SparkContext.scala:2062)\n  at org.apache.spark.SparkContext.runJob(SparkContext.scala:2087)\n  at org.apache.spark.rdd.RDD.count(RDD.scala:1158)\n  ... 46 elided\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1539763794128_657720281",
+      "id": "20181017-160954_201843736",
+      "dateCreated": "Oct 17, 2018 4:09:54 PM",
+      "dateStarted": "Oct 17, 2018 4:36:27 PM",
+      "dateFinished": "Oct 17, 2018 5:11:53 PM",
+      "status": "ERROR",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "for(i\u003c- 807 to 809){\n    val inputPath \u003d \"/user/webrank/clicklog/ms/201\"+i.toString+\"/*\"\n    println(inputPath)\n    lograw \u003d sc.textFile(inputPath)\n    result \u003d lograw.map(x\u003d\u003egetRow(x)).filter(filterNone).map(x\u003d\u003ex.get).filter(_.urls!\u003dNone).filter(_.urls.length \u003e 1).map(trans_dataframe).flatMap(list \u003d\u003e list).filter(x\u003d\u003efilterURI.contains(getHost(x._2)))\n    datardd2 \u003d result.map(p\u003d\u003e(\"@query:\" + p._1 + \"\\t@url:\" + p._2+\"\\t@qrandom:\"+(new util.Random).nextInt(10),1)).reduceByKey(_ + _)\n    datardd \u003d datardd.union(datardd2)\n    datardd \u003d datardd.reduceByKey(_ + _)\n    datardd.persist()\n}",
+      "user": "anonymous",
+      "dateUpdated": "Oct 17, 2018 5:23:41 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": true
+        },
+        "editorMode": "ace/mode/scala",
+        "editorHide": false,
+        "tableHide": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "res41: String \u003d 1\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1539763989379_-1730356490",
+      "id": "20181017-161309_1154835312",
+      "dateCreated": "Oct 17, 2018 4:13:09 PM",
+      "dateStarted": "Oct 17, 2018 4:13:46 PM",
+      "dateFinished": "Oct 17, 2018 4:19:49 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "(new util.Random).nextInt(3).toString",
+      "user": "anonymous",
+      "dateUpdated": "Oct 17, 2018 4:27:45 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "jobName": "paragraph_1539764862669_-1409614946",
+      "id": "20181017-162742_1201293493",
+      "dateCreated": "Oct 17, 2018 4:27:42 PM",
+      "dateStarted": "Oct 17, 2018 4:27:45 PM",
+      "dateFinished": "Oct 17, 2018 4:29:21 PM",
+      "status": "ABORT",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "var datau \u003d sqlContext.read.load(\"/user/webrank/liuqin/out/query_map_url_list_all_0712_0803.parquet\")\nvar datardd \u003d datau.rdd.map(p\u003d\u003e(\"@query:\" + p(0) + \"\\t@url: \" + p(1),p(2).toString.toInt)).reduceByKey(_ + _)",
+      "dateUpdated": "Oct 17, 2018 3:09:27 PM",
+      "config": {
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "results": {},
+        "enabled": true,
+        "editorSetting": {
+          "language": "scala"
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "datardd: org.apache.spark.rdd.RDD[(String, Int)] \u003d ShuffledRDD[84] at reduceByKey at \u003cconsole\u003e:29\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1539760167765_1238038464",
+      "id": "20180428-120356_964489789",
+      "dateCreated": "Oct 17, 2018 3:09:27 PM",
+      "status": "READY",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "var datardd \u003d datau.rdd.map(p\u003d\u003e(\"@query:\" + p(0) + \"\\t@url: \" + p(1),p(2).toString.toInt)).reduceByKey(_ + _)",
+      "dateUpdated": "Oct 17, 2018 3:09:27 PM",
+      "config": {
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "results": {},
+        "enabled": true,
+        "editorSetting": {
+          "language": "scala"
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "jobName": "paragraph_1539760167773_1234960473",
+      "id": "20180428-154012_1414239992",
+      "dateCreated": "Oct 17, 2018 3:09:27 PM",
+      "status": "READY",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "datardd.take(1)",
+      "dateUpdated": "Oct 17, 2018 3:09:27 PM",
+      "config": {
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "results": {},
+        "enabled": true,
+        "editorSetting": {
+          "language": "scala"
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "res24: Array[(String, Int)] \u003d Array((@query:中国银行这几个字是什么字体\t@url: https://zhidao.baidu.com/question/202795581,1))\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1539760167775_1235729971",
+      "id": "20180428-152323_529326501",
+      "dateCreated": "Oct 17, 2018 3:09:27 PM",
+      "status": "READY",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "var datarddr \u003d datardd.map(m \u003d\u003e(lineToM(m._1).get(\"@query:\").get,lineToM(m._1).get(\"@url:\").get,m._2))\ndatarddr.take(1)",
+      "dateUpdated": "Oct 17, 2018 3:09:27 PM",
+      "config": {
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "results": {},
+        "enabled": true,
+        "editorSetting": {
+          "language": "scala"
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "datarddr: org.apache.spark.rdd.RDD[(String, String, Int)] \u003d MapPartitionsRDD[141] at map at \u003cconsole\u003e:33\nres31: Array[(String, String, Int)] \u003d Array((四个意识展板图片,https://zhidao.baidu.com/question/176368440,1))\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1539760167797_1225726499",
+      "id": "20180428-162053_2116526129",
+      "dateCreated": "Oct 17, 2018 3:09:27 PM",
+      "status": "READY",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "var datarddr \u003d datardd.map(m \u003d\u003e(lineToM(m(0).toString).get(\"@query:\").get.toString,lineToM(m(0).toString).get(\"@url:\").get.toString,m(1).toString.toInt))\ndatarddr.take(1)",
+      "dateUpdated": "Oct 17, 2018 3:09:27 PM",
+      "config": {
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "results": {},
+        "enabled": true,
+        "editorSetting": {
+          "language": "scala"
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "datarddr: org.apache.spark.sql.Dataset[(String, String, Int)] \u003d [_1: string, _2: string ... 1 more field]\nres6: Array[(String, String, Int)] \u003d Array((中国银行这几个字是什么字体,https://zhidao.baidu.com/question/202795581,1))\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1539760167816_1304600024",
+      "id": "20180428-175713_297335690",
+      "dateCreated": "Oct 17, 2018 3:09:27 PM",
+      "status": "READY",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md ### parquet格式的方式不能处理数据倾斜的问题",
+      "user": "anonymous",
+      "dateUpdated": "Oct 17, 2018 3:15:58 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "markdown",
+          "editOnDblClick": true
+        },
+        "editorMode": "ace/mode/markdown",
+        "editorHide": true,
+        "tableHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "HTML",
+            "data": "\u003cdiv class\u003d\"markdown-body\"\u003e\n\u003ch3\u003eparquet格式的方式不能处理数据倾斜的问题\u003c/h3\u003e\n\u003c/div\u003e"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1539760167942_962173503",
+      "id": "20180427-224900_477784916",
+      "dateCreated": "Oct 17, 2018 3:09:27 PM",
+      "dateStarted": "Oct 17, 2018 3:15:58 PM",
+      "dateFinished": "Oct 17, 2018 3:15:58 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "for(i\u003c- 707 to 712){\n    val inputPath \u003d \"/user/webrank/clicklog/ms/201\"+i.toString+\"/*\"\n    println(inputPath)\n    var lograw \u003d sc.textFile(inputPath)\n    var result \u003d lograw.map(x\u003d\u003egetRow(x)).filter(filterNone).map(x\u003d\u003ex.get).filter(_.urls!\u003dNone).filter(_.urls.length \u003e 1).map(trans_dataframe).flatMap(list \u003d\u003e list).filter(x\u003d\u003efilterURI.contains(getHost(x._2))).map(r \u003d\u003e DFrow(r._1,r._2)).toDF()\n    result.registerTempTable(\"result\")\n    var sql_result \u003d sqlContext.sql(\"SELECT query,url,count(url) as pv FROM result group by query,url\")\n    sql_result.write.format(\"parquet\").save(\"/user/webrank/liuqin/out/query_map_url_list_all_201\"+i.toString+\".parquet\")                 //这里的clkpv指这个query只要被点击过任何一条url\n}",
+      "dateUpdated": "Oct 17, 2018 3:09:27 PM",
+      "config": {
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "results": {},
+        "enabled": true,
+        "editorSetting": {
+          "language": "scala"
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "warning: there was one deprecation warning; re-run with -deprecation for details\n/user/webrank/clicklog/ms/201707/*\n/user/webrank/clicklog/ms/201708/*\n/user/webrank/clicklog/ms/201709/*\n/user/webrank/clicklog/ms/201710/*\n/user/webrank/clicklog/ms/201711/*\n/user/webrank/clicklog/ms/201712/*\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1539760167740_1247657187",
+      "id": "20180426-220347_2050630044",
+      "dateCreated": "Oct 17, 2018 3:09:27 PM",
+      "status": "READY",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "var datau \u003dsqlContext.read.load(\"/user/webrank/liuqin/out/query_map_url_list_all_201803.parquet\")\nvar pos \u003d 803\nfor(k\u003c- 1 to 2){\n    var i \u003d pos-k\n    println(\"/user/webrank/liuqin/out/query_map_url_list_all_201\"+i.toString+\".parquet\")\n    var datau2 \u003dsqlContext.read.load(\"/user/webrank/liuqin/out/query_map_url_list_all_201\"+i.toString+\".parquet\")\n    datau \u003d datau.unionAll(datau2)\n    datau.registerTempTable(\"resultu\")\n    datau \u003d sqlContext.sql(\"SELECT query,url,sum(pv) as pv FROM resultu group by query,url\")\n    datau.write.format(\"parquet\").save(\"/user/webrank/liuqin/out/query_map_url_list_all_0\"+i.toString+\"_0803.parquet\")\n}",
+      "dateUpdated": "Oct 17, 2018 3:09:27 PM",
+      "config": {
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "results": {},
+        "enabled": true,
+        "editorSetting": {
+          "language": "scala"
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "jobName": "paragraph_1539760167742_1248426684",
+      "id": "20180426-191613_91306638",
+      "dateCreated": "Oct 17, 2018 3:09:27 PM",
+      "status": "READY",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    }
+  ],
+  "name": "/util/Monthly_cycle",
+  "id": "2DVMMP27F",
+  "angularObjects": {
+    "2D9M8ATZ9:shared_process": [],
+    "2D9NTGN5D::2DVMMP27F": [],
+    "2D859SF5B:shared_process": [],
+    "2D99W32FC:shared_process": [],
+    "2DA8NG9YB:shared_process": [],
+    "2DBCA9BMV:shared_process": [],
+    "2DA29EQ39:shared_process": [],
+    "2D86PKHDE:shared_process": [],
+    "2D8ZMX5FY:shared_process": [],
+    "2D8ZFKME2:shared_process": [],
+    "2DBAZD2WP:shared_process": [],
+    "2D8SP4FH8:shared_process": [],
+    "2DAESRJYD:shared_process": [],
+    "2DA7377EZ:shared_process": [],
+    "2D8DH9K51:shared_process": [],
+    "2D85K8KV7:shared_process": [],
+    "2D958F7RN:shared_process": [],
+    "2DAVR7XRG:shared_process": [],
+    "2DBX9FA55:shared_process": []
+  },
+  "config": {},
+  "info": {}
+}

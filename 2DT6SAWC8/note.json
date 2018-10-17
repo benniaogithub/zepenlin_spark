@@ -1,0 +1,1711 @@
+{
+  "paragraphs": [
+    {
+      "text": "%md ### 明医age数据根据pv展示过滤",
+      "user": "anonymous",
+      "dateUpdated": "Sep 20, 2018 11:36:46 AM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "markdown",
+          "editOnDblClick": true
+        },
+        "editorMode": "ace/mode/markdown",
+        "editorHide": true,
+        "tableHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "HTML",
+            "data": "\u003cdiv class\u003d\"markdown-body\"\u003e\n\u003ch3\u003e明医age数据根据pv展示过滤\u003c/h3\u003e\n\u003c/div\u003e"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1537414560163_1508841854",
+      "id": "20180920-113600_233455169",
+      "dateCreated": "Sep 20, 2018 11:36:00 AM",
+      "dateStarted": "Sep 20, 2018 11:36:46 AM",
+      "dateFinished": "Sep 20, 2018 11:36:46 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "import scala.util.matching.Regex\ncase class UURow(URL1 : String,URL2:String)\ndef httpNom(line : String) : String \u003d {\ntry {\n  val caseInsensitivePattern \u003d \"\"\"^(?i)(http|ftp|https)://\"\"\".r\n  return  caseInsensitivePattern.replaceFirstIn(line.trim(),\"http://\")\n  //      line replaceAll (caseInsensitivePattern, )\n}\ncatch {\n  case ex: Exception \u003d\u003e \"\"\n}\n}\n\ndef hash(s:String)\u003d{\n    val m \u003d java.security.MessageDigest.getInstance(\"MD5\")\n    val b \u003d s.getBytes(\"UTF-8\")\n    m.update(b,0,b.length)\n    new java.math.BigInteger(1,m.digest()).toString(16).trim()\n }\n  \ndef getHost(line : String) : String \u003d {\n    if (line \u003d\u003d null || line.trim().equals(\"\")) {\n      return \"\";\n    }\n    try {\n      val caseInsensitivePattern \u003d \"\"\"(?\u003c\u003d//|)((\\w)+\\.)+\\w+(:\\d*)?\"\"\".r\n      return  caseInsensitivePattern.findFirstIn(line).get\n      //      line replaceAll (caseInsensitivePattern, )\n    }\n    catch {\n      case ex: Exception \u003d\u003e \"\"\n    }\n  }\n  \n  def lineToM(l : String)\u003d {\n    var line \u003d l\n    line \u003d line.trim()\n    if(line.startsWith(\"\\\"\")\u0026\u0026line.endsWith(\"\\\"\")){\n      line \u003d line.substring(1,line.length-1)\n    }\n    if(line.startsWith(\"[\")\u0026\u0026line.endsWith(\"]\")){\n      line \u003d line.substring(1,line.length-1)\n    }\n    if(line.endsWith(\"]\")){\n      line \u003d line.substring(0,line.length-1)\n    }\n    val regex \u003d \"@[A-Za-z._]{1,30}:\".r\n    val tags \u003d regex findAllIn line toArray\n    val contents \u003d line.split(\"@[A-Za-z._]{1,30}:\",-1)\n    \n    var M:Map[String,String] \u003d Map()\n    \n    for(i\u003c-0 until tags.length){\n      var tag \u003d tags(i)\n      var content \u003d contents(i+1)\n      M +\u003d (tag -\u003e content.trim())\n    }\n    M\n  }\n  \n def filterAgeQ(line:String):Boolean\u003d{\n    try {\n      //    val patterns: List[String] \u003d List(\"(?:是否|能否|可否|应否|该不该|会不会|可不可以|能不能|是不是|要不要|应不应|应不应该|有么有|有没|有没有|有木有|有无|还是不|还是没)\", \"(?:可以吗|可以么|行不行|好不好|如何|怎样|好吗|怎么样|肿么样|咋样|好么|行吗|好嘛|好不|何如|刻印吗|厉害吗|行么|真的吗)$\", \"(?:是|要|能|不能|可以|能够|还能|有|会|可能|能用|含有|也会).+?(?:吗|吧|么|嘛|不)$\")\n      val patterns: List[String] \u003d List(\"((?:第)?(?:两|俩|一|二|三|四|五|六|七|八|九|十|1|2|3|4|5|6|7|8|9|0)+(?:-|到|个月|周|周岁|周岁到|岁到|岁)?(?:两|俩|一|二|三|四|五|六|七|八|九|十|1|2|3|4|5|6|7|8|9|0)*(?:个月|个半月|个多月|周岁|周|岁))\",\"((?:三|3)(?:十|1|2|3|4|5|6|7|8|9|0)+(?:.)?(?:一|二|三|四|五|六|七|八|九|十|1|2|3|4|5|6|7|8|9|0)*?(?:度)(?:一|二|三|四|五|六|七|八|九|十|1|2|3|4|5|6|7|8|9|0)?)\")\n      for (pattern \u003c- patterns) {\n        var patternp \u003d new Regex(pattern)\n\n        if(patternp.findAllIn(line).length\u003d\u003d1){\n          return true\n        }\n      }\n    }catch {\n      case ex: Exception \u003d\u003e return false\n    }\n    return false\n  }\n  def filterAgeD(l:String):Boolean\u003d{\n    try {\n      //    val patterns: List[String] \u003d List(\"(?:是否|能否|可否|应否|该不该|会不会|可不可以|能不能|是不是|要不要|应不应|应不应该|有么有|有没|有没有|有木有|有无|还是不|还是没)\", \"(?:可以吗|可以么|行不行|好不好|如何|怎样|好吗|怎么样|肿么样|咋样|好么|行吗|好嘛|好不|何如|刻印吗|厉害吗|行么|真的吗)$\", \"(?:是|要|能|不能|可以|能够|还能|有|会|可能|能用|含有|也会).+?(?:吗|吧|么|嘛|不)$\")\n      val patterns: List[String] \u003d List(\"((?:第)?(?:两|俩|一|二|三|四|五|六|七|八|九|十|1|2|3|4|5|6|7|8|9|0)+(?:-|到|个月|周|周岁|周岁到|岁到|岁)?(?:两|俩|一|二|三|四|五|六|七|八|九|十|1|2|3|4|5|6|7|8|9|0)*(?:个月|个半月|个多月|周岁|周|岁))\",\"((?:三|3)(?:十|1|2|3|4|5|6|7|8|9|0)+(?:.)?(?:一|二|三|四|五|六|七|八|九|十|1|2|3|4|5|6|7|8|9|0)*?(?:度)(?:一|二|三|四|五|六|七|八|九|十|1|2|3|4|5|6|7|8|9|0)?)\")\n      var line \u003d l\n      var l_h \u003d line.take(15)\n      var l_t \u003d line.substring(l_h.length)\n      line \u003d l_h+l_t.takeRight(5)\n      for (pattern \u003c- patterns) {\n        var patternp \u003d new Regex(pattern)\n\n        if(patternp.findAllIn(line).length\u003d\u003d1){\n          return true\n        }\n      }\n    }catch {\n      case ex: Exception \u003d\u003e return false\n    }\n    return false\n  }",
+      "user": "anonymous",
+      "dateUpdated": "Oct 17, 2018 4:34:39 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": true
+        },
+        "editorMode": "ace/mode/scala",
+        "editorHide": false,
+        "tableHide": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "import scala.util.matching.Regex\ndefined class UURow\nhttpNom: (line: String)String\nhash: (s: String)String\ngetHost: (line: String)String\nwarning: there was one feature warning; re-run with -feature for details\nlineToM: (l: String)Map[String,String]\nfilterAgeQ: (line: String)Boolean\nfilterAgeD: (l: String)Boolean\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1537414606767_793101631",
+      "id": "20180920-113646_436540978",
+      "dateCreated": "Sep 20, 2018 11:36:46 AM",
+      "dateStarted": "Oct 17, 2018 2:35:13 PM",
+      "dateFinished": "Oct 17, 2018 2:36:07 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "\n\nimport java.net.{URLDecoder, URLEncoder}\nimport java.text.SimpleDateFormat\nimport java.util.Date\nimport scala.collection.mutable.ArrayBuffer\ncase class Logrow(userid:String,uuid:String, page:String, time : String, search_type : String, query : String,urls:List[Map[String,String]])\ncase class QURow(query : String,URL:String)\n\n\ndef DateFormat(time:String):String\u003d{\n    var sdf:SimpleDateFormat \u003d new SimpleDateFormat(\"yyyyMMdd\")\n    var date:String \u003d sdf.format(new Date((time.toLong*1000)))\n    return date\n}\n\ndef decode(value:String): String \u003d URLDecoder.decode(value, \"gbk\")\n\ndef getRow(line : String):Option[Logrow]\u003d {\n    //    var userid, uuid, page, time, search_type \u003d \"\"\n    val regex\u003d\"\"\"^\\d+$\"\"\".r\n    var userid, uuid, page,time,search_type,unknown \u003d \"\"\n    var tmp \u003d line.trim().split(\u0027\\t\u0027)\n    if (tmp.length \u003c 2) {\n      return None\n    }\n    var tmp0 \u003d tmp(0).trim().split(\u0027#\u0027)\n    if (tmp0.length !\u003d 5 \u0026\u0026 tmp0.length !\u003d 6) {\n      return None\n    }\n    if(tmp0.length \u003d\u003d 5){\n      userid \u003d tmp0(0)\n      uuid \u003d tmp0(1)\n      page \u003d tmp0(2)\n      time \u003d tmp0(3)\n      search_type \u003d tmp0(4)\n    }else if(tmp0.length \u003d\u003d 6){\n      userid \u003d tmp0(0)\n      uuid \u003d tmp0(1)\n      page \u003d tmp0(2)\n      time \u003d tmp0(3)\n      search_type \u003d tmp0(4)\n      unknown \u003d tmp0(5)\n    }\n    var query \u003d decode(tmp(1))\n    var urls:List[Map[String,String]] \u003d List()\n    var urlblock:Map[String,String]\u003d Map()\n    var cnt \u003d 0\n    for(i \u003c- 2 to tmp.length-1){\n      //      println(tmp(i))\n      //      println(tmp(i).trim().split(\"#\",-1).length)\n      if (((tmp(i).trim().split(\"#\",-1).length) \u003e\u003d 4) \u0026\u0026 regex.findFirstMatchIn((tmp(i).trim().split(\"#\",-1)(1))) !\u003d None){\n        var tmp_i \u003d tmp(i).trim().split(\"#\",-1)\n        if(tmp_i.length !\u003d 4){\n          tmp_i \u003d Array(\"\",\"\",\"\",\"\")\n        }\n        var Array(vrid, ph_3_1, ph_3_2, baseurl) \u003d tmp_i\n        baseurl \u003d decode(baseurl)\n        urlblock +\u003d (\"vrid\" -\u003e vrid)\n        urlblock +\u003d (\"3_1\" -\u003e ph_3_1)\n        urlblock +\u003d (\"3_2\" -\u003e ph_3_2)\n        urlblock +\u003d (\"baseurl\" -\u003e baseurl)\n        urls \u003d urls :+ urlblock\n        urlblock \u003d Map()\n        cnt \u003d 0\n      }else{\n        if(cnt\u003d\u003d0){\n          urlblock +\u003d (\"wapurl\" -\u003e tmp(i))\n          cnt \u003d cnt+1\n        }else if(cnt\u003d\u003d1){\n          urlblock +\u003d (\"clk\" -\u003e tmp(i))\n          cnt \u003d cnt+1\n        }else if(cnt\u003d\u003d2){\n          urlblock +\u003d (\"2\" -\u003e tmp(i))\n          cnt \u003d cnt+1\n        }\n      }\n    }\n    return Some(new Logrow(userid, uuid, page, time, search_type, query, urls))\n  }\n\n def trans_dataframe(row:Logrow)\u003d {\n    // val filterURI \u003d List(\"ask.yaolan.com\", \"www.120ask.com\", \"www.babytree.com\", \"club.xywy.com\", \"ask.39.net\", \n    //   \"www.haodf.com\", \"ask.ci123.com\", \"ask.familydoctor.com.cn\", \"bbs.tianya.cn\")\n    val filterURI \u003d List(\"www.120ask.com\", \"wzjlsogoupc.guahao.com\", \"www.mfk.com\", \"sns.guahao.com\", \"www.cnkang.com\", \n      \"www.youlai.cn\", \"www.39yst.com\", \"www.sytown.cn\", \"ask.39.net\")\n    var list \u003d ArrayBuffer[(String,String)]()\n    var urls \u003d row.urls.map(urlblock \u003d\u003e {\n      var url \u003d \"\"\n      if (urlblock.get(\"baseurl\").getOrElse(\"\") \u003d\u003d \"\") {\n        url \u003d urlblock.get(\"wapurl\").getOrElse(\"\").toString\n      } else {\n        url \u003d urlblock.get(\"baseurl\").getOrElse(\"\").toString\n      }\n      url \u003d httpNom(url)\n      url\n    })\n    urls \u003d urls.filter(x\u003d\u003efilterURI.contains(getHost(x))).sorted\n    // urls.foreach(println)\n    // print(urls.length)\n    val len \u003d urls.length\n    if(len\u003e1){\n      var url_1 \u003d \"\"\n      var url_2 \u003d \"\"\n\n      for (i \u003c- 0 to len - 2) {\n        url_1  \u003d urls(i)\n        for (j \u003c- i+1 to len - 1) {\n          url_2  \u003d urls(j)\n          list +\u003d ((url_1,url_2))\n        }\n      }\n    }\n    list.toList\n  }\n  \n  def trans_dataframe_all(row:Logrow)\u003d{\n    \n    var query \u003d row.query\n    var urls \u003d row.urls.map(urlblock \u003d\u003e {\n       var url \u003d \"\"\n       if (urlblock.get(\"baseurl\").getOrElse(\"\") \u003d\u003d \"\") {\n        url \u003d urlblock.get(\"wapurl\").getOrElse(\"\").toString\n       } else {\n        url \u003d urlblock.get(\"baseurl\").getOrElse(\"\").toString\n       }\n       (query,url)\n      })\n     urls\n }\n \n \n\ndef filterNone(x: Option[Logrow]) \u003d x match {\n      case Some(s) \u003d\u003e true\n      case None \u003d\u003e false\n    }\n\n   \n",
+      "user": "anonymous",
+      "dateUpdated": "Oct 17, 2018 2:35:19 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "import java.net.{URLDecoder, URLEncoder}\nimport java.text.SimpleDateFormat\nimport java.util.Date\nimport scala.collection.mutable.ArrayBuffer\ndefined class Logrow\ndefined class QURow\nDateFormat: (time: String)String\ndecode: (value: String)String\ngetRow: (line: String)Option[Logrow]\ntrans_dataframe: (row: Logrow)List[(String, String)]\ntrans_dataframe_all: (row: Logrow)List[(String, String)]\nfilterNone: (x: Option[Logrow])Boolean\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1537414656117_276829903",
+      "id": "20180920-113736_218235935",
+      "dateCreated": "Sep 20, 2018 11:37:36 AM",
+      "dateStarted": "Oct 17, 2018 2:35:19 PM",
+      "dateFinished": "Oct 17, 2018 2:36:10 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%spark\ncase class DQU(query:String,url:String)\n\nval inputPath \u003d \"/user/webrank/clicklog/ms/2018*\"\nprintln(inputPath)\nval filterURI \u003d List(\"www.120ask.com\", \"wzjlsogoupc.guahao.com\", \"www.mfk.com\", \"sns.guahao.com\", \"www.cnkang.com\", \n      \"www.youlai.cn\", \"www.39yst.com\", \"www.sytown.cn\", \"ask.39.net\")\n      \nvar lograw \u003d sc.textFile(inputPath)\nvar result \u003d lograw.map(x\u003d\u003egetRow(x)).filter(filterNone).map(x\u003d\u003ex.get).filter(_.urls!\u003dNone).filter(_.urls.length \u003e 0).map(trans_dataframe_all).flatMap(list \u003d\u003e list).filter(x\u003d\u003e(filterURI.contains(getHost(x._2)))).map(r \u003d\u003e DQU(r._1,r._2)).toDF()\n\n",
+      "user": "anonymous",
+      "dateUpdated": "Oct 17, 2018 2:36:07 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "defined class DQU\ninputPath: String \u003d /user/webrank/clicklog/ms/2018*\n/user/webrank/clicklog/ms/2018*\nfilterURI: List[String] \u003d List(www.120ask.com, wzjlsogoupc.guahao.com, www.mfk.com, sns.guahao.com, www.cnkang.com, www.youlai.cn, www.39yst.com, www.sytown.cn, ask.39.net)\nlograw: org.apache.spark.rdd.RDD[String] \u003d /user/webrank/clicklog/ms/2018* MapPartitionsRDD[1] at textFile at \u003cconsole\u003e:35\nresult: org.apache.spark.sql.DataFrame \u003d [query: string, url: string]\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1537414772159_951865009",
+      "id": "20180920-113932_721531019",
+      "dateCreated": "Sep 20, 2018 11:39:32 AM",
+      "dateStarted": "Oct 17, 2018 2:36:07 PM",
+      "dateFinished": "Oct 17, 2018 2:36:14 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%spark\nresult.registerTempTable(\"t_result\")\nvar sql_result \u003dsqlContext.sql(\"SELECT  query,url,count(*) as pv FROM t_result group by query,url\")\nsql_result.persist()\nsql_result.registerTempTable(\"result\")\nvar sql_result \u003dsqlContext.sql(\"SELECT CONCAT(\u0027@query:\u0027,query,\u0027\\t@url:\u0027,url,\u0027\\t@pv:\u0027,pv) as line FROM result\")\nsql_result.select(\"line\").rdd.saveAsTextFile(\"/user/webrank/liuqin/Medical_Tagging_polymerization/query_url_pv_2018_01-1016.csv\")",
+      "user": "anonymous",
+      "dateUpdated": "Oct 17, 2018 2:36:47 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "warning: there was one deprecation warning; re-run with -deprecation for details\nsql_result: org.apache.spark.sql.DataFrame \u003d [query: string, url: string ... 1 more field]\nres34: org.apache.spark.sql.Dataset[org.apache.spark.sql.Row] \u003d [query: string, url: string ... 1 more field]\nwarning: there was one deprecation warning; re-run with -deprecation for details\nsql_result: org.apache.spark.sql.DataFrame \u003d [line: string]\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1537414930684_1566150303",
+      "id": "20180920-114210_1542909493",
+      "dateCreated": "Sep 20, 2018 11:42:10 AM",
+      "dateStarted": "Sep 20, 2018 11:49:09 AM",
+      "dateFinished": "Sep 20, 2018 12:26:35 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "var df_up \u003dsqlContext.sql(\"SELECT url,sum(pv) as pv FROM result group by url\")",
+      "user": "anonymous",
+      "dateUpdated": "Sep 20, 2018 5:23:33 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "df_up: org.apache.spark.sql.DataFrame \u003d [url: string, pv: bigint]\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1537415186953_-1078276504",
+      "id": "20180920-114626_278602804",
+      "dateCreated": "Sep 20, 2018 11:46:26 AM",
+      "dateStarted": "Sep 20, 2018 12:31:24 PM",
+      "dateFinished": "Sep 20, 2018 12:31:24 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "df_up.persist()",
+      "user": "anonymous",
+      "dateUpdated": "Sep 20, 2018 12:35:55 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "res38: org.apache.spark.sql.Dataset[org.apache.spark.sql.Row] \u003d [url: string, pv: bigint]\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1537418083971_522588096",
+      "id": "20180920-123443_19621643",
+      "dateCreated": "Sep 20, 2018 12:34:43 PM",
+      "dateStarted": "Sep 20, 2018 12:35:55 PM",
+      "dateFinished": "Sep 20, 2018 12:39:19 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "df_up.where(\"pv\u003e2\").count()",
+      "user": "anonymous",
+      "dateUpdated": "Sep 20, 2018 12:31:28 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "res37: Long \u003d 48676837\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1537415489020_1692729403",
+      "id": "20180920-115129_249937850",
+      "dateCreated": "Sep 20, 2018 11:51:29 AM",
+      "dateStarted": "Sep 20, 2018 12:31:28 PM",
+      "dateFinished": "Sep 20, 2018 12:38:41 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "(new util.Random).nextInt(3).toString",
+      "user": "anonymous",
+      "dateUpdated": "Oct 17, 2018 4:18:14 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "res30: String \u003d 1\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1539764170313_-1812263677",
+      "id": "20181017-161610_2077369793",
+      "dateCreated": "Oct 17, 2018 4:16:10 PM",
+      "dateStarted": "Oct 17, 2018 4:18:14 PM",
+      "dateFinished": "Oct 17, 2018 4:18:14 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "df_up.where(\"pv\u003e2\")",
+      "user": "anonymous",
+      "dateUpdated": "Sep 20, 2018 12:40:59 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "jobName": "paragraph_1537418406422_961092928",
+      "id": "20180920-124006_1658954326",
+      "dateCreated": "Sep 20, 2018 12:40:06 PM",
+      "dateStarted": "Sep 20, 2018 12:40:43 PM",
+      "dateFinished": "Sep 20, 2018 12:40:43 PM",
+      "status": "ERROR",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "var df_up_2 \u003d df_up.where(\"pv\u003e2\")",
+      "user": "anonymous",
+      "dateUpdated": "Sep 20, 2018 12:42:33 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "df_up_2: org.apache.spark.sql.Dataset[org.apache.spark.sql.Row] \u003d [url: string, pv: bigint]\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1537415501647_-122900657",
+      "id": "20180920-115141_304228873",
+      "dateCreated": "Sep 20, 2018 11:51:41 AM",
+      "dateStarted": "Sep 20, 2018 12:42:33 PM",
+      "dateFinished": "Sep 20, 2018 12:42:33 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "df_up_2.registerTempTable(\"t_up\")",
+      "user": "anonymous",
+      "dateUpdated": "Sep 20, 2018 12:42:43 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "warning: there was one deprecation warning; re-run with -deprecation for details\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1537415462875_-698546308",
+      "id": "20180920-115102_663894634",
+      "dateCreated": "Sep 20, 2018 11:51:02 AM",
+      "dateStarted": "Sep 20, 2018 12:42:43 PM",
+      "dateFinished": "Sep 20, 2018 12:42:43 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "sqlContext.sql(\"SELECT sum(pv) FROM t_up\").show()\n",
+      "user": "anonymous",
+      "dateUpdated": "Sep 20, 2018 1:04:20 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "+----------+\n|   sum(pv)|\n+----------+\n|1767116980|\n+----------+\n\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1537419736946_1340552222",
+      "id": "20180920-130216_936140264",
+      "dateCreated": "Sep 20, 2018 1:02:16 PM",
+      "dateStarted": "Sep 20, 2018 1:04:20 PM",
+      "dateFinished": "Sep 20, 2018 1:05:39 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%spark\ncase class UQQRow(url :String,question:String,queDesc:String)\nvar line_uqaq \u003d sc.textFile(\"/user/webrank/liuqin/Medical_Tagging_polymerization/url_question_ans_quedesc.csv\")\n\nvar df_uqq \u003d line_uqaq.map(m \u003d\u003elineToM(m)).map(m \u003d\u003e(m.get(\"@URL:\").getOrElse(\"\").toString,m.get(\"@QUESTION:\").getOrElse(\"\").toString,m.get(\"@QUEDESC:\").getOrElse(\"\").toString)).filter(x\u003d\u003e(filterAgeQ(x._2)||filterAgeD(x._3))).map(r \u003d\u003eUQQRow(r._1,r._2,r._3)).toDF()\ndf_uqq.registerTempTable(\"t_uqq\")",
+      "user": "anonymous",
+      "dateUpdated": "Sep 20, 2018 8:19:02 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "defined class UQQRow\nline_uqaq: org.apache.spark.rdd.RDD[String] \u003d /user/webrank/liuqin/Medical_Tagging_polymerization/url_question_ans_quedesc.csv MapPartitionsRDD[1] at textFile at \u003cconsole\u003e:28\ndf_uqq: org.apache.spark.sql.DataFrame \u003d [url: string, question: string ... 1 more field]\nwarning: there was one deprecation warning; re-run with -deprecation for details\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1537415181091_-233584102",
+      "id": "20180920-114621_1452912793",
+      "dateCreated": "Sep 20, 2018 11:46:21 AM",
+      "dateStarted": "Sep 20, 2018 8:19:02 PM",
+      "dateFinished": "Sep 20, 2018 8:19:07 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%spark\nvar df_uqq \u003dsqlContext.sql(\"SELECT t_uqq.url as url, question,queDesc FROM t_uqq join t_up on t_up.url \u003d t_uqq.url\")\ndf_uqq \u003d df_uqq.distinct\n",
+      "user": "anonymous",
+      "dateUpdated": "Sep 20, 2018 12:43:11 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "df_uqq: org.apache.spark.sql.DataFrame \u003d [url: string, question: string ... 1 more field]\ndf_uqq: org.apache.spark.sql.DataFrame \u003d [url: string, question: string ... 1 more field]\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1537415160587_208477060",
+      "id": "20180920-114600_1456719617",
+      "dateCreated": "Sep 20, 2018 11:46:00 AM",
+      "dateStarted": "Sep 20, 2018 12:43:11 PM",
+      "dateFinished": "Sep 20, 2018 12:43:12 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%spark\ndf_uqq.count()",
+      "user": "anonymous",
+      "dateUpdated": "Sep 20, 2018 12:43:17 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "res44: Long \u003d 540417\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1537415814427_272866399",
+      "id": "20180920-115654_621789678",
+      "dateCreated": "Sep 20, 2018 11:56:54 AM",
+      "dateStarted": "Sep 20, 2018 12:43:17 PM",
+      "dateFinished": "Sep 20, 2018 12:49:35 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%spark\ndf_uqq.persist()",
+      "user": "anonymous",
+      "dateUpdated": "Sep 20, 2018 12:59:14 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "res46: org.apache.spark.sql.Dataset[org.apache.spark.sql.Row] \u003d [url: string, question: string ... 1 more field]\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1537419536562_-1511330863",
+      "id": "20180920-125856_1456919186",
+      "dateCreated": "Sep 20, 2018 12:58:56 PM",
+      "dateStarted": "Sep 20, 2018 12:59:14 PM",
+      "dateFinished": "Sep 20, 2018 1:04:19 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%spark\ndf_uqq.registerTempTable(\"out_result\")\nvar sql_result \u003dsqlContext.sql(\"SELECT CONCAT(\u0027@QUESTION:\u0027,question,\u0027\\t@URL:\u0027,url,\u0027\\t@QUEDESC:\u0027,queDesc) as line FROM out_result\")\nsql_result.select(\"line\").rdd.saveAsTextFile(\"/user/webrank/liuqin/Medical_Tagging_polymerization/question_url_queDesc_m2.csv\")",
+      "user": "anonymous",
+      "dateUpdated": "Sep 20, 2018 1:04:19 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "warning: there was one deprecation warning; re-run with -deprecation for details\nsql_result: org.apache.spark.sql.DataFrame \u003d [line: string]\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1537415803010_-1316161883",
+      "id": "20180920-115643_406198584",
+      "dateCreated": "Sep 20, 2018 11:56:43 AM",
+      "dateStarted": "Sep 20, 2018 1:04:19 PM",
+      "dateFinished": "Sep 20, 2018 1:05:19 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%spark\n",
+      "user": "anonymous",
+      "dateUpdated": "Sep 20, 2018 1:44:38 PM",
+      "config": {},
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "jobName": "paragraph_1537422278004_1889976343",
+      "id": "20180920-134438_977970948",
+      "dateCreated": "Sep 20, 2018 1:44:38 PM",
+      "status": "READY",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "df_uqq.select(\"url\").distinct().count()",
+      "user": "anonymous",
+      "dateUpdated": "Sep 20, 2018 1:16:07 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "res55: Long \u003d 540416\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1537419515516_-527943323",
+      "id": "20180920-125835_511567457",
+      "dateCreated": "Sep 20, 2018 12:58:35 PM",
+      "dateStarted": "Sep 20, 2018 1:16:07 PM",
+      "dateFinished": "Sep 20, 2018 1:17:00 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "df_uqq.select(\"question\").distinct().count()",
+      "user": "anonymous",
+      "dateUpdated": "Sep 20, 2018 1:05:40 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "res54: Long \u003d 536119\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1537419634335_1134556674",
+      "id": "20180920-130034_1580675593",
+      "dateCreated": "Sep 20, 2018 1:00:34 PM",
+      "dateStarted": "Sep 20, 2018 1:05:40 PM",
+      "dateFinished": "Sep 20, 2018 1:16:41 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "\ndf_uqq.select(\"question\").distinct().registerTempTable(\"sql_result\")\nvar sql_result \u003dsqlContext.sql(\"SELECT CONCAT(\u0027@QUESTION:\u0027,question) as line FROM sql_result\")\nsql_result.select(\"line\").rdd.saveAsTextFile(\"/user/webrank/liuqin/Medical_Tagging_polymerization/mingyi_question_m2.csv\")",
+      "user": "anonymous",
+      "dateUpdated": "Sep 20, 2018 1:40:06 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "warning: there was one deprecation warning; re-run with -deprecation for details\nsql_result: org.apache.spark.sql.DataFrame \u003d [line: string]\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1537421786985_1241197229",
+      "id": "20180920-133626_1165859117",
+      "dateCreated": "Sep 20, 2018 1:36:26 PM",
+      "dateStarted": "Sep 20, 2018 1:38:48 PM",
+      "dateFinished": "Sep 20, 2018 1:39:15 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "df_uqq.registerTempTable(\"t_uqq\")\nsqlContext.sql(\"SELECT sum(pv) FROM t_up join t_uqq on t_uqq.url \u003d t_up.url\").show()\n",
+      "user": "anonymous",
+      "dateUpdated": "Sep 20, 2018 1:05:19 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "warning: there was one deprecation warning; re-run with -deprecation for details\n+--------+\n| sum(pv)|\n+--------+\n|19666809|\n+--------+\n\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1537419786801_-249402088",
+      "id": "20180920-130306_1483217622",
+      "dateCreated": "Sep 20, 2018 1:03:06 PM",
+      "dateStarted": "Sep 20, 2018 1:05:19 PM",
+      "dateFinished": "Sep 20, 2018 1:16:06 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md ### 拼接query",
+      "user": "anonymous",
+      "dateUpdated": "Sep 20, 2018 5:31:37 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "HTML",
+            "data": "\u003cdiv class\u003d\"markdown-body\"\u003e\n\u003ch3\u003e拼接query\u003c/h3\u003e\n\u003c/div\u003e"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1537435867511_1492603096",
+      "id": "20180920-173107_76926566",
+      "dateCreated": "Sep 20, 2018 5:31:07 PM",
+      "dateStarted": "Sep 20, 2018 5:31:37 PM",
+      "dateFinished": "Sep 20, 2018 5:31:37 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%spark\ncase class UQQRow(url :String,question:String,queDesc:String)\nvar line_uqaq \u003d sc.textFile(\"/user/webrank/liuqin/Medical_Tagging_polymerization/question_url_queDesc_m2.csv\")\n\nvar df_uqq \u003d line_uqaq.map(m \u003d\u003elineToM(m)).map(m \u003d\u003e(m.get(\"@URL:\").getOrElse(\"\").toString,m.get(\"@QUESTION:\").getOrElse(\"\").toString,m.get(\"@QUEDESC:\").getOrElse(\"\").toString)).map(r \u003d\u003eUQQRow(r._1,r._2,r._3)).toDF()\ndf_uqq.registerTempTable(\"t_uqq\")",
+      "user": "anonymous",
+      "dateUpdated": "Sep 20, 2018 8:21:07 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "defined class UQQRow\nline_uqaq: org.apache.spark.rdd.RDD[String] \u003d /user/webrank/liuqin/Medical_Tagging_polymerization/question_url_queDesc_m2.csv MapPartitionsRDD[29] at textFile at \u003cconsole\u003e:29\ndf_uqq: org.apache.spark.sql.DataFrame \u003d [url: string, question: string ... 1 more field]\nwarning: there was one deprecation warning; re-run with -deprecation for details\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1537419725541_-254632042",
+      "id": "20180920-130205_649890348",
+      "dateCreated": "Sep 20, 2018 1:02:05 PM",
+      "dateStarted": "Sep 20, 2018 8:21:07 PM",
+      "dateFinished": "Sep 20, 2018 8:21:08 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%spark\ndf_uqq.count()",
+      "user": "anonymous",
+      "dateUpdated": "Sep 20, 2018 8:19:52 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "res8: Long \u003d 540417\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1537445985584_-1828696744",
+      "id": "20180920-201945_178864472",
+      "dateCreated": "Sep 20, 2018 8:19:45 PM",
+      "dateStarted": "Sep 20, 2018 8:19:52 PM",
+      "dateFinished": "Sep 20, 2018 8:20:07 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%spark\n\ncase class QUPRow(query:String,url:String,pv:Int)\nvar line_qup \u003d sc.textFile(\"/user/webrank/liuqin/Medical_Tagging_polymerization/query_url_pv_201808.csv\")\nvar df_qup \u003d line_qup.map(m \u003d\u003elineToM(m)).map(m \u003d\u003e(m.get(\"@query:\").getOrElse(\"\").toString,m.get(\"@url:\").getOrElse(\"\").toString,m.get(\"@pv:\").getOrElse(\"0\").toInt)).map(r \u003d\u003eQUPRow(r._1,r._2,r._3)).toDF()",
+      "user": "anonymous",
+      "dateUpdated": "Oct 10, 2018 10:37:30 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "defined class QUPRow\nline_qup: org.apache.spark.rdd.RDD[String] \u003d /user/webrank/liuqin/Medical_Tagging_polymerization/query_url_pv_201808.csv MapPartitionsRDD[45] at textFile at \u003cconsole\u003e:29\ndf_qup: org.apache.spark.sql.DataFrame \u003d [query: string, url: string ... 1 more field]\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1537435537513_-488941872",
+      "id": "20180920-172537_700459824",
+      "dateCreated": "Sep 20, 2018 5:25:37 PM",
+      "dateStarted": "Sep 20, 2018 8:29:27 PM",
+      "dateFinished": "Sep 20, 2018 8:29:28 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%spark\ndf_qup.persist()",
+      "user": "anonymous",
+      "dateUpdated": "Sep 20, 2018 6:26:07 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "res77: org.apache.spark.sql.Dataset[org.apache.spark.sql.Row] \u003d [query: string, url: string ... 1 more field]\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1537437678923_903144758",
+      "id": "20180920-180118_1661936990",
+      "dateCreated": "Sep 20, 2018 6:01:18 PM",
+      "dateStarted": "Sep 20, 2018 6:26:07 PM",
+      "dateFinished": "Sep 20, 2018 6:26:08 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%spark\ndf_qup.count()",
+      "user": "anonymous",
+      "dateUpdated": "Sep 20, 2018 6:12:31 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "jobName": "paragraph_1537437761778_1755702348",
+      "id": "20180920-180241_701616609",
+      "dateCreated": "Sep 20, 2018 6:02:41 PM",
+      "dateStarted": "Sep 20, 2018 6:12:31 PM",
+      "dateFinished": "Sep 20, 2018 6:13:13 PM",
+      "status": "ERROR",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%spark\ndf_qup\u003d  df_qup.where(\"pv\u003e2\")",
+      "user": "anonymous",
+      "dateUpdated": "Sep 20, 2018 8:29:48 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {
+          "0": {
+            "graph": {
+              "mode": "table",
+              "height": 98.793,
+              "optionOpen": false
+            }
+          }
+        },
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "jobName": "paragraph_1537437452607_-1060920112",
+      "id": "20180920-175732_943337361",
+      "dateCreated": "Sep 20, 2018 5:57:32 PM",
+      "dateStarted": "Sep 20, 2018 6:10:29 PM",
+      "dateFinished": "Sep 20, 2018 6:12:16 PM",
+      "status": "ERROR",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%spark\n\ndf_qup.registerTempTable(\"t_qup\")\n// df_qup.count()",
+      "user": "anonymous",
+      "dateUpdated": "Sep 20, 2018 8:29:56 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "warning: there was one deprecation warning; re-run with -deprecation for details\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1537435790012_-896610953",
+      "id": "20180920-172950_1632246229",
+      "dateCreated": "Sep 20, 2018 5:29:50 PM",
+      "dateStarted": "Sep 20, 2018 8:29:56 PM",
+      "dateFinished": "Sep 20, 2018 8:29:56 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%spark\nvar sql_result \u003dsqlContext.sql(\"select * from (SELECT query,pv,t_uqq.url as url,question,queDesc,row_number() over(partition by t_uqq.url,question,queDesc order by pv desc) as rowNumber FROM t_uqq left join t_qup on t_qup.url \u003d t_uqq.url) where rowNumber\u003c\u003d3\")",
+      "user": "anonymous",
+      "dateUpdated": "Sep 20, 2018 8:30:02 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "sql_result: org.apache.spark.sql.DataFrame \u003d [query: string, pv: int ... 4 more fields]\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1537435853344_2004703882",
+      "id": "20180920-173053_398323358",
+      "dateCreated": "Sep 20, 2018 5:30:53 PM",
+      "dateStarted": "Sep 20, 2018 8:30:02 PM",
+      "dateFinished": "Sep 20, 2018 8:30:02 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%spark\nsql_result.show()",
+      "user": "anonymous",
+      "dateUpdated": "Sep 20, 2018 8:22:56 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "jobName": "paragraph_1537446163317_-1957928047",
+      "id": "20180920-202243_2125667793",
+      "dateCreated": "Sep 20, 2018 8:22:43 PM",
+      "status": "READY",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%spark\nsql_result.persist()",
+      "user": "anonymous",
+      "dateUpdated": "Sep 20, 2018 6:24:51 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "res68: org.apache.spark.sql.Dataset[org.apache.spark.sql.Row] \u003d [query: string, pv: int ... 4 more fields]\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1537436782549_640518911",
+      "id": "20180920-174622_122518763",
+      "dateCreated": "Sep 20, 2018 5:46:22 PM",
+      "dateStarted": "Sep 20, 2018 6:24:51 PM",
+      "dateFinished": "Sep 20, 2018 6:24:51 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%spark\nsql_result \u003d sql_result.where(\"query is not null\")\nsql_result.registerTempTable(\"out_result\")\nvar sql_result \u003dsqlContext.sql(\"SELECT CONCAT(\u0027@QUESTION:\u0027,question,\u0027\\t@URL:\u0027,url,\u0027\\t@QUEDESC:\u0027,queDesc,\u0027\\t@QUERY:\u0027,query,\u0027\\t@PV:\u0027,pv) as line FROM out_result \")\nsql_result.select(\"line\").rdd.saveAsTextFile(\"/user/webrank/liuqin/Medical_Tagging_polymerization/question_url_queDesc_query_pv_m2_top3.csv\")",
+      "user": "anonymous",
+      "dateUpdated": "Sep 20, 2018 8:30:35 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "sql_result: org.apache.spark.sql.DataFrame \u003d [query: string, pv: int ... 4 more fields]\nwarning: there was one deprecation warning; re-run with -deprecation for details\nsql_result: org.apache.spark.sql.DataFrame \u003d [line: string]\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1537436147548_1121318763",
+      "id": "20180920-173547_654024140",
+      "dateCreated": "Sep 20, 2018 5:35:47 PM",
+      "dateStarted": "Sep 20, 2018 8:30:35 PM",
+      "dateFinished": "Sep 20, 2018 8:34:19 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%spark\nsqlContext.sql(\"SELECT count(distinct(query)) FROM out_result\").show()",
+      "user": "anonymous",
+      "dateUpdated": "Sep 20, 2018 8:33:26 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "+---------------------+\n|count(DISTINCT query)|\n+---------------------+\n|              1463685|\n+---------------------+\n\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1537438415456_1325067638",
+      "id": "20180920-181335_1141172667",
+      "dateCreated": "Sep 20, 2018 6:13:35 PM",
+      "dateStarted": "Sep 20, 2018 8:33:26 PM",
+      "dateFinished": "Sep 20, 2018 8:43:33 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%spark\nsqlContext.sql(\"SELECT count(distinct(url)) FROM out_result\").show()",
+      "user": "anonymous",
+      "dateUpdated": "Sep 20, 2018 8:33:33 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "+-------------------+\n|count(DISTINCT url)|\n+-------------------+\n|             540416|\n+-------------------+\n\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1537438445127_-356239083",
+      "id": "20180920-181405_33058342",
+      "dateCreated": "Sep 20, 2018 6:14:05 PM",
+      "dateStarted": "Sep 20, 2018 8:34:20 PM",
+      "dateFinished": "Sep 20, 2018 8:48:37 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%spark\n\nsqlContext.sql(\"SELECT distinct(query) FROM out_result\").rdd.saveAsTextFile(\"/user/webrank/liuqin/Medical_Tagging_polymerization/mingyi_query_m2_2.csv\")\n// sql_result.select(\"line\").rdd.saveAsTextFile(\"/user/webrank/liuqin/Medical_Tagging_polymerization/mingyi_question_m2.csv\")",
+      "user": "anonymous",
+      "dateUpdated": "Sep 20, 2018 8:33:46 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": []
+      },
+      "apps": [],
+      "jobName": "paragraph_1537438559657_897458368",
+      "id": "20180920-181559_737683861",
+      "dateCreated": "Sep 20, 2018 6:15:59 PM",
+      "dateStarted": "Sep 20, 2018 8:43:34 PM",
+      "dateFinished": "Sep 20, 2018 8:53:54 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md ### python过滤后的数据拼接json",
+      "user": "anonymous",
+      "dateUpdated": "Oct 10, 2018 10:23:00 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "markdown",
+          "editOnDblClick": true
+        },
+        "editorMode": "ace/mode/markdown",
+        "editorHide": true,
+        "tableHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "HTML",
+            "data": "\u003cdiv class\u003d\"markdown-body\"\u003e\n\u003ch3\u003epython过滤后的数据拼接json\u003c/h3\u003e\n\u003c/div\u003e"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1539181338173_-1849284719",
+      "id": "20181010-222218_1737147588",
+      "dateCreated": "Oct 10, 2018 10:22:18 PM",
+      "dateStarted": "Oct 10, 2018 10:23:00 PM",
+      "dateFinished": "Oct 10, 2018 10:23:00 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "\ncase class Row_uqj(url :String,question:String,json:String)\nvar line_uqj \u003d sc.textFile(\"/user/webrank/liuqin/Medical_Tagging_polymerization/url_question_ans_quedesc_json.csv\")\nvar df_uqj \u003d line_uqj.map(m \u003d\u003elineToM(m)).map(m \u003d\u003e(m.get(\"@URL:\").getOrElse(\"\").toString,m.get(\"@QUESTION:\").getOrElse(\"\").toString,m.get(\"@JSON:\").getOrElse(\"\").toString)).map(r \u003d\u003eRow_uqj(r._1,r._2,r._3)).toDF()\n",
+      "user": "anonymous",
+      "dateUpdated": "Oct 11, 2018 12:56:50 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "defined class Row_uqj\nline_uqj: org.apache.spark.rdd.RDD[String] \u003d /user/webrank/liuqin/Medical_Tagging_polymerization/url_question_ans_quedesc_json.csv MapPartitionsRDD[1] at textFile at \u003cconsole\u003e:32\ndf_uqj: org.apache.spark.sql.DataFrame \u003d [url: string, question: string ... 1 more field]\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1537438667547_1752491373",
+      "id": "20180920-181747_436230444",
+      "dateCreated": "Sep 20, 2018 6:17:47 PM",
+      "dateStarted": "Oct 11, 2018 12:57:28 PM",
+      "dateFinished": "Oct 11, 2018 12:57:33 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "df_uqj \u003d df_uqj.dropDuplicates(Seq(\"url\",\"question\"))\ndf_uqj.registerTempTable(\"t_uqj\")",
+      "user": "anonymous",
+      "dateUpdated": "Oct 11, 2018 12:57:31 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "df_uqj: org.apache.spark.sql.DataFrame \u003d [url: string, question: string ... 1 more field]\nwarning: there was one deprecation warning; re-run with -deprecation for details\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1539182471917_871268699",
+      "id": "20181010-224111_1324256362",
+      "dateCreated": "Oct 10, 2018 10:41:11 PM",
+      "dateStarted": "Oct 11, 2018 12:57:31 PM",
+      "dateFinished": "Oct 11, 2018 12:57:34 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "df_uqj.count()",
+      "user": "anonymous",
+      "dateUpdated": "Oct 10, 2018 10:42:16 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "res17: Long \u003d 20245424\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1539182531521_76654951",
+      "id": "20181010-224211_701044698",
+      "dateCreated": "Oct 10, 2018 10:42:11 PM",
+      "dateStarted": "Oct 10, 2018 10:42:16 PM",
+      "dateFinished": "Oct 10, 2018 10:44:41 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "case class Row_kcqqu(norm_gkey:String,norm_cand:String,question:String,re_urlq:String,url:String)\nvar line_kcqqu \u003d sc.textFile(\"/user/webrank/liuqin/Medical_Tagging_polymerization/mingyi_age_result.csv\")\nvar df_kcqqu \u003d line_kcqqu.map(m \u003d\u003elineToM(m)).map(m \u003d\u003e(m.get(\"@norm_gkey:\").getOrElse(\"\").toString,m.get(\"@norm_cand:\").getOrElse(\"\").toString,m.get(\"@question:\").getOrElse(\"\").toString,m.get(\"@re_urlq:\").getOrElse(\"\").toString,m.get(\"@url:\").getOrElse(\"\").toString)).map(r \u003d\u003eRow_kcqqu(r._1,r._2,r._3,r._4,r._5)).toDF()\ndf_kcqqu.registerTempTable(\"t_kcqqu\")",
+      "user": "anonymous",
+      "dateUpdated": "Oct 11, 2018 12:56:57 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "defined class Row_kcqqu\nline_kcqqu: org.apache.spark.rdd.RDD[String] \u003d /user/webrank/liuqin/Medical_Tagging_polymerization/mingyi_age_result.csv MapPartitionsRDD[6] at textFile at \u003cconsole\u003e:32\ndf_kcqqu: org.apache.spark.sql.DataFrame \u003d [norm_gkey: string, norm_cand: string ... 3 more fields]\nwarning: there was one deprecation warning; re-run with -deprecation for details\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1539181813105_1988461845",
+      "id": "20181010-223013_1316298035",
+      "dateCreated": "Oct 10, 2018 10:30:13 PM",
+      "dateStarted": "Oct 11, 2018 12:57:34 PM",
+      "dateFinished": "Oct 11, 2018 12:57:35 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "df_kcqqu.show()",
+      "user": "anonymous",
+      "dateUpdated": "Oct 10, 2018 11:08:35 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "+----------------+---------+--------------------+--------------------+--------------------+\n|       norm_gkey|norm_cand|            question|             re_urlq|                 url|\n+----------------+---------+--------------------+--------------------+--------------------+\n|         ,近视怎么恢复|       9岁|     怎么把高度近视眼恢复正常眼睛？|眼睛高度近视怎么恢复1001眼睛高...|http://www.cnkang...|\n|         ,近视怎么恢复|      18岁|         500度近视眼能恢复吗|500度近视能恢复吗1001500...|http://www.cnkang...|\n|         ,近视怎么恢复|      14岁|    14岁，近视200多度，能恢复吗|14岁近视还能恢复吗100214岁...|http://www.cnkang...|\n|         ,近视怎么恢复|      12岁|         12岁近视怎样才能恢复|          ,12岁近视怎么恢复|http://www.cnkang...|\n|         .小女孩来月经|       5岁|      5岁小女孩来月经是怎么回事啊|           .5岁小女孩来月经|http://www.cnkang...|\n|         .小女孩来月经|      13岁|    小女孩来过月经又提前十天正常吗？|刚来月经的小女孩，正常来月经后十天...|http://www.cnkang...|\n|         .小女孩来月经|      11岁|          少女初次来月经怎么办|           小女孩来月经怎么办|http://www.cnkang...|\n|         /属于高血压吗|      67岁|      老人血压高压164低压105|        164/66属于高血压吗|http://www.cnkang...|\n|         /属于高血压吗|      55岁|我妈现在55岁，血压150/88算不算高|        150/88属于高血压吗|http://www.cnkang...|\n|         /属于高血压吗|      25岁|25岁，血压141、87，属不属于高血压|141/97属于高血压100214...|http://www.cnkang...|\n|   1对半宝宝半夜闭着眼睛哭闹|      9个月|  九个月的宝宝晚上总是闭着眼睛哭怎么办|9个月宝宝晚上睡觉老是闭着眼睛哭闹...|http://www.cnkang...|\n|   1对半宝宝半夜闭着眼睛哭闹|      8个月|      宝宝夜里突然哭闹，闭着眼睛哭|     宝宝半夜闭着眼睛哭闹是为什么呢|http://www.cnkang...|\n|   1对半宝宝半夜闭着眼睛哭闹|       1岁|          宝宝半夜闭着眼睛哭闹|       1对半宝宝半夜闭着眼睛哭闹|http://www.cnkang...|\n|      2段换3段奶粉怎么换|      8个月|         1段奶粉转2段奶粉需要|     一段奶粉换二段奶粉需要注意事项|http://www.cnkang...|\n|      2段换3段奶粉怎么换|      6个月|怎么样从一段换成二段奶粉啊，有什么...|     一段奶粉换二段奶粉需要注意事项|http://www.cnkang...|\n|      2段换3段奶粉怎么换|       1岁|宝宝快1岁准备转3段奶粉，现在2段...|我家宝宝1岁多开始喝奶粉，现在1岁...|http://www.cnkang...|\n|            4点咳嗽|      5个月|            有点咳嗽怎么办？|            有一点咳嗽怎么办|http://www.cnkang...|\n|            4点咳嗽|       4岁|           晚上八点到十点咳嗽|                八点咳嗽|http://www.cnkang...|\n|            4点咳嗽|      1个月|干咳一个月白天不咳嗽，凌晨1点多干咳几下|               一点多咳嗽|http://www.120ask...|\n|7小孩这几天晚上睡觉总是翻来覆去|      7个月|宝宝这几天晚上睡觉总翻来覆去的怎么回事？|    7小孩这几天晚上睡觉总是翻来覆去|http://www.cnkang...|\n+----------------+---------+--------------------+--------------------+--------------------+\nonly showing top 20 rows\n\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1539182205027_-762373486",
+      "id": "20181010-223645_634110679",
+      "dateCreated": "Oct 10, 2018 10:36:45 PM",
+      "dateStarted": "Oct 10, 2018 11:08:35 PM",
+      "dateFinished": "Oct 10, 2018 11:08:36 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "var sql_result \u003dsqlContext.sql(\"select norm_gkey,norm_cand,t_kcqqu.question as question1,t_uqj.question as question2,re_urlq,t_kcqqu.url as url,json from t_kcqqu join t_uqj on t_uqj.url\u003dt_kcqqu.url and t_kcqqu.question\u003dt_uqj.question\")",
+      "user": "anonymous",
+      "dateUpdated": "Oct 11, 2018 12:57:05 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "sql_result: org.apache.spark.sql.DataFrame \u003d [norm_gkey: string, norm_cand: string ... 5 more fields]\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1539182216066_-851989332",
+      "id": "20181010-223656_235527150",
+      "dateCreated": "Oct 10, 2018 10:36:56 PM",
+      "dateStarted": "Oct 11, 2018 12:57:34 PM",
+      "dateFinished": "Oct 11, 2018 12:57:36 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "sql_result.count()",
+      "user": "anonymous",
+      "dateUpdated": "Oct 10, 2018 11:09:16 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "res32: Long \u003d 47594\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1539182799025_-2103536988",
+      "id": "20181010-224639_1048699048",
+      "dateCreated": "Oct 10, 2018 10:46:39 PM",
+      "dateStarted": "Oct 10, 2018 11:09:16 PM",
+      "dateFinished": "Oct 10, 2018 11:10:00 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "sql_result.show()",
+      "user": "anonymous",
+      "dateUpdated": "Oct 10, 2018 11:09:19 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "+--------------+---------+--------------------+--------------------+--------------------+--------------------+--------------------+\n|     norm_gkey|norm_cand|           question1|           question2|             re_urlq|                 url|                json|\n+--------------+---------+--------------------+--------------------+--------------------+--------------------+--------------------+\n|     北京哪家治疗脑瘫好|       2岁|       北京治疗脑瘫哪家治疗效果好|       北京治疗脑瘫哪家治疗效果好|           北京脑瘫治疗哪家好|http://www.cnkang...|{\"key\": \"10006335...|\n|        孩子左眼右眼|       5岁|     孩子左眼0,4右眼0,6正常吗|     孩子左眼0,4右眼0,6正常吗|      5岁孩子左眼4.6右眼4.8|http://www.cnkang...|{\"key\": \"10008101...|\n|       月经后白带带血|      23岁|             经期白带里夹血|             经期白带里夹血|             月经白带里带血|http://www.cnkang...|{\"key\": \"10011236...|\n|       怀孕腰困正常吗|      5个月|        怀孕五个月，左边腰老是痛|        怀孕五个月，左边腰老是痛|          怀孕5个月腰困正常吗|http://www.cnkang...|{\"key\": \"10011498...|\n|        怀孕腰特别疼|      5个月|        怀孕五个月，左边腰老是痛|        怀孕五个月，左边腰老是痛|           怀孕5个月腰特别疼|http://www.cnkang...|{\"key\": \"10011498...|\n|         产后小腹痛|      7个月|            产后7个月肚子痛|            产后7个月肚子痛|            产后7个月小腹痛|http://www.cnkang...|{\"key\": \"10029707...|\n|     产后肚子疼怎么回事|      7个月|            产后7个月肚子痛|            产后7个月肚子痛|        产后7个月肚子疼怎么回事|http://www.cnkang...|{\"key\": \"10029707...|\n|     保胎出血有血块怎么|       6周|     孕6周吃保胎药后还是出血有血块|     孕6周吃保胎药后还是出血有血块|        保胎第二天出血有血块怎么|http://www.cnkang...|{\"key\": \"10032341...|\n|     怀孕可不可以做人流|      6个月|         怀孕了六个月可否做人流|         怀孕了六个月可否做人流|        怀孕6个月可不可以做人流|http://www.cnkang...|{\"key\": \"10033229...|\n|       宝宝睡觉时间长|      2个月|          两个月宝宝睡觉时间长|          两个月宝宝睡觉时间长|          2个月宝宝睡觉时间长|http://www.cnkang...|{\"key\": \"10042764...|\n|    宝宝打喷嚏黄鼻涕咳嗽|      9个月|       宝宝咳嗽有痰打喷嚏流浓鼻涕|       宝宝咳嗽有痰打喷嚏流浓鼻涕| 宝宝打喷嚏流浓鼻涕，还有些咳嗽怎么治疗|http://www.cnkang...|{\"key\": \"10045392...|\n|        哺乳期膝盖疼|      6个月|       哺乳期妇女右膝盖疼什么原因|       哺乳期妇女右膝盖疼什么原因|              哺乳期膝盖疼|http://www.cnkang...|{\"key\": \"10045662...|\n|        宝宝不吃夜奶|      5个月|     五个月宝宝晚上不吃夜奶，正常吗|     五个月宝宝晚上不吃夜奶，正常吗|         5月宝宝不吃夜奶正常吗|http://www.cnkang...|{\"key\": \"10057206...|\n|        宝宝奶量好少|      5个月|          五个月宝宝吃奶量很少|          五个月宝宝吃奶量很少|           5个月宝宝奶量好少|http://www.cnkang...|{\"key\": \"10060860...|\n|      怀孕有红色分泌物|       6周|        怀孕六周阴道有红色分泌物|        怀孕六周阴道有红色分泌物|          怀孕6周有红色分泌物|http://www.cnkang...|{\"key\": \"10067817...|\n|怀孕胎盘覆盖内宫颈口要紧吗？|      5个月|  怀孕五个月胎盘低置，胎盘覆盖于内宫口|  怀孕五个月胎盘低置，胎盘覆盖于内宫口|   怀孕5个月胎盘覆盖内宫颈口要紧吗？|http://www.cnkang...|{\"key\": \"10072993...|\n|    孕妇心口窝疼是怎么办|      8个月|         孕妇心口窝疼是怎么回事|         孕妇心口窝疼是怎么回事|         孕妇心口窝疼是怎么回事|http://www.cnkang...|{\"key\": \"10100013...|\n|    宝宝发烧退烧后又起烧|      9个月|九个半月的婴儿，开始发了一下烧温度...|九个半月的婴儿，开始发了一下烧温度...|9个月宝宝发烧38度左右一会起烧一...|http://www.cnkang...|{\"key\": \"10140532...|\n|         会不会怀孕|      12岁|             12岁会怀孕吗|             12岁会怀孕吗|            12岁会不会怀孕|http://www.cnkang...|{\"key\": \"10151112...|\n|  多小孩肚脐上疼是怎么回事|       2岁|        宝宝2岁半了老说肚脐眼疼|        宝宝2岁半了老说肚脐眼疼|      2岁多小孩肚脐上疼是怎么回事|http://www.cnkang...|{\"key\": \"10157057...|\n+--------------+---------+--------------------+--------------------+--------------------+--------------------+--------------------+\nonly showing top 20 rows\n\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1539183148664_-1539203941",
+      "id": "20181010-225228_878256956",
+      "dateCreated": "Oct 10, 2018 10:52:28 PM",
+      "dateStarted": "Oct 10, 2018 11:09:19 PM",
+      "dateFinished": "Oct 10, 2018 11:10:36 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "sql_result.registerTempTable(\"out_result\")\nvar sql_result \u003dsqlContext.sql(\"SELECT CONCAT(\u0027@norm_gkey:\u0027,norm_gkey,\u0027\\t@norm_cand:\u0027,norm_cand,\u0027\\t@re_urlq:\u0027,re_urlq,\u0027\\t@question:\u0027,question1,\u0027\\t@url:\u0027,url,\u0027\\t@json:\u0027,json) as line FROM out_result order by norm_gkey,norm_cand\")\nsql_result.select(\"line\").rdd.saveAsTextFile(\"/user/webrank/liuqin/Medical_Tagging_polymerization/mingyi_result_with_json.csv\")",
+      "user": "anonymous",
+      "dateUpdated": "Oct 11, 2018 12:57:59 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "warning: there was one deprecation warning; re-run with -deprecation for details\nsql_result: org.apache.spark.sql.DataFrame \u003d [line: string]\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1539182832415_1219801417",
+      "id": "20181010-224712_1983671893",
+      "dateCreated": "Oct 10, 2018 10:47:12 PM",
+      "dateStarted": "Oct 11, 2018 12:57:59 PM",
+      "dateFinished": "Oct 11, 2018 1:01:35 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "sc.stop()",
+      "user": "anonymous",
+      "dateUpdated": "Oct 10, 2018 11:12:35 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": []
+      },
+      "apps": [],
+      "jobName": "paragraph_1539184243720_219849940",
+      "id": "20181010-231043_83300267",
+      "dateCreated": "Oct 10, 2018 11:10:43 PM",
+      "dateStarted": "Oct 10, 2018 11:12:35 PM",
+      "dateFinished": "Oct 10, 2018 11:12:35 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "user": "anonymous",
+      "config": {},
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "jobName": "paragraph_1539184355369_856360894",
+      "id": "20181010-231235_1453848121",
+      "dateCreated": "Oct 10, 2018 11:12:35 PM",
+      "status": "READY",
+      "progressUpdateIntervalMs": 500
+    }
+  ],
+  "name": "medical/medical_eval_mingyi_age_pv_cov",
+  "id": "2DT6SAWC8",
+  "angularObjects": {
+    "2D9M8ATZ9:shared_process": [],
+    "2D859SF5B:shared_process": [],
+    "2D99W32FC:shared_process": [],
+    "2DA8NG9YB:shared_process": [],
+    "2DBCA9BMV:shared_process": [],
+    "2DA29EQ39:shared_process": [],
+    "2D86PKHDE:shared_process": [],
+    "2D8ZMX5FY:shared_process": [],
+    "2D8ZFKME2:shared_process": [],
+    "2DBAZD2WP:shared_process": [],
+    "2D8SP4FH8:shared_process": [],
+    "2DAESRJYD:shared_process": [],
+    "2DA7377EZ:shared_process": [],
+    "2D8DH9K51:shared_process": [],
+    "2D85K8KV7:shared_process": [],
+    "2D9NTGN5D::2DT6SAWC8": [],
+    "2D958F7RN:shared_process": [],
+    "2DAVR7XRG:shared_process": [],
+    "2DBX9FA55:shared_process": []
+  },
+  "config": {},
+  "info": {}
+}
